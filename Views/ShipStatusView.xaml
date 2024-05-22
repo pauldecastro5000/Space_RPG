@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Space_RPG.Views.ShipStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Space_RPG.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="200"
+             Background="Black">
+    <Grid>
+        <StackPanel>
+            <Label Content="STRUCTURE"
+                   Style="{StaticResource Title}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Label Content="Ship"
+                           Style="{StaticResource Body}" />
+                    <Label Content="Weapons"
+                           Style="{StaticResource Body}" />
+                    <Label Content="Engine"
+                           Style="{StaticResource Body}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label Content="{Binding ShipManager.Ship}"
+                           ContentStringFormat="{}{0}%"
+                           Style="{StaticResource Body}" />
+                    <Label Content="{Binding ShipManager.Weapons}"
+                           ContentStringFormat="{}{0}%"
+                           Style="{StaticResource Body}" />
+                    <Label Content="{Binding ShipManager.Engine}"
+                           ContentStringFormat="{}{0}%"
+                           Style="{StaticResource Body}" />
+                </StackPanel>
+            </Grid>
+            <Label Content="RESOURCES"
+                   Style="{StaticResource Title}"
+                   Margin="0,20,0,0" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Label Content="Food"
+                           Style="{StaticResource Body}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label Content="{Binding ShipManager.Food}"
+                           Style="{StaticResource Body}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

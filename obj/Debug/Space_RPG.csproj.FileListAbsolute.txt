@@ -1,0 +1,36 @@
+C:\Users\paul.andrew\source\repos\Space_RPG\bin\Debug\Space_RPG.exe.config
+C:\Users\paul.andrew\source\repos\Space_RPG\bin\Debug\Space_RPG.exe
+C:\Users\paul.andrew\source\repos\Space_RPG\bin\Debug\Space_RPG.pdb
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.csproj.AssemblyReference.cache
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\MainWindow.g.cs
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\App.g.cs
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG_MarkupCompile.cache
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG_MarkupCompile.lref
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\MainWindow.baml
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.g.resources
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.Properties.Resources.resources
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.csproj.GenerateResource.cache
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.csproj.CoreCompileInputs.cache
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.exe
+C:\Users\paul.andrew\source\repos\Space_RPG\obj\Debug\Space_RPG.pdb
+C:\Users\Paul\Documents\Git Repos\Space_RPG\bin\Debug\Space_RPG.exe.config
+C:\Users\Paul\Documents\Git Repos\Space_RPG\bin\Debug\Space_RPG.exe
+C:\Users\Paul\Documents\Git Repos\Space_RPG\bin\Debug\Space_RPG.pdb
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.csproj.AssemblyReference.cache
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\MainWindow.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\App.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG_MarkupCompile.cache
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG_MarkupCompile.lref
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\MainWindow.baml
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.g.resources
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.Properties.Resources.resources
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.csproj.GenerateResource.cache
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.csproj.CoreCompileInputs.cache
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.exe
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Space_RPG.pdb
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\ShipStatusView.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\App.baml
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\ShipStatusView.baml
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\CrewListView.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\CrewListView.baml

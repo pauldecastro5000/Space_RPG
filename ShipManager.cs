@@ -13,5 +13,9 @@ namespace Space_RPG
         public int Engine { get; set; }
 
         public int Food { get; set; }
+
+        #region Public Methods
+
+        #endregion Public Methods
     }
 }

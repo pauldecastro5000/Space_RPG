@@ -56,9 +56,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crew.cs" />
+    <Compile Include="Planet.cs" />
     <Compile Include="PlanetManager.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="ShipManager.cs" />
     <Compile Include="StorageManager.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\CrewListView.xaml.cs">

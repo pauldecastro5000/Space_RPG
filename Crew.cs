@@ -11,6 +11,7 @@ namespace Space_RPG
         public enum CrewJob
         {
             None,
+            Captain,
             Pilot,
             Weapons,
             Engineer

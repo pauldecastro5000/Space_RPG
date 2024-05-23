@@ -29,7 +29,65 @@ namespace Space_RPG
             Alexander,
             Owen,
             Asher,
-            Samuel
+            Samuel,
+            Olivia,
+            Emma,
+            Charlotte,
+            Amelia,
+            Sophia,
+            Mia,
+            Isabella,
+            Ava,
+            Evelyn,
+            Luna,
+            Harper,
+            Sofia,
+            Camila,
+            Eleanor,
+            Elizabeth,
+            Violet,
+            Scarlett,
+            Emily,
+            Hazel,
+            Lily,
+            Gianna,
+            Aurora,
+            Penelope,
+            Aria,
+            Chloe,
+            Ellie,
+            Mila,
+            Layla,
+            Abigail,
+            Ella,
+            Eliana,
+            Nova,
+            Madison,
+            Zoe,
+            Ivy,
+            Grace,
+            Lucy,
+            Emilia,
+            Riley,
+            Naomi,
+            Victoria,
+            Stella,
+            Elena,
+            Hannah,
+            Valentina,
+            Maya,
+            Zoey,
+            Delilah,
+            Leah,
+            Lainey,
+            Lillian,
+            Madelyn,
+            Sophie,
+            Natalie,
+            Josephine,
+            Alice,
+            Ruby,
+            Claire
         }
 
         public List<Crew> Crews { get; set; } = new List<Crew>();
@@ -42,7 +100,7 @@ namespace Space_RPG
             var name = String.Empty;
             do
             {
-                name = ((CrewNameEnum)RandomNumber(0, 19)).ToString();
+                name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
             } while (CrewNameExist(name));
             var aiming = RandomNumber(0, 100);
             var pilot = RandomNumber(0, 100);

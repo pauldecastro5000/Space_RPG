@@ -8,14 +8,39 @@ namespace Space_RPG
 {
     public class ShipManager
     {
-        public int Ship { get; set; }
-        public int Weapons { get; set; }
-        public int Engine { get; set; }
+        #region Public Properties
+        public Ship MyShip { get; set; }
+        #endregion Public Properties
 
-        public int Food { get; set; }
+        #region Constructor
+        public ShipManager()
+        {
+        }
+        #endregion Constructor
 
         #region Public Methods
+        public void CreateMyShip()
+        {
+            var weapons = new List<Ship.Weapon>();
 
+            for (int i = 0; i < 3; i++)
+            {
+                weapons.Add(new Ship.Weapon() { Damage = 10, Health = 100});
+            }
+
+            MyShip = new Ship()
+            {
+                Engine = 1000,
+                Food = 1000,
+                Location = new System.Windows.Point(500, 500),
+                State = Ship.state.Hovering,
+                Weapons = weapons
+            };
+        }
+        public Ship GetMyShip()
+        {
+            return MyShip;
+        }
         #endregion Public Methods
     }
 }

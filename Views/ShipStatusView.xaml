@@ -9,7 +9,7 @@
              Background="Black">
     <Grid>
         <StackPanel>
-            <Label Content="STRUCTURE"
+            <TextBlock Text="STRUCTURE"
                    Style="{StaticResource Title}" />
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,26 +17,34 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <Label Content="Ship"
+                    <TextBlock Text="Engine"
                            Style="{StaticResource Body}" />
-                    <Label Content="Weapons"
-                           Style="{StaticResource Body}" />
-                    <Label Content="Engine"
-                           Style="{StaticResource Body}" />
+                    <!--<TextBlock Content="Weapons"
+                           Style="{StaticResource Body}" />-->
+                    <ItemsControl ItemsSource="{Binding ShipManager.MyShip.Weapons}" Style="{StaticResource Basic}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Margin="20,0"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <Label Content="{Binding ShipManager.Ship}"
-                           ContentStringFormat="{}{0}%"
-                           Style="{StaticResource Body}" />
-                    <Label Content="{Binding ShipManager.Weapons}"
-                           ContentStringFormat="{}{0}%"
-                           Style="{StaticResource Body}" />
-                    <Label Content="{Binding ShipManager.Engine}"
-                           ContentStringFormat="{}{0}%"
-                           Style="{StaticResource Body}" />
+                    <TextBlock Text="{Binding ShipManager.MyShip.Engine}"
+                           Style="{StaticResource BodyValue}" />
+                    <!--<TextBlock Content="{Binding ShipManager.MyShip.Weapons}"
+                           Style="{StaticResource Body}" />-->
+                    <ItemsControl ItemsSource="{Binding ShipManager.MyShip.Weapons}"
+                                  Style="{StaticResource Basic}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Health}" Style="{StaticResource BodyValue}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Grid>
-            <Label Content="RESOURCES"
+            <TextBlock Text="RESOURCES"
                    Style="{StaticResource Title}"
                    Margin="0,20,0,0" />
             <Grid>
@@ -45,12 +53,12 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <Label Content="Food"
+                    <TextBlock Text="Food"
                            Style="{StaticResource Body}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <Label Content="{Binding ShipManager.Food}"
-                           Style="{StaticResource Body}" />
+                    <TextBlock Text="{Binding ShipManager.MyShip.Food}"
+                           Style="{StaticResource BodyValue}" />
                 </StackPanel>
             </Grid>
         </StackPanel>

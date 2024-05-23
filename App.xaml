@@ -5,6 +5,15 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="{x:Type Control}"
+               x:Key="Basic">
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="FontFamily"
+                    Value="Century Gothic" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}"
                x:Key="baseStyle">
             <Setter Property="Foreground"
                     Value="White" />
@@ -13,18 +22,22 @@
             <Setter Property="FontFamily"
                     Value="Century Gothic" />
         </Style>
-        <Style TargetType="{x:Type Label}"
-               BasedOn="{StaticResource baseStyle}"></Style>
         <Style x:Key="Body"
-               TargetType="{x:Type Label}"
+               TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource baseStyle}">
-            <!--<Setter Property="FontStyle"
-             Value="Italic" />-->
             <Setter Property="Margin"
-                    Value="10,0" />
+                    Value="20,0" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+        </Style>
+        <Style x:Key="BodyValue"
+               TargetType="{x:Type TextBlock}"
+               BasedOn="{StaticResource baseStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
         </Style>
         <Style x:Key="Title"
-               TargetType="{x:Type Label}"
+               TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource baseStyle}">
             <Setter Property="FontWeight"
                     Value="Bold" />

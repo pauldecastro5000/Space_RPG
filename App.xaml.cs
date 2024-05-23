@@ -14,12 +14,6 @@ namespace Space_RPG
     /// </summary>
     public partial class App : Application
     {
-        public static CrewManager Crew = new CrewManager();
-        
-        public static ShipManager Ship = new ShipManager();
-        public static StorageManager Storage = new StorageManager();
-        public static Utilities Util = new Utilities();
-
-        public static MainVM mainVm = new MainVM();
+   
     }
 }

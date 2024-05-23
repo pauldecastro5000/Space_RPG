@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\
 Space_RPG
 none
 false
 DEBUG;TRACE
-C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\App.xaml
-3-1581563256
+C:\Users\Paul\Documents\Git Repos\Space_RPG\App.xaml
+4-424466776
 
-179745222
+18-2028031218
 13-946294123
-MainWindow.xaml;Views\CrewListView.xaml;Views\ShipStatusView.xaml;
+MainWindow.xaml;Views\CrewListView.xaml;Views\MainView.xaml;Views\ShipStatusView.xaml;
 
 False
 

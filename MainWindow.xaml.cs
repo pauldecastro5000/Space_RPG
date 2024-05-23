@@ -22,23 +22,26 @@ namespace Space_RPG
     public partial class MainWindow : Window
     {
         public static PlanetManager Planet = new PlanetManager();
+        public static CrewManager Crew = new CrewManager();
+        public static ShipManager Ship = new ShipManager();
+        public static StorageManager Storage = new StorageManager();
+        public static Utilities Util = new Utilities();
+
+        public static MainVM mainVm = new MainVM();
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = App.mainVm;
-
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    Crew.AddRandomCrew();
-            //}
-            
+            DataContext = mainVm;
 
             // Generate Planets
             for (int i = 0; i < 100; i++)
             {
                 Planet.CreateRandomPlanet();
             }
+
+            Ship.CreateMyShip();
+            Crew.AddCaptain();
 
             // Initialize the ship
 

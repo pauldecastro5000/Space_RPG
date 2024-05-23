@@ -22,11 +22,11 @@ namespace Space_RPG
 
             do
             {
-                loc = new Point(App.Util.RandomNumber(1, 1000), App.Util.RandomNumber(1, 1000));
+                loc = new Point(MainWindow.Util.RandomNumber(1, 1000), MainWindow.Util.RandomNumber(1, 1000));
                 distOK = true;
                 foreach (var planet in planets)
                 {
-                    var dist = App.Util.Distance2Points(loc, planet.Location);
+                    var dist = MainWindow.Util.Distance2Points(loc, planet.Location);
                     if (dist < distBetweenPlanets)
                     { 
                         distOK = false;

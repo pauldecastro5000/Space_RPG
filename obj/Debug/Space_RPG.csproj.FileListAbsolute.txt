@@ -55,3 +55,5 @@ C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Space_RPG
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Space_RPG.csproj.CoreCompileInputs.cache
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Space_RPG.exe
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Space_RPG.pdb
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\MainView.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\MainView.baml

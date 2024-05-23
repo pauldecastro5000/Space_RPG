@@ -61,11 +61,15 @@
     <Compile Include="Ship.cs" />
     <Compile Include="ShipManager.cs" />
     <Compile Include="StorageManager.cs" />
+    <Compile Include="UniverseTime.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\CrewListView.xaml.cs">
       <DependentUpon>CrewListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShipStatusView.xaml.cs">
       <DependentUpon>ShipStatusView.xaml</DependentUpon>
@@ -84,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CrewListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

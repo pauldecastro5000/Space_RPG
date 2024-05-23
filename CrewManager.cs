@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Space_RPG
 {
@@ -113,6 +114,7 @@ namespace Space_RPG
                 Name = name,
                 Job = job,
                 Hunger = 100,
+                Money = 500,
                 skills = new Crew.Skills()
                 {
                     Pilot = pilot,
@@ -122,6 +124,24 @@ namespace Space_RPG
                 },
             };
 
+            Crews.Add(newCrew);
+        }
+        public void AddCaptain()
+        {
+            var newCrew = new Crew()
+            {
+                Name = "Paul",
+                Job = Crew.CrewJob.Captain,
+                Hunger = 100,
+                Money = 100000,
+                skills = new Crew.Skills()
+                {
+                    Pilot = 90,
+                    EngineRepair = 90,
+                    WeaponsRepair = 90,
+                    Aiming = 90,
+                },
+            };
             Crews.Add(newCrew);
         }
 

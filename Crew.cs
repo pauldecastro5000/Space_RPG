@@ -28,7 +28,7 @@ namespace Space_RPG
         #region Public Properties
         public string Name { get; set; }
         public CrewJob Job { get; set; } = CrewJob.None;
-        public int Hunger { get; set; } = 100;
+        public double Hunger { get; set; } = 100.0;
         public Skills skills { get; set; }
         public int Money { get; set; }
         #endregion Public Properties

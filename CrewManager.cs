@@ -9,6 +9,7 @@ namespace Space_RPG
 {
     public class CrewManager
     {
+        #region Public Members
         public enum CrewNameEnum
         {
             Liam,
@@ -90,10 +91,32 @@ namespace Space_RPG
             Ruby,
             Claire
         }
+        #endregion Public Members
 
+        #region Public Properties
         public List<Crew> Crews { get; set; } = new List<Crew>();
+        #endregion Public Properties
+
+        #region Private Variables
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
+        private double hungerRatio = 0.125;
+        #endregion Private Variables
+
+        #region Constructor
+        public CrewManager()
+        {
+            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+        }
+
+        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        {
+            foreach (Crew c in Crews)
+            {
+                c.Hunger -= hungerRatio;
+            }
+        }
+        #endregion Constructor
 
         #region Public Methods
         public void AddRandomCrew()

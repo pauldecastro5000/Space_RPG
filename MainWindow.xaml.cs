@@ -44,9 +44,23 @@ namespace Space_RPG
 
             Ship.CreateMyShip();
             Crew.AddCaptain();
+            // generate crews
+            for (int i = 0; i < 2; i++)
+            {
+                Crew.AddRandomCrew();
+            }
+
 
             // Initialize the ship
 
+        }
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            //Crew.Crews[0].Hunger -= 1;
+            Ship.MyShip.Engine -= 10;
+            Crew.AddRandomCrew();
+            Ship.MyShip.Weapons[0].Health -= 1;
         }
     }
 }

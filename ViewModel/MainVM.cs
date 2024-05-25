@@ -17,7 +17,14 @@ namespace Space_RPG.ViewModel
 			set { _shipManager = value; OnPropertyChanged(); }
 		}
 
-        BackgroundWorker _bgwShip;
+        private CrewManager _crewManager;
+        public CrewManager CrewManager
+        {
+            get { return _crewManager; }
+            set { _crewManager = value; OnPropertyChanged(); }
+        }
+
+        BackgroundWorker _bgwUpdate;
 
         public MainVM()
         {
@@ -30,18 +37,20 @@ namespace Space_RPG.ViewModel
             //};
 
             ShipManager = MainWindow.Ship;
+            CrewManager = MainWindow.Crew;
 
-            //_bgwShip = new BackgroundWorker();
-            //_bgwShip.WorkerSupportsCancellation = true;
-            //_bgwShip.DoWork += _bgwShip_DoWork;
-            //_bgwShip.RunWorkerAsync();
+            _bgwUpdate = new BackgroundWorker();
+            _bgwUpdate.WorkerSupportsCancellation = true;
+            _bgwUpdate.DoWork += _bgwUpdate_DoWork;
+            _bgwUpdate.RunWorkerAsync();
         }
 
-        private void _bgwShip_DoWork(object sender, DoWorkEventArgs e)
+        private void _bgwUpdate_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (!_bgwShip.CancellationPending)
+            while (!_bgwUpdate.CancellationPending)
             {
                 OnPropertyChanged(nameof(ShipManager));
+                OnPropertyChanged(nameof(CrewManager));
                 System.Threading.Thread.Sleep(10);
             }
         }

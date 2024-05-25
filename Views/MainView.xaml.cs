@@ -23,6 +23,7 @@ namespace Space_RPG.Views
         public MainView()
         {
             InitializeComponent();
+            DataContext = MainWindow.mainVm;
         }
     }
 }

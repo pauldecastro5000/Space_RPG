@@ -111,7 +111,7 @@ namespace Space_RPG
 
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
-            foreach (Crew c in Crews)
+            foreach (Crew c in MainWindow.Crew.Crews)
             {
                 c.Hunger -= hungerRatio;
             }
@@ -136,7 +136,7 @@ namespace Space_RPG
             {
                 Name = name,
                 Job = job,
-                Hunger = 100,
+                Hunger = 90,
                 Money = 500,
                 skills = new Crew.Skills()
                 {

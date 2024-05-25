@@ -23,6 +23,7 @@ namespace Space_RPG.Views
         public ShipStatusView()
         {
             InitializeComponent();
+            DataContext = MainWindow.mainVm;
         }
     }
 }

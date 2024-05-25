@@ -23,6 +23,7 @@ namespace Space_RPG.Views
         public CrewListView()
         {
             InitializeComponent();
+            DataContext = MainWindow.mainVm;
         }
     }
 }

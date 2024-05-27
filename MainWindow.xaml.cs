@@ -42,7 +42,9 @@ namespace Space_RPG
                 Planet.CreateRandomPlanet();
             }
 
+            Ship.loadPlanet(Planet.Planets[0]);
             Ship.CreateMyShip();
+
             Crew.AddCaptain();
             // generate crews
             for (int i = 0; i < 3; i++)

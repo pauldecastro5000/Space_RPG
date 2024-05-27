@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Space_RPG
 {
-    public class Planet
+    public class Planet : ViewModelBase
     {
         #region Private Variables
         private static readonly Random random = new Random();
@@ -32,9 +32,24 @@ namespace Space_RPG
         #endregion Constructor
 
         #region Public Properties
-        public Resources resources { get; private set; } = new Resources();
-        public Point Location { get; set; } = new Point(0,0);
-        public Type type { get; private set; } = Type.Unknown;
+        private Resources _resources = new Resources();
+        public Resources resources
+        {
+            get { return _resources; }
+            set { _resources = value; OnPropertyChanged(); }
+        }
+        private Point _location = new Point(0,0);
+        public Point Location
+        {
+            get { return _location; }
+            set { _location = value; OnPropertyChanged(); }
+        }
+        private Type _type;
+        public Type type
+        {
+            get { return _type; }
+            set { _type = value; OnPropertyChanged(); }
+        }
         #endregion Public Properties
 
         #region Public Methods
@@ -84,10 +99,20 @@ namespace Space_RPG
         #endregion Private Methods
 
         #region Public Class
-        public class Resources
+        public class Resources : ViewModelBase
         {
-            public int Food { get; set; }
-            public int Fuel { get; set; }
+            private int _food = 0;
+            public int Food
+            {
+                get { return _food; }
+                set { _food = value; OnPropertyChanged(); }
+            }
+            private int _fuel = 0;
+            public int Fuel
+            {
+                get { return _fuel; }
+                set { _fuel = value; OnPropertyChanged(); }
+            }
         }
         #endregion Public Class
     }

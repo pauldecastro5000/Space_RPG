@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,10 +8,19 @@ using System.Windows;
 
 namespace Space_RPG
 {
-    public class PlanetManager
+    public class PlanetManager : ViewModelBase
     {
+        #region Public Properties
+        private ObservableCollection<Planet> _planets = new ObservableCollection<Planet>();
+        public ObservableCollection<Planet> Planets
+        {
+            get { return _planets; }
+            set { _planets = value; OnPropertyChanged(); }
+        }
+        #endregion Public Properties
+
         #region Private Variables
-        private List<Planet> planets = new List<Planet>();
+
         #endregion Private Variables
 
         #region Public Methods
@@ -24,7 +34,7 @@ namespace Space_RPG
             {
                 loc = new Point(MainWindow.Util.RandomNumber(1, 1000), MainWindow.Util.RandomNumber(1, 1000));
                 distOK = true;
-                foreach (var planet in planets)
+                foreach (var planet in Planets)
                 {
                     var dist = MainWindow.Util.Distance2Points(loc, planet.Location);
                     if (dist < distBetweenPlanets)
@@ -37,7 +47,7 @@ namespace Space_RPG
 
             var newPlanet = new Planet();
             newPlanet.Location = loc;
-            planets.Add(newPlanet);
+            Planets.Add(newPlanet);
         }
         #endregion Public Methods
     }

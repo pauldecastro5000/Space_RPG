@@ -3,20 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|c:\\users\\paul\\documents\\git repos\\space_rpg\\universetime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:universetime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\viewmodel\\mainvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:viewmodel\\mainvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\shipmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:shipmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|c:\\users\\paul\\documents\\git repos\\space_rpg\\planet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:planet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\planetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:planetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\crew.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:crew.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\views\\shipstatusview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:views\\shipstatusview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\universetime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:universetime.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|c:\\users\\paul\\documents\\git repos\\space_rpg\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -27,30 +55,6 @@
       "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:views\\crewlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|c:\\users\\paul\\documents\\git repos\\space_rpg\\ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\shipmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:shipmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\viewmodel\\mainvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:viewmodel\\mainvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\planetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:planetmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|c:\\users\\paul\\documents\\git repos\\space_rpg\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\viewmodel\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:viewmodel\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\crewmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:crewmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -59,12 +63,12 @@
       "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\crew.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:crew.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\storagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4F28DB66-A854-46FB-BCD3-1E7900535985}|Space_RPG.csproj|solutionrelative:storagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\ViewModelBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModel\\ViewModelBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,75 +78,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UniverseTime.cs",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\UniverseTime.cs",
-              "RelativeDocumentMoniker": "UniverseTime.cs",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\UniverseTime.cs",
-              "RelativeToolTip": "UniverseTime.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "DocumentIndex": 5,
+              "Title": "Planet.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Planet.cs",
+              "RelativeDocumentMoniker": "Planet.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Planet.cs",
+              "RelativeToolTip": "Planet.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T14:42:42.512Z",
+              "WhenOpened": "2024-05-27T11:20:06.686Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAAACoAAAAgAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAcwC4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-21T15:48:42.456Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ViewModelBase.cs",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\ViewModelBase.cs",
-              "RelativeDocumentMoniker": "ViewModel\\ViewModelBase.cs",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\ViewModelBase.cs",
-              "RelativeToolTip": "ViewModel\\ViewModelBase.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:48:41.724Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "PlanetManager.cs",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\PlanetManager.cs",
               "RelativeDocumentMoniker": "PlanetManager.cs",
               "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\PlanetManager.cs",
               "RelativeToolTip": "PlanetManager.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAhwBQAAAAmAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-21T15:48:41.788Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ShipStatusView.xaml",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\ShipStatusView.xaml",
-              "RelativeDocumentMoniker": "Views\\ShipStatusView.xaml",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\ShipStatusView.xaml",
-              "RelativeToolTip": "Views\\ShipStatusView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-22T00:42:55.462Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\App.xaml",
               "RelativeDocumentMoniker": "App.xaml",
@@ -154,31 +133,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "CrewListView.xaml",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\CrewListView.xaml",
               "RelativeDocumentMoniker": "Views\\CrewListView.xaml",
               "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\CrewListView.xaml",
               "RelativeToolTip": "Views\\CrewListView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-22T05:49:02.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-22T05:49:02.394Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
               "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-21T15:48:42.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T15:48:42.434Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Crew.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Crew.cs",
+              "RelativeDocumentMoniker": "Crew.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Crew.cs",
+              "RelativeToolTip": "Crew.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAUwB8AAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T15:48:41.785Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ShipManager.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ShipManager.cs",
+              "RelativeDocumentMoniker": "ShipManager.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ShipManager.cs",
+              "RelativeToolTip": "ShipManager.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAIwCAAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T15:48:41.79Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainView.xaml",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\MainView.xaml",
               "RelativeDocumentMoniker": "Views\\MainView.xaml",
@@ -190,7 +192,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
+              "Title": "Ship.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Ship.cs",
+              "RelativeDocumentMoniker": "Ship.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Ship.cs",
+              "RelativeToolTip": "Ship.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAowBYAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-23T12:26:26.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainVM.cs",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\MainVM.cs",
               "RelativeDocumentMoniker": "ViewModel\\MainVM.cs",
@@ -203,33 +218,42 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Ship.cs",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Ship.cs",
-              "RelativeDocumentMoniker": "Ship.cs",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Ship.cs",
-              "RelativeToolTip": "Ship.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAgwCMAAAAbAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T12:26:26.055Z",
-              "EditorCaption": ""
+              "DocumentIndex": 8,
+              "Title": "ShipStatusView.xaml",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\ShipStatusView.xaml",
+              "RelativeDocumentMoniker": "Views\\ShipStatusView.xaml",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Views\\ShipStatusView.xaml",
+              "RelativeToolTip": "Views\\ShipStatusView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-05-22T00:42:55.462Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ShipManager.cs",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ShipManager.cs",
-              "RelativeDocumentMoniker": "ShipManager.cs",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ShipManager.cs",
-              "RelativeToolTip": "ShipManager.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAgwB0AAAAAAAAA",
+              "DocumentIndex": 16,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "ViewModel\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\ViewModel\\ViewModelBase.cs",
+              "RelativeToolTip": "ViewModel\\ViewModelBase.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:48:41.79Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T15:48:41.724Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 9,
+              "Title": "UniverseTime.cs",
+              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\UniverseTime.cs",
+              "RelativeDocumentMoniker": "UniverseTime.cs",
+              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\UniverseTime.cs",
+              "RelativeToolTip": "UniverseTime.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-23T14:42:42.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "CrewManager.cs",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\CrewManager.cs",
               "RelativeDocumentMoniker": "CrewManager.cs",
@@ -237,12 +261,11 @@
               "RelativeToolTip": "CrewManager.cs",
               "ViewState": "AQIAAHQAAAAAAAAAAAApwJAAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:48:41.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T15:48:41.791Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\App.xaml.cs",
               "RelativeDocumentMoniker": "App.xaml.cs",
@@ -250,21 +273,7 @@
               "RelativeToolTip": "App.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAqwBAAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:48:41.786Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Crew.cs",
-              "DocumentMoniker": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Crew.cs",
-              "RelativeDocumentMoniker": "Crew.cs",
-              "ToolTip": "C:\\Users\\Paul\\Documents\\Git Repos\\Space_RPG\\Crew.cs",
-              "RelativeToolTip": "Crew.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:48:41.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-21T15:48:41.786Z"
             },
             {
               "$type": "Document",

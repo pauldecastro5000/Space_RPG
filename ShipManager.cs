@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Space_RPG
 {
@@ -17,6 +18,10 @@ namespace Space_RPG
             set { _ships = value; OnPropertyChanged(); }
         }
         #endregion Public Properties
+
+        #region Private Properties
+        private Planet _planet;
+        #endregion Private Properties
 
         #region Constructor
         public ShipManager()
@@ -37,11 +42,15 @@ namespace Space_RPG
             Ships.Add(new Ship()
             {
                 Engine = 1000,
-                State = Ship.state.Hovering,
-                Location = new System.Windows.Point(100, 100),
+                State = Ship.state.Docked,
+                Location = _planet.Location,
                 Weapons = weapons,
                 Food = 1000
             });
+        }
+        public void loadPlanet(Planet planet)
+        {
+            _planet = planet;
         }
         public Ship GetMyShip()
         {

@@ -84,6 +84,11 @@ namespace Space_RPG
 
         private void scrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            if (mainVm.Log.Count > 20)
+            {
+                mainVm.Log.RemoveAt(0);
+            }
+
             // User scroll event : set or unset auto-scroll mode
             if (e.ExtentHeightChange == 0)
             {   // Content unchanged : user scroll event

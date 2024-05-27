@@ -45,13 +45,15 @@ namespace Space_RPG
             Ship.CreateMyShip();
             Crew.AddCaptain();
             // generate crews
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Crew.AddRandomCrew();
             }
 
             // Initialize my ship
             mainVm.MyShip = Ship.Ships.First();
+
+            mainVm.CrewManager = Crew;
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)

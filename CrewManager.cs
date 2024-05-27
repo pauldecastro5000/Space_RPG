@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Space_RPG
 {
-    public class CrewManager
+    public class CrewManager : ViewModelBase
     {
         #region Public Members
         public enum CrewNameEnum
@@ -94,7 +95,12 @@ namespace Space_RPG
         #endregion Public Members
 
         #region Public Properties
-        public List<Crew> Crews { get; set; } = new List<Crew>();
+        private ObservableCollection<Crew> _crews = new ObservableCollection<Crew>();
+        public ObservableCollection<Crew> Crews
+        {
+            get { return _crews; }
+            set { _crews = value; OnPropertyChanged(); }
+        }
         #endregion Public Properties
 
         #region Private Variables
@@ -137,14 +143,8 @@ namespace Space_RPG
                 Name = name,
                 Job = job,
                 Hunger = 90,
-                Money = 500,
-                skills = new Crew.Skills()
-                {
-                    Pilot = pilot,
-                    EngineRepair = engineRepair,
-                    WeaponsRepair = weaponsRepair,
-                    Aiming = aiming,
-                },
+                Cash = 500,
+                Skills = new Crew.skills()
             };
 
             Crews.Add(newCrew);
@@ -156,13 +156,13 @@ namespace Space_RPG
                 Name = "Paul",
                 Job = Crew.CrewJob.Captain,
                 Hunger = 100,
-                Money = 100000,
-                skills = new Crew.Skills()
+                Cash = 100000,
+                Skills = new Crew.skills()
                 {
-                    Pilot = 90,
+                    Piloting = 90,
+                    Aiming = 90,
                     EngineRepair = 90,
                     WeaponsRepair = 90,
-                    Aiming = 90,
                 },
             };
             Crews.Add(newCrew);

@@ -45,6 +45,13 @@ namespace Space_RPG.ViewModel
             set { _command = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<string> _log = new ObservableCollection<string>();
+        public ObservableCollection<string> Log
+        {
+            get { return _log; }
+            set { _log = value; OnPropertyChanged(); }
+        }
+
         BackgroundWorker _bgwUpdate;
 
         public MainVM()

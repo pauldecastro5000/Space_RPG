@@ -27,6 +27,7 @@ namespace Space_RPG
         public static ShipManager Ship = new ShipManager();
         public static StorageManager Storage = new StorageManager();
         public static Utilities Util = new Utilities();
+        public static CommandManager Command = new CommandManager();
         
 
         public static MainVM mainVm = new MainVM();
@@ -47,10 +48,10 @@ namespace Space_RPG
 
             Crew.AddCaptain();
             // generate crews
-            for (int i = 0; i < 3; i++)
-            {
-                Crew.AddRandomCrew();
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    Crew.AddRandomCrew();
+            //}
 
             // Initialize my ship
             mainVm.MyShip = Ship.Ships.First();
@@ -68,15 +69,42 @@ namespace Space_RPG
             mainVm.MyShip.Weapons[1].Health -= 1;
             mainVm.MyShip.Food -= 1;
             mainVm.MyShip.Engine -= 1;
+            mainVm.Log.Add("test 123" + DateTime.Now.ToString("mm-ss"));
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                MessageBox.Show(mainVm.Command);
+               Command.ProcessCommand(mainVm.Command);
             }
            
+        }
+        private Boolean AutoScroll = true;
+
+        private void scrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            // User scroll event : set or unset auto-scroll mode
+            if (e.ExtentHeightChange == 0)
+            {   // Content unchanged : user scroll event
+                if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
+                {   // Scroll bar is in bottom
+                    // Set auto-scroll mode
+                    AutoScroll = true;
+                }
+                else
+                {   // Scroll bar isn't in bottom
+                    // Unset auto-scroll mode
+                    AutoScroll = false;
+                }
+            }
+
+            // Content scroll event : auto-scroll eventually
+            if (AutoScroll && e.ExtentHeightChange != 0)
+            {   // Content changed and auto-scroll mode set
+                // Autoscroll
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.ExtentHeight);
+            }
         }
     }
 }

@@ -107,6 +107,7 @@ namespace Space_RPG
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
         private double hungerRatio = 0.125;
+        private Crew _applicant;
         #endregion Private Variables
 
         #region Constructor
@@ -125,7 +126,31 @@ namespace Space_RPG
         #endregion Constructor
 
         #region Public Methods
-        public void AddRandomCrew()
+        //public void AddRandomCrew()
+        //{
+        //    var name = String.Empty;
+        //    do
+        //    {
+        //        name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
+        //    } while (CrewNameExist(name));
+        //    var aiming = RandomNumber(0, 100);
+        //    var pilot = RandomNumber(0, 100);
+        //    var engineRepair = RandomNumber(0, 100);
+        //    var weaponsRepair = RandomNumber(0, 100);
+        //    var job = (Crew.CrewJob)RandomNumber(1, 3);
+
+        //    var newCrew = new Crew()
+        //    {
+        //        Name = name,
+        //        Job = job,
+        //        Hunger = 90,
+        //        Cash = 500,
+        //        Skills = new Crew.skills()
+        //    };
+
+        //    Crews.Add(newCrew);
+        //}
+        public void FindApplicant()
         {
             var name = String.Empty;
             do
@@ -133,21 +158,26 @@ namespace Space_RPG
                 name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
             } while (CrewNameExist(name));
             var aiming = RandomNumber(0, 100);
-            var pilot = RandomNumber(0, 100);
+            var piloting = RandomNumber(0, 100);
             var engineRepair = RandomNumber(0, 100);
             var weaponsRepair = RandomNumber(0, 100);
-            var job = (Crew.CrewJob)RandomNumber(1, 3);
+            var job = Crew.CrewJob.None;
 
             var newCrew = new Crew()
             {
                 Name = name,
                 Job = job,
-                Hunger = 90,
+                Hunger = 100,
                 Cash = 500,
-                Skills = new Crew.skills()
+                Skills = new Crew.skills() {
+                    Piloting = piloting,
+                    Aiming = aiming, 
+                    EngineRepair = engineRepair, 
+                    WeaponsRepair = weaponsRepair 
+                } 
             };
 
-            Crews.Add(newCrew);
+            _applicant = newCrew;
         }
         public void AddCaptain()
         {

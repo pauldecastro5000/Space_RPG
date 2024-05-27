@@ -53,7 +53,17 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
-
+                <ScrollViewer ScrollChanged="scrollChanged" Name="scrollViewer">
+                    <ItemsControl ItemsSource="{Binding Log}"
+                                  Style="{StaticResource Basic}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"
+                                           Foreground="White" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
                 <TextBox Grid.Row="1"
                          Background="Black"
                          KeyDown="OnKeyDownHandler"

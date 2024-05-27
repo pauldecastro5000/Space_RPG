@@ -69,14 +69,15 @@ namespace Space_RPG
             mainVm.MyShip.Weapons[1].Health -= 1;
             mainVm.MyShip.Food -= 1;
             mainVm.MyShip.Engine -= 1;
-            mainVm.Log.Add("test 123" + DateTime.Now.ToString("mm-ss"));
+            //mainVm.Log.Add("test 123" + DateTime.Now.ToString("mm-ss"));
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-               Command.ProcessCommand(mainVm.Command);
+                Command.ProcessCommand(mainVm.Command);
+                mainVm.Command = "";
             }
            
         }

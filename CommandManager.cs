@@ -35,11 +35,12 @@ namespace Space_RPG
 
                 case CommandType.Hiring:
                     MainWindow.Crew.FindApplicant();
-
+                    MainWindow.Crew.DisplayApplicant();
                     break;
 
                 case CommandType.Hire:
-
+                    var name = command.Split(' ').Last();
+                    MainWindow.Crew.HireApplicant(name);
                     break;
             }
 

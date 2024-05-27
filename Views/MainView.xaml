@@ -31,7 +31,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel>
                     <TextBlock Text="Cash"
-                               Style="{StaticResource Body}" />
+                               Style="{StaticResource baseStyle}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="{Binding MyCaptain.Cash, StringFormat='{}{0:C}'}"
@@ -41,7 +41,9 @@
                 <StackPanel Grid.Row="1"
                             Orientation="Vertical">
                     <TextBlock Text="Location"
-                               Style="{StaticResource Body}" />
+                               Style="{StaticResource baseStyle}" />
+                    <TextBlock Text="Planet Type"
+                               Style="{StaticResource baseStyle}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1"
                             Grid.Column="1">

@@ -179,6 +179,26 @@ namespace Space_RPG
 
             _applicant = newCrew;
         }
+        public void DisplayApplicant()
+        {
+            Log("Name: " + _applicant.Name);
+            Log("Piloting: " + _applicant.Skills.Piloting);
+            Log("Aiming: " + _applicant.Skills.Aiming);
+            Log("EngineRepair: " + _applicant.Skills.EngineRepair);
+            Log("WeaponsRepair: " + _applicant.Skills.WeaponsRepair);
+            Log("");
+        }
+        public void HireApplicant(string name)
+        {
+            if (name.ToUpper() == _applicant.Name.ToUpper())
+            {
+                Crews.Add(_applicant);
+            }
+            else
+            {
+                Log("No applicant with that name...");
+            }
+        }
         public void AddCaptain()
         {
             var newCrew = new Crew()
@@ -218,6 +238,10 @@ namespace Space_RPG
             { // synchronize
                 return random.Next(min, max);
             }
+        }
+        private void Log(string message)
+        {
+            MainWindow.mainVm.Log.Add(message);
         }
         #endregion Private Methods
     }

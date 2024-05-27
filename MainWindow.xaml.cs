@@ -54,6 +54,7 @@ namespace Space_RPG
             mainVm.MyShip = Ship.Ships.First();
 
             mainVm.CrewManager = Crew;
+            mainVm.MyCaptain = mainVm.CrewManager.Crews.First();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)

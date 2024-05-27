@@ -38,6 +38,13 @@ namespace Space_RPG.ViewModel
             set { _crewManager = value; OnPropertyChanged(); }
         }
 
+        private string _command;
+        public string Command
+        {
+            get { return _command; }
+            set { _command = value; OnPropertyChanged(); }
+        }
+
         BackgroundWorker _bgwUpdate;
 
         public MainVM()

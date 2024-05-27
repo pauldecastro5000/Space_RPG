@@ -41,15 +41,25 @@
         <!-- BOTTOM LEFT -->
         <Border Grid.Row="1"
                 Grid.Column="0">
-            <Button Content="Test" Click="btnTest_Click" />
+            <Button Content="Test"
+                    Click="btnTest_Click" />
         </Border>
 
         <!-- BOTTOM MIDDLE -->
         <Border Grid.Row="1"
                 Grid.Column="1">
-            <TextBlock Text="test"
-                       FontSize="18"
-                       Foreground="LightGray" />
+            <Grid Margin="0,0,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+
+                <TextBox Grid.Row="1"
+                         Background="Black"
+                         KeyDown="OnKeyDownHandler"
+                         Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Foreground="White" />
+            </Grid>
         </Border>
 
         <!-- BOTTOM RIGHT -->

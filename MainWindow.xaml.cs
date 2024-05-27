@@ -69,5 +69,14 @@ namespace Space_RPG
             mainVm.MyShip.Food -= 1;
             mainVm.MyShip.Engine -= 1;
         }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                MessageBox.Show(mainVm.Command);
+            }
+           
+        }
     }
 }

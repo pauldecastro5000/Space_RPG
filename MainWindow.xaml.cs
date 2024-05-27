@@ -50,17 +50,19 @@ namespace Space_RPG
                 Crew.AddRandomCrew();
             }
 
-
-            // Initialize the ship
-
+            // Initialize my ship
+            mainVm.MyShip = Ship.Ships.First();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            //Crew.Crews[0].Hunger -= 1;
-            Ship.MyShip.Engine -= 10;
-            Crew.AddRandomCrew();
-            Ship.MyShip.Weapons[0].Health -= 1;
+            ////Crew.Crews[0].Hunger -= 1;
+            //Ship.MyShip.Engine -= 10;
+            //Crew.AddRandomCrew();
+            //Ship.MyShip.Weapons[0].Health -= 1;
+            mainVm.MyShip.Weapons[1].Health -= 1;
+            mainVm.MyShip.Food -= 1;
+            mainVm.MyShip.Engine -= 1;
         }
     }
 }

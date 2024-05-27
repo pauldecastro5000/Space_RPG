@@ -17,6 +17,13 @@ namespace Space_RPG.ViewModel
 			set { _shipManager = value; OnPropertyChanged(); }
 		}
 
+        private Ship _myShip;
+        public Ship MyShip
+        {
+            get { return _myShip; }
+            set { _myShip = value; OnPropertyChanged(); }
+        }
+
         private CrewManager _crewManager;
         public CrewManager CrewManager
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace Space_RPG
 {
-    public class Ship
+    public class Ship : ViewModelBase
     {
         #region Public Members
         public enum state
@@ -20,11 +21,37 @@ namespace Space_RPG
         #endregion Public Members
 
         #region Public Properties
-        public int Engine { get; set; }
-        public List<Weapon> Weapons { get; set; }
-        public state State { get; set; }
-        public Point Location { get; set; }
-        public int Food { get; set; }
+        private int _engine;
+        public int Engine
+        {
+            get { return _engine; }
+            set { _engine = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<Weapon> _weapons;
+        public ObservableCollection<Weapon> Weapons
+        {
+            get { return _weapons; }
+            set { _weapons = value; OnPropertyChanged(); }
+        }
+        private state _state;
+        public state State
+        {
+            get { return _state; }
+            set { _state = value; OnPropertyChanged(); }
+        }
+        private Point _location;
+        public Point Location
+        {
+            get { return _location; }
+            set { _location = value; OnPropertyChanged(); }
+        }
+        private int _food;
+        public int Food
+        {
+            get { return _food; }
+            set { _food = value; OnPropertyChanged(); }
+        }
 
         #endregion Public Properties
 
@@ -33,11 +60,22 @@ namespace Space_RPG
         #endregion Public Methods
 
         #region Public Class
-        public class Weapon
+        public class Weapon : ViewModelBase
         {
             public string Name { get; set; } = "Weapon 1";
-            public int Health { get; set; }
-            public int Damage { get; set; }
+
+            private int _health;
+            public int Health
+            {
+                get { return _health; }
+                set { _health = value; OnPropertyChanged(); }
+            }
+            private int _damage;
+            public int Damage
+            {
+                get { return _damage; }
+                set { _damage = value; OnPropertyChanged(); }
+            }
         }
         #endregion Public Class
 

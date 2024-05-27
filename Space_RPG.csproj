@@ -63,8 +63,8 @@
     <Compile Include="StorageManager.cs" />
     <Compile Include="UniverseTime.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\CrewListView.xaml.cs">
       <DependentUpon>CrewListView.xaml</DependentUpon>
     </Compile>

@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Space_RPG
 {
-    public class ShipManager
+    public class ShipManager : ViewModelBase
     {
         #region Public Properties
-        public Ship MyShip { get; set; }
+        private ObservableCollection<Ship> _ships = new ObservableCollection<Ship>();
+        public ObservableCollection<Ship> Ships
+        {
+            get { return _ships; }
+            set { _ships = value; OnPropertyChanged(); }
+        }
         #endregion Public Properties
 
         #region Constructor
@@ -21,25 +27,25 @@ namespace Space_RPG
         #region Public Methods
         public void CreateMyShip()
         {
-            var weapons = new List<Ship.Weapon>();
+            var weapons = new ObservableCollection<Ship.Weapon>();
 
             for (int i = 0; i < 3; i++)
             {
                 weapons.Add(new Ship.Weapon() { Damage = 10, Health = 100});
             }
 
-            MyShip = new Ship()
+            Ships.Add(new Ship()
             {
                 Engine = 1000,
-                Food = 1000,
-                Location = new System.Windows.Point(500, 500),
                 State = Ship.state.Hovering,
-                Weapons = weapons
-            };
+                Location = new System.Windows.Point(100, 100),
+                Weapons = weapons,
+                Food = 1000
+            });
         }
         public Ship GetMyShip()
         {
-            return MyShip;
+            return Ships[0];
         }
         #endregion Public Methods
     }

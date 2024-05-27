@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Space_RPG.ViewModel
+namespace Space_RPG
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -80,13 +80,18 @@ namespace Space_RPG
         #endregion Private Properties
 
         #region Public Methods
-        public void AssignCaptain(string name)
+        public void Assign(string name, string assignedTo)
         {
-            Captain = name;
-        }
-        public void AssignPilot(string name)
-        {
-            Pilot = name;
+            switch (assignedTo.ToUpper())
+            {
+                case "CAPTAIN":
+                    Captain = name;
+                    break;
+
+                case "PILOT":
+                    Pilot = name;
+                    break;
+            }
         }
         #endregion Public Methods
 

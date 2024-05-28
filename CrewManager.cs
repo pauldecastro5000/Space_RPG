@@ -217,7 +217,7 @@ namespace Space_RPG
             };
             Crews.Add(newCrew);
         }
-
+        
         #endregion Public Methods
 
         #region Private Methods

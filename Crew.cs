@@ -84,7 +84,10 @@ namespace Space_RPG
         {
             Hunger--;
         }
-
+        public Crew GetCrew()
+        {
+            return this;
+        }
         #endregion Public Methods
 
     }

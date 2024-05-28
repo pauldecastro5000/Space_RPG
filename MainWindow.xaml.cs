@@ -58,7 +58,7 @@ namespace Space_RPG
             mainVm.CurrentPlanet = Planet.Planets.First();
             var planetType = Planet.Planets.First().type;
             mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), planetType);
-            mainVm.MyShip.AssignCaptain(mainVm.MyCaptain.Name);
+            mainVm.MyShip.Assign(mainVm.MyCaptain.Name, "Captain");
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)

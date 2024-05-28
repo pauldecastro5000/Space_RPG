@@ -49,6 +49,32 @@ namespace Space_RPG
             newPlanet.Location = loc;
             Planets.Add(newPlanet);
         }
+        public void CreateColonizedPlanet()
+        {
+            var distBetweenPlanets = 20;
+            bool distOK = true;
+            var loc = new Point(0, 0);
+
+            do
+            {
+                loc = new Point(MainWindow.Util.RandomNumber(1, 1000), MainWindow.Util.RandomNumber(1, 1000));
+                distOK = true;
+                foreach (var planet in Planets)
+                {
+                    var dist = MainWindow.Util.Distance2Points(loc, planet.Location);
+                    if (dist < distBetweenPlanets)
+                    {
+                        distOK = false;
+                        break;
+                    }
+                }
+            } while (!distOK);
+
+            var newPlanet = new Planet();
+            newPlanet.type = Planet.Type.Colonized;
+            newPlanet.Location = loc;
+            Planets.Add(newPlanet);
+        }
         #endregion Public Methods
     }
 }

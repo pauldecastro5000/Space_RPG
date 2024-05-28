@@ -15,7 +15,8 @@ namespace Space_RPG
         {
             None,
             Docked,
-            Flying,
+            Landed,
+            Warping,
             Hovering
         }
         #endregion Public Members
@@ -26,6 +27,25 @@ namespace Space_RPG
         {
             get { return _engine; }
             set { _engine = value; OnPropertyChanged(); }
+        }
+        private string _captain;
+        public string Captain
+        {
+            get { return _captain; }
+            set { _captain = value; OnPropertyChanged(); }
+        }
+
+        private string _pilot = "None";
+        public string Pilot
+        {
+            get { return _pilot; }
+            set { _pilot = value; OnPropertyChanged(); }
+        }
+        private double _pilotSkill;
+        public double PilotSkill
+        {
+            get { return _pilotSkill; }
+            set { _pilotSkill = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<Weapon> _weapons;
@@ -55,14 +75,36 @@ namespace Space_RPG
 
         #endregion Public Properties
 
-        #region Public Methods
+        #region Private Properties
 
+        #endregion Private Properties
+
+        #region Public Methods
+        public void AssignCaptain(string name)
+        {
+            Captain = name;
+        }
+        public void AssignPilot(string name)
+        {
+            Pilot = name;
+        }
         #endregion Public Methods
 
         #region Public Class
         public class Weapon : ViewModelBase
         {
-            public string Name { get; set; } = "Weapon 1";
+            private string _name = "Weapon 1";
+            public string Name
+            {
+                get { return _name; }
+                set { _name = value; OnPropertyChanged(); }
+            }
+            private string _gunner = "None";
+            public string Gunner
+            {
+                get { return _gunner; }
+                set { _gunner = value; OnPropertyChanged(); }
+            }
 
             private int _health;
             public int Health

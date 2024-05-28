@@ -41,8 +41,7 @@
         <!-- BOTTOM LEFT -->
         <Border Grid.Row="1"
                 Grid.Column="0">
-            <Button Content="Test"
-                    Click="btnTest_Click" />
+            <views:PlanetView />
         </Border>
 
         <!-- BOTTOM MIDDLE -->
@@ -53,7 +52,8 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
-                <ScrollViewer ScrollChanged="scrollChanged" Name="scrollViewer">
+                <ScrollViewer ScrollChanged="scrollChanged"
+                              Name="scrollViewer">
                     <ItemsControl ItemsSource="{Binding Log}"
                                   Style="{StaticResource Basic}">
                         <ItemsControl.ItemTemplate>
@@ -75,6 +75,10 @@
         <!-- BOTTOM RIGHT -->
         <Border Grid.Row="1"
                 Grid.Column="2">
+            <Button Content="Test"
+                    Click="btnTest_Click"
+                    Background="Black"
+                    Foreground="White" />
         </Border>
     </Grid>
 </Window>

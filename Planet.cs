@@ -10,11 +10,6 @@ namespace Space_RPG
 {
     public class Planet : ViewModelBase
     {
-        #region Private Variables
-        private static readonly Random random = new Random();
-        private static readonly object syncLock = new object();
-        #endregion Private Variables
-
         #region Enums
         public enum Type
         {
@@ -23,6 +18,11 @@ namespace Space_RPG
             Uncolonized
         }
         #endregion
+
+        #region Private Variables
+        private static readonly Random random = new Random();
+        private static readonly object syncLock = new object();
+        #endregion Private Variables
 
         #region Constructor
         public Planet()
@@ -44,7 +44,7 @@ namespace Space_RPG
             get { return _location; }
             set { _location = value; OnPropertyChanged(); }
         }
-        private Type _type;
+        private Type _type = Type.Unknown;
         public Type type
         {
             get { return _type; }

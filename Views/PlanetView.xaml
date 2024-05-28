@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="Space_RPG.Views.PlanetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Space_RPG.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="200"
+             Background="Black">
+    <Grid>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <TextBlock Text="PLANET"
+                       Style="{StaticResource Title}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                
+                <!-- LEFT -->
+                <StackPanel>
+                    <TextBlock Text="Type"
+                               Style="{StaticResource Body}" />
+                    <TextBlock Text="Location"
+                               Style="{StaticResource Body}" />
+                </StackPanel>
+                
+                <!-- RIGHT -->
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding PlanetType}"
+                               Style="{StaticResource BodyValue}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MyShip.Location.X, StringFormat='{}{0}, '}"
+                                   Style="{StaticResource BodyValue}" />
+                        <TextBlock Text="{Binding MyShip.Location.Y}"
+                                   Style="{StaticResource BodyValue}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <TextBlock Text="RESOURCES"
+                       Style="{StaticResource Title}"
+                       Margin="0,20,0,0" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- LEFT -->
+                <StackPanel>
+                    <TextBlock Text="Food"
+                               Style="{StaticResource Body}" />
+                    <TextBlock Text="Fuel"
+                               Style="{StaticResource Body}" />
+                </StackPanel>
+
+                <!-- RIGHT -->
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding CurrentPlanet.resources.Food}"
+                               Style="{StaticResource BodyValue}" />
+                    <TextBlock Text="{Binding CurrentPlanet.resources.Fuel}"
+                               Style="{StaticResource BodyValue}" />
+                </StackPanel>
+                
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

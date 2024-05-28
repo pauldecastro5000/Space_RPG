@@ -37,39 +37,35 @@ namespace Space_RPG
             InitializeComponent();
             DataContext = mainVm;
 
-            // Generate Planets
+            // Generate Planet
+            Planet.CreateColonizedPlanet();
             for (int i = 0; i < 100; i++)
             {
                 Planet.CreateRandomPlanet();
             }
 
-            Ship.loadPlanet(Planet.Planets[0]);
+            Ship.loadPlanet(Planet.Planets.First());
+
             Ship.CreateMyShip();
 
             Crew.AddCaptain();
-            // generate crews
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    Crew.AddRandomCrew();
-            //}
 
-            // Initialize my ship
+            // Initialize
             mainVm.MyShip = Ship.Ships.First();
-
             mainVm.CrewManager = Crew;
             mainVm.MyCaptain = mainVm.CrewManager.Crews.First();
+            mainVm.Planets = Planet.Planets;
+            mainVm.CurrentPlanet = Planet.Planets.First();
+            var planetType = Planet.Planets.First().type;
+            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), planetType);
+            mainVm.MyShip.AssignCaptain(mainVm.MyCaptain.Name);
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            ////Crew.Crews[0].Hunger -= 1;
-            //Ship.MyShip.Engine -= 10;
-            //Crew.AddRandomCrew();
-            //Ship.MyShip.Weapons[0].Health -= 1;
             mainVm.MyShip.Weapons[1].Health -= 1;
             mainVm.MyShip.Food -= 1;
             mainVm.MyShip.Engine -= 1;
-            //mainVm.Log.Add("test 123" + DateTime.Now.ToString("mm-ss"));
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

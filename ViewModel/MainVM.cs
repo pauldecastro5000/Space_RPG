@@ -52,6 +52,26 @@ namespace Space_RPG.ViewModel
             set { _log = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<Planet> _planets;
+        public ObservableCollection<Planet> Planets
+        {
+            get { return _planets; }
+            set { _planets = value; OnPropertyChanged(); }
+        }
+        private Planet _currentPlanet;
+        public Planet CurrentPlanet
+        {
+            get { return _currentPlanet; }
+            set { _currentPlanet = value; OnPropertyChanged(); }
+        }
+
+        private string _planetType;
+        public string PlanetType
+        {
+            get { return _planetType; }
+            set { _planetType = value; OnPropertyChanged(); }
+        }
+
         BackgroundWorker _bgwUpdate;
 
         public MainVM()
@@ -67,10 +87,10 @@ namespace Space_RPG.ViewModel
             ShipManager = MainWindow.Ship;
             CrewManager = MainWindow.Crew;
 
-            _bgwUpdate = new BackgroundWorker();
-            _bgwUpdate.WorkerSupportsCancellation = true;
-            _bgwUpdate.DoWork += _bgwUpdate_DoWork;
-            _bgwUpdate.RunWorkerAsync();
+            //_bgwUpdate = new BackgroundWorker();
+            //_bgwUpdate.WorkerSupportsCancellation = true;
+            //_bgwUpdate.DoWork += _bgwUpdate_DoWork;
+            //_bgwUpdate.RunWorkerAsync();
         }
 
         private void _bgwUpdate_DoWork(object sender, DoWorkEventArgs e)

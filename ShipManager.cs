@@ -48,6 +48,15 @@ namespace Space_RPG
                 Food = 1000
             });
         }
+        public void AssignMyPilot(Crew crew)
+        {
+            Ships.First().Pilot = crew.Name;
+            Ships.First().PilotSkill = crew.Skills.Piloting;
+        }
+        public void AssignMyCaptain(Crew crew)
+        {
+            Ships.First().Captain = crew.Name;
+        }
         public void loadPlanet(Planet planet)
         {
             _planet = planet;

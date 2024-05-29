@@ -211,6 +211,13 @@ namespace Space_RPG
                 return false;
             }
         }
+        public void RemoveApplicant(Crew crew)
+        {
+            if (crew.Name == _applicant.Name)
+            {
+                _applicant = null;
+            }
+        }
         public void AddCaptain()
         {
             var newCrew = new Crew()

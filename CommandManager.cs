@@ -49,6 +49,7 @@ namespace Space_RPG
                         return false;
 
                     MainWindow.mainVm.MyShip.HireApplicant(crew);
+                    MainWindow.Crew.RemoveApplicant(crew);
                     break;
             }
             return true;

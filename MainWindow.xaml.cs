@@ -57,14 +57,18 @@ namespace Space_RPG
             // Initialize planets
             mainVm.Planets = Planet.Planets;                 // assign planets
             mainVm.CurrentPlanet = Planet.Planets.First();   // load first planet as my current planet
-            var planetType = Planet.Planets.First().type;    
-            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), planetType);
+
+            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), 
+                Planet.Planets.First().type);
+            mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+                mainVm.MyShip.engine.State);
+            
             UniverseTime.TimeStart();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            mainVm.MyShip.Weapons[1].Health -= 1;
+            mainVm.MyShip.Weapons[1].CurrentHealth -= 1;
             mainVm.MyShip.Food -= 1;
             mainVm.MyShip.engine.Health -= 1;
         }

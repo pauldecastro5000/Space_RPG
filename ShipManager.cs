@@ -49,12 +49,20 @@ namespace Space_RPG
 
             for (int i = 0; i < 3; i++)
             {
-                weapons.Add(new Ship.Weapon() { Damage = 10, Health = 100});
+                weapons.Add(new Ship.Weapon() { 
+                    Damage = 10, 
+                    MaxHealth = 100,
+                    CurrentHealth = 100,
+                });
             }
 
             Ships.Add(new Ship()
             {
-                engine = new Ship.Engine() { Health = 1000 , Fuel = 1000 , State = Ship.Engine.state.Off },
+                engine = new Ship.Engine() { 
+                    Health = 1000, 
+                    MaxFuel = 1000, 
+                    State = Ship.Engine.state.Off 
+                },
                 State = Ship.state.Docked,
                 Location = _planet.Location,
                 Weapons = weapons,

@@ -72,6 +72,13 @@ namespace Space_RPG.ViewModel
             set { _planetType = value; OnPropertyChanged(); }
         }
 
+        private string _engineState;
+        public string EngineState
+        {
+            get { return _engineState; }
+            set { _engineState = value; OnPropertyChanged(); }
+        }
+
         BackgroundWorker _bgwUpdate;
 
         public MainVM()

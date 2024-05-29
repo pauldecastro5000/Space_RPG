@@ -29,7 +29,14 @@
         <!-- TOP MIDDLE -->
         <Border Grid.Row="0"
                 Grid.Column="1">
-            <views:MainView />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <views:MainView />
+                <views:CockpitView Grid.Row="1"/>
+            </Grid>
         </Border>
 
         <!-- TOP RIGHT -->

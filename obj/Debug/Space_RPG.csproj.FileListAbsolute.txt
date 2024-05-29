@@ -63,3 +63,7 @@ C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Views\Pla
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Views\PlanetView.baml
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Views\CockpitView.g.cs
 C:\Users\paul.andrew\Documents\Paul\Git Repos Paul\Space_RPG\obj\Debug\Views\CockpitView.baml
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\CockpitView.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\PlanetView.g.cs
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\CockpitView.baml
+C:\Users\Paul\Documents\Git Repos\Space_RPG\obj\Debug\Views\PlanetView.baml

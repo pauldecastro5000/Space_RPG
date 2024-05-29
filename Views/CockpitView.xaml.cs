@@ -23,6 +23,7 @@ namespace Space_RPG.Views
         public CockpitView()
         {
             InitializeComponent();
+            DataContext = MainWindow.mainVm;
         }
     }
 }

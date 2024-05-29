@@ -147,19 +147,27 @@ namespace Space_RPG
                 get { return _name; }
                 set { _name = value; OnPropertyChanged(); }
             }
-            private string _gunner = "None";
-            public string Gunner
+            private Crew _gunner;
+            public Crew Gunner
             {
                 get { return _gunner; }
                 set { _gunner = value; OnPropertyChanged(); }
             }
 
-            private int _health;
-            public int Health
+            private int _maxHealth = 1000;
+            public int MaxHealth
             {
-                get { return _health; }
-                set { _health = value; OnPropertyChanged(); }
+                get { return _maxHealth; }
+                set { _maxHealth = value; OnPropertyChanged(); }
             }
+            private int _currentHealth;
+            public int CurrentHealth
+            {
+                get { return _currentHealth; }
+                set { _currentHealth = value; OnPropertyChanged(); }
+            }
+            public double HealthPercent => CurrentHealth / MaxHealth;
+
             private int _damage;
             public int Damage
             {
@@ -184,12 +192,19 @@ namespace Space_RPG
                 get { return _health; }
                 set { _health = value; OnPropertyChanged(); }
             }
-            private int _fuel;
-            public int Fuel
+            private int _maxFuel = 1000;
+            public int MaxFuel
             {
-                get { return _fuel; }
-                set { _fuel = value; OnPropertyChanged(); }
+                get { return _maxFuel; }
+                set { _maxFuel = value; OnPropertyChanged(); }
             }
+            private int _currFuel = 1000;
+            public int CurrentFuel
+            {
+                get { return _currFuel; }
+                set { _currFuel = value; OnPropertyChanged(); }
+            }
+            public double FuelPercent => _currFuel / _maxFuel;
 
             private state _state = state.Unknown;
             public state State

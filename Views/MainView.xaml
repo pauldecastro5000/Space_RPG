@@ -34,7 +34,7 @@
                                Style="{StaticResource baseStyle}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding MyCaptain.Cash, StringFormat='{}{0:C}'}"
+                    <TextBlock Text="{Binding MyShip.Captain.Cash, StringFormat='{}{0:C}'}"
                                Style="{StaticResource BodyValue}" />
                 </StackPanel>
             </Grid>

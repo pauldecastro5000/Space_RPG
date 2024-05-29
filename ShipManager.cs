@@ -31,6 +31,9 @@ namespace Space_RPG
 
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
+            if (MainWindow.mainVm.MyShip.Crews == null || MainWindow.mainVm.MyShip.Crews.Count == 0)
+                return;
+
             double hungerRatio = 0.125;
             foreach (Crew c in MainWindow.mainVm.MyShip.Crews)
             {
@@ -51,7 +54,7 @@ namespace Space_RPG
 
             Ships.Add(new Ship()
             {
-                Engine = 1000,
+                engine = new Ship.Engine() { Health = 1000 , Fuel = 1000 , State = Ship.Engine.state.Off },
                 State = Ship.state.Docked,
                 Location = _planet.Location,
                 Weapons = weapons,

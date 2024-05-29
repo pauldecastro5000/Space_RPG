@@ -66,6 +66,9 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
+    <Compile Include="Views\CockpitView.xaml.cs">
+      <DependentUpon>CockpitView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CrewListView.xaml.cs">
       <DependentUpon>CrewListView.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CockpitView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CrewListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

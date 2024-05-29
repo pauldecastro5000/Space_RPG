@@ -23,8 +23,8 @@ namespace Space_RPG
         #endregion Public Members
 
         #region Public Properties
-        private int _engine;
-        public int Engine
+        private Engine _engine;
+        public Engine engine
         {
             get { return _engine; }
             set { _engine = value; OnPropertyChanged(); }
@@ -42,12 +42,6 @@ namespace Space_RPG
             get { return _pilot; }
             set { _pilot = value; OnPropertyChanged(); }
         }
-        //private double _pilotSkill;
-        //public double PilotSkill
-        //{
-        //    get { return _pilotSkill; }
-        //    set { _pilotSkill = value; OnPropertyChanged(); }
-        //}
 
         private ObservableCollection<Weapon> _weapons;
         public ObservableCollection<Weapon> Weapons
@@ -172,6 +166,38 @@ namespace Space_RPG
                 get { return _damage; }
                 set { _damage = value; OnPropertyChanged(); }
             }
+        }
+
+        public class Engine : ViewModelBase
+        {
+            public enum state
+            {
+                Unknown,
+                On,
+                Off,
+                Jammed
+            }
+
+            private int _health = 0;
+            public int Health
+            {
+                get { return _health; }
+                set { _health = value; OnPropertyChanged(); }
+            }
+            private int _fuel;
+            public int Fuel
+            {
+                get { return _fuel; }
+                set { _fuel = value; OnPropertyChanged(); }
+            }
+
+            private state _state = state.Unknown;
+            public state State
+            {
+                get { return _state; }
+                set { _state = value; OnPropertyChanged(); }
+            }
+
         }
         #endregion Public Class
 

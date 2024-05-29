@@ -59,14 +59,14 @@ namespace Space_RPG
             mainVm.CurrentPlanet = Planet.Planets.First();   // load first planet as my current planet
             var planetType = Planet.Planets.First().type;    
             mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), planetType);
-
+            UniverseTime.TimeStart();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
             mainVm.MyShip.Weapons[1].Health -= 1;
             mainVm.MyShip.Food -= 1;
-            mainVm.MyShip.Engine -= 1;
+            mainVm.MyShip.engine.Health -= 1;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

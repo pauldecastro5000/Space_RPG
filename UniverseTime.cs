@@ -29,7 +29,6 @@ namespace Space_RPG
             _bgwUniverseTime.WorkerSupportsCancellation = true;
             _bgwUniverseTime.DoWork += _bgwUniverseTime_DoWork;
             _bgwUniverseTime.RunWorkerAsync();
-            TimeRunning = true;
         }
         #endregion Constructor
 

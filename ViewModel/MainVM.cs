@@ -10,12 +10,12 @@ namespace Space_RPG.ViewModel
 {
     public class MainVM :ViewModelBase
     {
-		private ShipManager _shipManager;
-		public ShipManager ShipManager
-		{
-			get { return _shipManager; }
-			set { _shipManager = value; OnPropertyChanged(); }
-		}
+		//private ShipManager _shipManager;
+		//public ShipManager ShipManager
+		//{
+		//	get { return _shipManager; }
+		//	set { _shipManager = value; OnPropertyChanged(); }
+		//}
 
         private Ship _myShip;
         public Ship MyShip
@@ -24,12 +24,12 @@ namespace Space_RPG.ViewModel
             set { _myShip = value; OnPropertyChanged(); }
         }
 
-        private Crew _myCaptain;
-        public Crew MyCaptain
-        {
-            get { return _myCaptain; }
-            set { _myCaptain = value; OnPropertyChanged(); }
-        }
+        //private Crew _myCaptain;
+        //public Crew MyCaptain
+        //{
+        //    get { return _myCaptain; }
+        //    set { _myCaptain = value; OnPropertyChanged(); }
+        //}
 
         private CrewManager _crewManager;
         public CrewManager CrewManager
@@ -76,15 +76,6 @@ namespace Space_RPG.ViewModel
 
         public MainVM()
         {
-            //ShipManager = new ShipManager()
-            //{
-            //    Ship = 100,
-            //    Weapons = 100,
-            //    Engine = 100,
-            //    Food = 100
-            //};
-
-            ShipManager = MainWindow.Ship;
             CrewManager = MainWindow.Crew;
 
             //_bgwUpdate = new BackgroundWorker();

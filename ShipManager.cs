@@ -26,6 +26,16 @@ namespace Space_RPG
         #region Constructor
         public ShipManager()
         {
+            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+        }
+
+        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        {
+            double hungerRatio = 0.125;
+            foreach (Crew c in MainWindow.mainVm.MyShip.Crews)
+            {
+                c.Hunger -= hungerRatio;
+            }
         }
         #endregion Constructor
 
@@ -50,12 +60,12 @@ namespace Space_RPG
         }
         public void AssignMyPilot(Crew crew)
         {
-            Ships.First().Pilot = crew.Name;
-            Ships.First().PilotSkill = crew.Skills.Piloting;
+            //Ships.First().Pilot = crew.Name;
+            //Ships.First().PilotSkill = crew.Skills.Piloting;
         }
         public void AssignMyCaptain(Crew crew)
         {
-            Ships.First().Captain = crew.Name;
+            //Ships.First().Captain = crew.Name;
         }
         public void loadPlanet(Planet planet)
         {

@@ -50,15 +50,16 @@ namespace Space_RPG
 
             Crew.AddCaptain();
 
-            // Initialize
-            mainVm.MyShip = Ship.Ships.First();
-            mainVm.CrewManager = Crew;
-            mainVm.MyCaptain = mainVm.CrewManager.Crews.First();
-            mainVm.Planets = Planet.Planets;
-            mainVm.CurrentPlanet = Planet.Planets.First();
-            var planetType = Planet.Planets.First().type;
+            // Initialize my ship
+            mainVm.MyShip = Ship.Ships.First();              // load first ship as my ship
+            mainVm.MyShip.AddCaptain();                      // add caption to my ship
+            
+            // Initialize planets
+            mainVm.Planets = Planet.Planets;                 // assign planets
+            mainVm.CurrentPlanet = Planet.Planets.First();   // load first planet as my current planet
+            var planetType = Planet.Planets.First().type;    
             mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), planetType);
-            mainVm.MyShip.Assign(mainVm.MyCaptain.Name, "Captain");
+
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -72,11 +73,21 @@ namespace Space_RPG
         {
             if (e.Key == Key.Return)
             {
-                Command.ProcessCommand(mainVm.Command);
+                if (!Command.ProcessCommand(mainVm.Command, out string err))
+                {
+                    Log($"Command: [{mainVm.Command}] returns error.");
+                    Log($"ERROR: {err}");
+                }
                 mainVm.Command = "";
             }
            
         }
+
+        private void Log(string message)
+        {
+            MainWindow.mainVm.Log.Add(message);
+        }
+
         private Boolean AutoScroll = true;
 
         private void scrollChanged(object sender, ScrollChangedEventArgs e)

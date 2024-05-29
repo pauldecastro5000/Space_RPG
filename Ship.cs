@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace Space_RPG
 {
@@ -28,25 +29,25 @@ namespace Space_RPG
             get { return _engine; }
             set { _engine = value; OnPropertyChanged(); }
         }
-        private string _captain;
-        public string Captain
+        private Crew _captain;
+        public Crew Captain
         {
             get { return _captain; }
             set { _captain = value; OnPropertyChanged(); }
         }
 
-        private string _pilot = "None";
-        public string Pilot
+        private Crew _pilot;
+        public Crew Pilot
         {
             get { return _pilot; }
             set { _pilot = value; OnPropertyChanged(); }
         }
-        private double _pilotSkill;
-        public double PilotSkill
-        {
-            get { return _pilotSkill; }
-            set { _pilotSkill = value; OnPropertyChanged(); }
-        }
+        //private double _pilotSkill;
+        //public double PilotSkill
+        //{
+        //    get { return _pilotSkill; }
+        //    set { _pilotSkill = value; OnPropertyChanged(); }
+        //}
 
         private ObservableCollection<Weapon> _weapons;
         public ObservableCollection<Weapon> Weapons
@@ -73,6 +74,12 @@ namespace Space_RPG
             set { _food = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<Crew> _crews = new ObservableCollection<Crew>();
+        public ObservableCollection<Crew> Crews
+        {
+            get { return _crews; }
+            set { _crews = value; OnPropertyChanged(); }
+        }
         #endregion Public Properties
 
         #region Private Properties
@@ -80,18 +87,60 @@ namespace Space_RPG
         #endregion Private Properties
 
         #region Public Methods
-        public void Assign(string name, string assignedTo)
+        public bool Assign(string name, string crewJob, out string err)
         {
-            switch (assignedTo.ToUpper())
+            if (Crews.Count == 0)
             {
-                case "CAPTAIN":
-                    Captain = name;
-                    break;
-
-                case "PILOT":
-                    Pilot = name;
-                    break;
+                err = "You have to crew";
+                return false;
             }
+            err = "";
+            var crew = Crews.FirstOrDefault(x => x.Name.ToUpper() == name.ToUpper());
+            if (crew != null)
+            {
+                switch (crewJob.ToUpper())
+                {
+                    case "CAPTAIN":
+                        Captain = crew;
+                        break;
+
+                    case "PILOT":
+                        Pilot = crew;
+                        break;
+                    default:
+                        err = $"Job {crewJob} is not a known job";
+                        return false;
+                }
+                return true;
+            }
+            else
+            {
+                err = $"{name} is not one of the crew member";
+                return false;
+            }
+        }
+        public void AddCaptain()
+        {
+            var newCrew = new Crew()
+            {
+                Name = "Paul",
+                Job = Crew.CrewJob.Captain,
+                Hunger = 100,
+                Cash = 100000,
+                Skills = new Crew.skills()
+                {
+                    Piloting = 90,
+                    Aiming = 90,
+                    EngineRepair = 90,
+                    WeaponsRepair = 90,
+                },
+            };
+            Captain = newCrew;
+            Crews.Add(newCrew);
+        }
+        public void HireApplicant(Crew crew)
+        {
+            Crews.Add(crew);
         }
         #endregion Public Methods
 

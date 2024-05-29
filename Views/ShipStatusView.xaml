@@ -89,9 +89,9 @@
                 
                 <!-- RIGHT -->
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding MyShip.Captain}"
+                    <TextBlock Text="{Binding MyShip.Captain.Name}"
                                Style="{StaticResource BodyValue}" />
-                    <TextBlock Text="{Binding MyShip.Pilot}"
+                    <TextBlock Text="{Binding MyShip.Pilot.Name}"
                                Style="{StaticResource BodyValue}" />
                     <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
                                   Style="{StaticResource Basic}">

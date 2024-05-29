@@ -106,22 +106,13 @@ namespace Space_RPG
         #region Private Variables
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
-        private double hungerRatio = 0.125;
         private Crew _applicant;
         #endregion Private Variables
 
         #region Constructor
         public CrewManager()
         {
-            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
-        }
 
-        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
-        {
-            foreach (Crew c in MainWindow.Crew.Crews)
-            {
-                c.Hunger -= hungerRatio;
-            }
         }
         #endregion Constructor
 
@@ -197,6 +188,27 @@ namespace Space_RPG
             else
             {
                 Log("No applicant with that name...");
+            }
+        }
+        public bool GetApplicant(string name, out Crew crew, out string err)
+        {
+            err = "";
+            crew = new Crew();
+            if (_applicant == null)
+            {
+                err = "There is no applicant";
+                return false;
+            }
+
+            if (name.ToUpper() == _applicant.Name.ToUpper())
+            {
+                crew = _applicant;
+                return true;
+            }
+            else
+            {
+                err = "No applicant with that name...";
+                return false;
             }
         }
         public void AddCaptain()

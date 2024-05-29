@@ -18,24 +18,24 @@ namespace Space_RPG
             Hire,       // hire
         }
         #region Public Methods
-        public void ProcessCommand(string command)
+        public bool ProcessCommand(string command, out string err)
         {
-            string err = "";
-            // Get the type of command
-            if (!GetType(command, out CommandType type, out err))
-            {
-                MessageBox.Show("Error Command: " + err);
-                return;
-            }
-
+            err = "";
             string name = "";
             string assignedTo = "";
-            
+
+            // Get the type of command
+            if (!GetType(command, out CommandType type, out err))
+                return false;
+
             switch (type)
             {
                 case CommandType.Assignment:
-                    GetAssignment(command, out name, out assignedTo, out err);
-                    MainWindow.mainVm.MyShip.Assign(name, assignedTo);
+                    if (!GetAssignment(command, out name, out assignedTo, out err))
+                        return false;
+
+                    if (!MainWindow.mainVm.MyShip.Assign(name, assignedTo, out err))
+                        return false;
                     break;
 
                 case CommandType.Hiring:
@@ -45,10 +45,13 @@ namespace Space_RPG
 
                 case CommandType.Hire:
                     name = command.Split(' ').Last();
-                    MainWindow.Crew.HireApplicant(name);
+                    if (!MainWindow.Crew.GetApplicant(name, out Crew crew, out err))
+                        return false;
+
+                    MainWindow.mainVm.MyShip.HireApplicant(crew);
                     break;
             }
-
+            return true;
         }
         #endregion Public Methods
 

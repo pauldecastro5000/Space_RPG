@@ -85,23 +85,37 @@ namespace Space_RPG
         {
             if (Crews.Count == 0)
             {
-                err = "You have to crew";
+                err = "You have no crew";
                 return false;
             }
             err = "";
             var crew = Crews.FirstOrDefault(x => x.Name.ToUpper() == name.ToUpper());
+
             if (crew != null)
             {
                 switch (crewJob.ToUpper())
                 {
                     case "CAPTAIN":
+                        RemoveAssignment(crew);
                         Captain = crew;
                         break;
 
                     case "PILOT":
+                        RemoveAssignment(crew);
                         Pilot = crew;
                         break;
+
                     default:
+                        // check weapons names
+                        foreach (var weapon in Weapons)
+                        {
+                            if (crewJob.ToUpper() == weapon.Name.ToUpper())
+                            {
+                                RemoveAssignment(crew);
+                                weapon.Gunner = crew;
+                                return true;
+                            }
+                        }
                         err = $"Job {crewJob} is not a known job";
                         return false;
                 }
@@ -138,10 +152,38 @@ namespace Space_RPG
         }
         #endregion Public Methods
 
+        #region Private Methods
+        private void RemoveAssignment(Crew crew)
+        {
+            // CAPTAIN
+            if (Captain?.Name == crew.Name)
+            {
+                Captain = null;
+                return;
+            }
+            // PILOT
+            if (Pilot?.Name == crew.Name)
+            {
+                Pilot = null;
+                return;
+            }
+            // WEAPONS
+            foreach (var weapon in Weapons)
+            {
+                if (weapon.Gunner?.Name == crew.Name)
+                { 
+                    weapon.Gunner = null;
+                    return;
+                }
+             
+            }
+        }
+        #endregion Private Methods
+
         #region Public Class
         public class Weapon : ViewModelBase
         {
-            private string _name = "Weapon 1";
+            private string _name = "Turret";
             public string Name
             {
                 get { return _name; }
@@ -160,19 +202,25 @@ namespace Space_RPG
                 get { return _maxHealth; }
                 set { _maxHealth = value; OnPropertyChanged(); }
             }
-            private int _currentHealth;
+            private int _currentHealth = 1000;
             public int CurrentHealth
             {
                 get { return _currentHealth; }
                 set { _currentHealth = value; OnPropertyChanged(); }
             }
-            public double HealthPercent => CurrentHealth / MaxHealth;
+            public double HealthPercent => (CurrentHealth / MaxHealth) * 100;
 
-            private int _damage;
+            private int _damage = 10;
             public int Damage
             {
                 get { return _damage; }
                 set { _damage = value; OnPropertyChanged(); }
+            }
+            private int _ammo = 1000;
+            public int Ammo
+            {
+                get { return _ammo; }
+                set { _ammo = value; OnPropertyChanged(); }
             }
         }
 
@@ -204,7 +252,7 @@ namespace Space_RPG
                 get { return _currFuel; }
                 set { _currFuel = value; OnPropertyChanged(); }
             }
-            public double FuelPercent => _currFuel / _maxFuel;
+            public double FuelPercent => (_currFuel / _maxFuel) * 100;
 
             private state _state = state.Unknown;
             public state State

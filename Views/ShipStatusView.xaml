@@ -97,7 +97,7 @@
                                   Style="{StaticResource Basic}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Gunner}" />
+                                <TextBlock Text="{Binding Gunner.Name}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

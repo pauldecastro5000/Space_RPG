@@ -9,41 +9,74 @@
              d:DesignWidth="600"
              Background="Black">
     <Grid Margin="10,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <!-- ENGINE STATE -->
-        <!--<Border Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2">
+        <!-- ROW SET 1 -->
+        <!-- left -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Engine State"
+                           Style="{StaticResource baseStyle}" />
+                <TextBlock Text="Engine Fuel"
+                           Style="{StaticResource baseStyle}" />
+            </StackPanel>
 
-        </Border>-->
-        <TextBlock Text="Engine State"
-                   Style="{StaticResource baseStyle}" />
-        <TextBlock Text="{Binding EngineState}"
-                   Grid.Column="1"
-                   Style="{StaticResource BodyValue}" />
+            <!-- right -->
+            <StackPanel Grid.Column="1"
+                        Margin="10,0,0,0">
+                <TextBlock Text="{Binding EngineState}"
+                           Style="{StaticResource BodyValue}" />
+                <TextBlock Text="{Binding MyShip.engine.FuelPercent, StringFormat='{}{0}%'}"
+                           Style="{StaticResource BodyValue}" />
+            </StackPanel>
+        </Grid>
 
-        <TextBlock Text="Engine Fuel"
-                   Grid.Row="1"
-                   Style="{StaticResource baseStyle}" />
-        <TextBlock Text="{Binding MyShip.engine.Fuel}"
-                   Grid.Row="1"
-                   Grid.Column="1"
-                   Style="{StaticResource BodyValue}" />
-
+        <!-- ROW SET 2 -->
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- left -->
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
+                              Style="{StaticResource Basic}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"
+                                           Style="{StaticResource baseStyle}" />
+                                <TextBlock Text="{Binding Ammo, StringFormat=' [{0}]'}"
+                                           Style="{StaticResource BodyValue}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <!-- right -->
+            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
+                              Style="{StaticResource Basic}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding HealthPercent, StringFormat='{}{0} %'}"
+                                           Style="{StaticResource baseStyle}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+      
+        
     </Grid>
 </UserControl>

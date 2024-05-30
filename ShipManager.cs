@@ -50,6 +50,7 @@ namespace Space_RPG
             for (int i = 0; i < 3; i++)
             {
                 weapons.Add(new Ship.Weapon() { 
+                    Name = $"Turret{i+1}",
                     Damage = 10, 
                     MaxHealth = 100,
                     CurrentHealth = 100,

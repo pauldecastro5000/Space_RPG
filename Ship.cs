@@ -116,7 +116,7 @@ namespace Space_RPG
                                 return true;
                             }
                         }
-                        err = $"Job {crewJob} is not a known job";
+                        err = $"Job {crewJob} is not a known job or assignment";
                         return false;
                 }
                 return true;
@@ -175,7 +175,6 @@ namespace Space_RPG
                     weapon.Gunner = null;
                     return;
                 }
-             
             }
         }
         #endregion Private Methods

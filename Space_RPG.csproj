@@ -62,6 +62,7 @@
     <Compile Include="Ship.cs" />
     <Compile Include="ShipManager.cs" />
     <Compile Include="StorageManager.cs" />
+    <Compile Include="TaskManager.cs" />
     <Compile Include="UniverseTime.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ViewModelBase.cs" />

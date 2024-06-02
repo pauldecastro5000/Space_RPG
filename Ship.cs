@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Space_RPG.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Xml.Linq;
 
 namespace Space_RPG
@@ -77,7 +79,9 @@ namespace Space_RPG
         #endregion Public Properties
 
         #region Private Properties
-
+        private static object _lockCommands = new object();
+        public int OrderId { get; set; } = 0;
+        private List<Order> _CaptainsOrders = new List<Order>();
         #endregion Private Properties
 
         #region Public Methods
@@ -93,15 +97,22 @@ namespace Space_RPG
 
             if (crew != null)
             {
+                if (!crew.Alive)
+                {
+                    err = $"{crew.Name} is no longer alive";
+                    return false;
+                }
                 switch (crewJob.ToUpper())
                 {
                     case "CAPTAIN":
                         RemoveAssignment(crew);
+                        crew.Job = Crew.CrewJob.Captain;
                         Captain = crew;
                         break;
 
                     case "PILOT":
                         RemoveAssignment(crew);
+                        crew.Job = Crew.CrewJob.Pilot;
                         Pilot = crew;
                         break;
 
@@ -116,7 +127,7 @@ namespace Space_RPG
                                 return true;
                             }
                         }
-                        err = $"Job {crewJob} is not a known job or assignment";
+                        err = $"Job {crewJob} is not a known designation";
                         return false;
                 }
                 return true;
@@ -150,10 +161,7 @@ namespace Space_RPG
         {
             Crews.Add(crew);
         }
-        #endregion Public Methods
-
-        #region Private Methods
-        private void RemoveAssignment(Crew crew)
+        public void RemoveAssignment(Crew crew)
         {
             // CAPTAIN
             if (Captain?.Name == crew.Name)
@@ -171,12 +179,68 @@ namespace Space_RPG
             foreach (var weapon in Weapons)
             {
                 if (weapon.Gunner?.Name == crew.Name)
-                { 
+                {
                     weapon.Gunner = null;
                     return;
                 }
             }
         }
+        public void StartEngine()
+        {
+            engine.State = Engine.state.On;
+            MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+                                                         MainWindow.mainVm.MyShip.engine.State);
+        }
+        public void TaskDone(int taskId)
+        {
+            lock (_lockCommands)
+            {
+                _CaptainsOrders.RemoveAll(x => x.Id == taskId);
+            }
+        }
+        public void ShutOffEngine()
+        {
+            engine.State = Engine.state.Off;
+            MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+                                                         MainWindow.mainVm.MyShip.engine.State);
+        }
+        public void AddCrewTask(Crew.CrewJob job, string command)
+        {
+            lock (_lockCommands)
+            {
+                _CaptainsOrders.Add(new Order()
+                {
+                    Id = OrderId,
+                    Job = job,
+                    Command = command
+
+                });
+                OrderId++;
+            }
+        }
+        public void RemoveCrewTask(int Id)
+        {
+            lock (_lockCommands)
+            {
+                _CaptainsOrders.RemoveAll(x => x.Id == Id);
+            }
+        }
+        public string GetCrewTask(Crew.CrewJob job, out int taskId)
+        {
+            taskId = -1;
+            var task = _CaptainsOrders.FirstOrDefault(x => x.Job == job);
+            if (task != null)
+            { 
+                taskId = task.Id;
+                return task.Command;
+            }
+            else
+                return "";
+        }
+        #endregion Public Methods
+
+        #region Private Methods
+
         #endregion Private Methods
 
         #region Public Class
@@ -222,7 +286,6 @@ namespace Space_RPG
                 set { _ammo = value; OnPropertyChanged(); }
             }
         }
-
         public class Engine : ViewModelBase
         {
             public enum state
@@ -259,9 +322,13 @@ namespace Space_RPG
                 get { return _state; }
                 set { _state = value; OnPropertyChanged(); }
             }
-
+        }
+        public class Order
+        {
+            public int Id { get; set; }
+            public Crew.CrewJob Job { get; set; }
+            public string Command { get; set; }
         }
         #endregion Public Class
-
     }
 }

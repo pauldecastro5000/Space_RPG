@@ -16,6 +16,7 @@ namespace Space_RPG
             Assignment, // assign xx to/as xx
             Hiring,     // hire new crew
             Hire,       // hire
+            CrewTask
         }
         #region Public Methods
         public bool ProcessCommand(string command, out string err)
@@ -51,41 +52,71 @@ namespace Space_RPG
                     MainWindow.mainVm.MyShip.HireApplicant(crew);
                     MainWindow.Crew.RemoveApplicant(crew);
                     break;
+                case CommandType.CrewTask:
+                    if (!ProcessCrewTask(command, out Crew.CrewJob Job, out err))
+                        return false;
+                    MainWindow.mainVm.MyShip.AddCrewTask(Job, command);
+                    break;
             }
             return true;
         }
         #endregion Public Methods
 
         #region Private Methods
+        private bool ProcessCrewTask(string command, out Crew.CrewJob job, out string err)
+        {
+            err = "";
+            job = Crew.CrewJob.None;
+            var cmd = command.ToUpper();
+            if (cmd.Contains("ENGINE"))
+            {
+                if (cmd.Contains("START") || cmd.Contains("SHUTOFF"))
+                {
+                    job = Crew.CrewJob.Pilot;
+                    return true;
+                } else if (cmd.Contains("FIX"))
+                {
+                    job = Crew.CrewJob.Engineer;
+                    return true;
+                }
+            }
+            err = $"Unkown command: {command}";
+            return false;
+        }
         private bool GetType(string command, out CommandType type, out string err)
         {
+            var cmd = command.ToUpper();
             type = CommandType.Unknown;
             err = string.Empty;
 
-            var action = command.Split(' ')[0].ToUpper();
-
-            switch (action)
+            // ASSIGNMENT
+            if (cmd.Contains("ASSIGN"))
             {
-                case "ASSIGN":
-                    type = CommandType.Assignment;
-                    break;
-
-                case "HIRE":
-                    if (command.Contains("new"))
-                    {
-                        type = CommandType.Hiring;
-                    }
-                    else
-                    {
-                        type = CommandType.Hire;
-                    }
-                    break;
-
-                default:
-                    err = "Unknown Command";
-                    return false;
+                type = CommandType.Assignment;
+                return true;
             }
-            return true;
+            // HIRING
+            if (cmd.Contains("HIRE"))
+            {
+                if (command.Contains("new"))
+                {
+                    type = CommandType.Hiring;
+                }
+                else
+                {
+                    type = CommandType.Hire;
+                }
+                return true;
+            }
+            // CREW TASKS
+            if (cmd.Contains("ENGINE"))
+            {
+                type = CommandType.CrewTask;
+                return true;
+            }
+
+            err = $"Unkown Command: {command}";
+            return false;
         }
         private bool GetAssignment(string command, out string name, out string assignedTo, out string err)
         {

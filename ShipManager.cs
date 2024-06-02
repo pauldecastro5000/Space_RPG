@@ -31,14 +31,27 @@ namespace Space_RPG
 
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
-            if (MainWindow.mainVm.MyShip.Crews == null || MainWindow.mainVm.MyShip.Crews.Count == 0)
-                return;
+            //if (MainWindow.mainVm.MyShip.Crews == null || MainWindow.mainVm.MyShip.Crews.Count == 0)
+            //    return;
 
-            double hungerRatio = 0.125;
-            foreach (Crew c in MainWindow.mainVm.MyShip.Crews)
-            {
-                c.Hunger -= hungerRatio;
-            }
+            //double hungerRatio = 0.125;
+
+            //foreach (Crew c in MainWindow.mainVm.MyShip.Crews)
+            //{
+            //    if (c.Alive)
+            //    {
+            //        c.Hunger = c.Hunger >= hungerRatio ? c.Hunger -= hungerRatio : 0;
+            //        if (c.Hunger <= 0) 
+            //        {
+            //            c.Health = c.Health >= hungerRatio ? c.Health -= hungerRatio : 0;
+            //            if (c.Health <= 0)
+            //            { 
+            //                c.Alive = false;
+            //                MainWindow.mainVm.MyShip.RemoveAssignment(c);
+            //            }
+            //        }
+            //    }
+            //}
         }
         #endregion Constructor
 

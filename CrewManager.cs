@@ -101,6 +101,8 @@ namespace Space_RPG
             get { return _crews; }
             set { _crews = value; OnPropertyChanged(); }
         }
+
+        public double hungerDepletion { get; } = 0.125;
         #endregion Public Properties
 
         #region Private Variables

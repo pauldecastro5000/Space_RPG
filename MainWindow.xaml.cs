@@ -29,9 +29,9 @@ namespace Space_RPG
         public static Utilities Util = new Utilities();
         public static CommandManager Command = new CommandManager();
         public static TaskManager TaskMgr = new TaskManager();
-        
-
         public static MainVM mainVm = new MainVM();
+
+        private string _prevCommand;
 
         public MainWindow()
         {
@@ -83,9 +83,9 @@ namespace Space_RPG
                     Log($"Command: [{mainVm.Command}] returns error.");
                     Log($"ERROR: {err}");
                 }
+                _prevCommand = mainVm.Command;
                 mainVm.Command = "";
             }
-           
         }
 
         private void Log(string message)

@@ -74,7 +74,7 @@ namespace Space_RPG
             {
                 engine = new Ship.Engine() { 
                     Health = 1000, 
-                    MaxFuel = 1000, 
+                    FuelCapacity = 10000, 
                     State = Ship.Engine.state.Off 
                 },
                 State = Ship.state.Docked,

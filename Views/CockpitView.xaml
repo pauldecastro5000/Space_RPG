@@ -34,7 +34,7 @@
                         Margin="10,0,0,0">
                 <TextBlock Text="{Binding EngineState}"
                            Style="{StaticResource BodyValue}" />
-                <TextBlock Text="{Binding MyShip.engine.FuelPercent, StringFormat='{}{0}%'}"
+                <TextBlock Text="{Binding MyShip.engine.FuelPercent, StringFormat='{}{0:N1} %'}"
                            Style="{StaticResource BodyValue}" />
             </StackPanel>
         </Grid>
@@ -68,7 +68,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding HealthPercent, StringFormat='{}{0} %'}"
+                                <TextBlock Text="{Binding HealthPercent, StringFormat='{}{0:N1} %'}"
                                            Style="{StaticResource baseStyle}" />
                             </StackPanel>
                         </DataTemplate>

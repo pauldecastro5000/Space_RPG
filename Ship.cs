@@ -76,13 +76,21 @@ namespace Space_RPG
             get { return _crews; }
             set { _crews = value; OnPropertyChanged(); }
         }
+        public int OrderId { get; set; } = 0;
         #endregion Public Properties
 
         #region Private Properties
         private static object _lockCommands = new object();
-        public int OrderId { get; set; } = 0;
         private List<Order> _CaptainsOrders = new List<Order>();
+        private double _engineFuelDepletionRate = 0.23;
         #endregion Private Properties
+
+        #region Constructor
+        public Ship()
+        {
+            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+        }
+        #endregion Constructor
 
         #region Public Methods
         public bool Assign(string name, string crewJob, out string err)
@@ -257,6 +265,13 @@ namespace Space_RPG
             MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
                                      MainWindow.mainVm.MyShip.engine.State);
         }
+        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        {
+            if (engine.State == Engine.state.On)
+            {
+                engine.ConsumeFuel(_engineFuelDepletionRate);
+            }
+        }
         #endregion Private Methods
 
         #region Public Class
@@ -318,25 +333,43 @@ namespace Space_RPG
                 get { return _health; }
                 set { _health = value; OnPropertyChanged(); }
             }
-            private int _maxFuel = 1000;
-            public int MaxFuel
+            private int _fuelCapacity = 10000;
+            public int FuelCapacity
             {
-                get { return _maxFuel; }
-                set { _maxFuel = value; OnPropertyChanged(); }
+                get { return _fuelCapacity; }
+                set { _fuelCapacity = value; OnPropertyChanged(); }
             }
-            private int _currFuel = 1000;
-            public int CurrentFuel
+            private double _currFuel = 10000;
+            public double CurrentFuel
             {
                 get { return _currFuel; }
                 set { _currFuel = value; OnPropertyChanged(); }
             }
-            public double FuelPercent => (_currFuel / _maxFuel) * 100;
+            private double _fuelPercent = 100.0;
+            public double FuelPercent
+            {
+                get { return _fuelPercent; }
+                set { _fuelPercent = value; OnPropertyChanged(); }
+            }
 
             private state _state = state.Unknown;
             public state State
             {
                 get { return _state; }
                 set { _state = value; OnPropertyChanged(); }
+            }
+
+            public void ConsumeFuel(double amount)
+            {
+                CurrentFuel = CurrentFuel > amount ? CurrentFuel - amount : 0;
+                if (CurrentFuel == 0)
+                    MainWindow.mainVm.MyShip.ShutOffEngine();
+                FuelPercent = (CurrentFuel / FuelCapacity) * 100;
+            }
+            public void AddFuel(double amount)
+            {
+                CurrentFuel = CurrentFuel + amount < FuelCapacity ? CurrentFuel + amount : FuelCapacity;
+                FuelPercent = (CurrentFuel / FuelCapacity) * 100;
             }
         }
         public class Order

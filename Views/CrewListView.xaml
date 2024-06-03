@@ -10,7 +10,7 @@
              Background="Black">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <StackPanel>
@@ -18,17 +18,20 @@
                           Style="{StaticResource Basic}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="10,0">
             <ItemsControl ItemsSource="{Binding MyShip.Crews}"
                           Style="{StaticResource Basic}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Hunger, StringFormat=N2}" />
+                        <TextBlock Text="{Binding StrCurrentTask}"
+                                   Style="{StaticResource BaseStyleItalic}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

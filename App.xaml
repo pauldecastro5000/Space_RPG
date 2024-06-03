@@ -30,6 +30,14 @@
             <Setter Property="HorizontalAlignment"
                     Value="Left" />
         </Style>
+        <Style x:Key="BaseStyleItalic"
+               TargetType="{x:Type TextBlock}"
+               BasedOn="{StaticResource baseStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Right" />
+            <Setter Property="FontStyle"
+                    Value="Italic" />
+        </Style>
         <Style x:Key="BodyValue"
                TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource baseStyle}">

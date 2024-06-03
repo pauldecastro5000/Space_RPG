@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,17 +76,19 @@ namespace Space_RPG
             get { return _health; }
             set { _health = value; OnPropertyChanged(); }
         }
-        private string _currentTask;
-        public string CurrentTask
+        private string _strCurrentTask = "-";
+        public string StrCurrentTask
         {
-            get { return _currentTask; }
-            set { _currentTask = value; OnPropertyChanged(); }
+            get { return _strCurrentTask; }
+            set { _strCurrentTask = value; OnPropertyChanged(); }
         }
         #endregion Public Properties
 
         #region Private Properties
         private bool _isBusy = false;
         //private List<string> _Command = new List<string>();
+        private Task _currentTask = Task.None;
+        private int _currentTaskId = 0;
         #endregion Private Properties
 
         #region Constructor
@@ -116,31 +119,40 @@ namespace Space_RPG
                 return;
 
             if (_isBusy)
-                return;
+            { 
+                switch (_currentTask)
+                {
+                    case Task.StartEngine:
+                        if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
+                            TaskDone();
+                        break;
+                    case Task.ShutOffEngine:
+                        if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                            TaskDone();
+                        break;
+                }
+                return; 
+            }
 
-            //if (_Command.Count == 0)
-            //    return;
-
-            var selectedTask = Task.None;
             var task = "";
 
             switch (Job)
             {
                 case CrewJob.Pilot:
-                    CurrentTask = "";
+                    StrCurrentTask = "-";
                     task = MainWindow.mainVm.MyShip.GetCrewTask(Job, out int TaskId);
+                    _currentTaskId = TaskId;
                     if (task == "")
                         return;
-                    selectedTask = GetPilotTask(task);
-                    switch (selectedTask)
+                    _currentTask = GetPilotTask(task);
+                    switch (_currentTask)
                     {
                         case Task.StartEngine:
-                            CurrentTask = "Starting the engine";
+                            StartTask("Starting the engine");
                             MainWindow.mainVm.MyShip.StartEngine();
-                            MainWindow.mainVm.MyShip.TaskDone(TaskId);
                             break;
                         case Task.ShutOffEngine:
-                            CurrentTask = "Shutting off the engine";
+                            StartTask("Shutting off the engine");
                             MainWindow.mainVm.MyShip.ShutOffEngine();
                             break;
                     }
@@ -164,7 +176,11 @@ namespace Space_RPG
                     break;
             }
         }
-
+        private void StartTask(string task)
+        {
+            StrCurrentTask = task;
+            _isBusy = true;
+        }
         private Task GetPilotTask(string command)
         {
             var cmd = command.ToUpper();
@@ -184,6 +200,14 @@ namespace Space_RPG
             }
 
             return Task.None;
+        }
+
+        private void TaskDone()
+        {
+            StrCurrentTask = " - ";
+            _currentTask = Task.None;
+            _isBusy = false;
+            MainWindow.mainVm.MyShip.TaskDone(_currentTaskId);
         }
         private Task GetEngineerTask(string command)
         {

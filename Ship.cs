@@ -185,11 +185,27 @@ namespace Space_RPG
                 }
             }
         }
-        public void StartEngine()
+        public async void StartEngine()
         {
-            engine.State = Engine.state.On;
-            MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
-                                                         MainWindow.mainVm.MyShip.engine.State);
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(2000);
+                if (engine.CurrentFuel > 0)
+                {
+                    SetEngineState(Engine.state.On);
+                }
+            });
+        }
+        public async void ShutOffEngine()
+        {
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(2000);
+                if (engine.CurrentFuel > 0)
+                {
+                    SetEngineState(Engine.state.Off);
+                }
+            });
         }
         public void TaskDone(int taskId)
         {
@@ -198,12 +214,7 @@ namespace Space_RPG
                 _CaptainsOrders.RemoveAll(x => x.Id == taskId);
             }
         }
-        public void ShutOffEngine()
-        {
-            engine.State = Engine.state.Off;
-            MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
-                                                         MainWindow.mainVm.MyShip.engine.State);
-        }
+    
         public void AddCrewTask(Crew.CrewJob job, string command)
         {
             lock (_lockCommands)
@@ -212,8 +223,8 @@ namespace Space_RPG
                 {
                     Id = OrderId,
                     Job = job,
-                    Command = command
-
+                    Command = command,
+                    Timestamp = DateTime.Now,
                 });
                 OrderId++;
             }
@@ -240,7 +251,12 @@ namespace Space_RPG
         #endregion Public Methods
 
         #region Private Methods
-
+        private void SetEngineState(Engine.state State)
+        {
+            engine.State = State;
+            MainWindow.mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+                                     MainWindow.mainVm.MyShip.engine.State);
+        }
         #endregion Private Methods
 
         #region Public Class
@@ -328,6 +344,7 @@ namespace Space_RPG
             public int Id { get; set; }
             public Crew.CrewJob Job { get; set; }
             public string Command { get; set; }
+            public DateTime Timestamp { get; set; }
         }
         #endregion Public Class
     }

@@ -114,7 +114,7 @@ namespace Space_RPG
         #region Constructor
         public CrewManager()
         {
-
+            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
         }
         #endregion Constructor
 
@@ -242,10 +242,18 @@ namespace Space_RPG
             };
             Crews.Add(newCrew);
         }
-        
+
         #endregion Public Methods
 
         #region Private Methods
+
+        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        {
+            foreach (var crew in MainWindow.mainVm.MyShip.Crews)
+            {
+                crew.TaskLoop();
+            }
+        }
         private bool CrewNameExist(string name)
         {
             if (Crews == null)

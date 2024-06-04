@@ -76,7 +76,7 @@ namespace Space_RPG
             get { return _health; }
             set { _health = value; OnPropertyChanged(); }
         }
-        private string _strCurrentTask = "-";
+        private string _strCurrentTask = " - ";
         public string StrCurrentTask
         {
             get { return _strCurrentTask; }
@@ -94,40 +94,58 @@ namespace Space_RPG
         private bool _isBusy = false;
         //private List<string> _Command = new List<string>();
         private Task _currentTask = Task.None;
+        private Task _prevTask = Task.None;
+        private string _strPrevTask = " - ";
         private int _currentTaskId = 0;
         #endregion Private Properties
 
         #region Constructor
         public Crew()
         {
-            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+            //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
         }
         #endregion Constructor
 
         #region Public Methods
-        public void AddCommand(string task)
-        {
-            //_Command.Add(task);
-        }
-
-        public Crew GetCrew()
-        {
-            return this;
-        }
-        #endregion Public Methods
-
-        #region Private Methods
-        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        public void TaskLoop()
         {
             if (Alive)
-                Hunger -= MainWindow.Crew.hungerDepletion;
+            {
+                if (_currentTask != Task.Eating)
+                    Hunger -= MainWindow.Crew.hungerDepletion;
+            }
             else
                 return;
 
-            if (_isBusy)
-            { 
-                switch (_currentTask)
+            // CHECK IF CREW IS HUNGRY
+            if (Hunger < 70 && _currentTask != Task.Eating)
+            {
+                if (MainWindow.mainVm.MyShip.Food > 0)
                 {
+                    MainWindow.mainVm.MyShip.Food--;
+                    _prevTask = _currentTask;
+                    _strPrevTask = StrCurrentTask;
+                    _currentTask = Task.Eating;
+                    StrCurrentTask = "Eating";
+                    _isBusy = true;
+                    return;
+                }
+            }
+
+            // CHECK CURRENT TASK
+            if (_isBusy)
+            {
+                switch (_currentTask)
+                {       // GENERAL TASKS
+                    case Task.Eating:
+                        var foodFill = 1.5; // 30 hunger in 20 mins. // TODO: must be in settings
+                        Hunger = Hunger + foodFill < 100 ? Hunger + foodFill : 100;
+                        if (Hunger >= 100)
+                        {
+                            PersonalTaskDone();
+                        }
+                        break;
+                    // PILOT TASKS
                     case Task.StartEngine:
                         if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
                             TaskDone();
@@ -137,7 +155,7 @@ namespace Space_RPG
                             TaskDone();
                         break;
                 }
-                return; 
+                return;
             }
 
             var task = "";
@@ -194,6 +212,18 @@ namespace Space_RPG
                     break;
             }
         }
+        public void AddCommand(string task)
+        {
+            //_Command.Add(task);
+        }
+
+        public Crew GetCrew()
+        {
+            return this;
+        }
+        #endregion Public Methods
+
+        #region Private Methods
         private void StartTask(string task)
         {
             StrCurrentTask = task;
@@ -225,6 +255,21 @@ namespace Space_RPG
             _currentTask = Task.None;
             _isBusy = false;
             MainWindow.mainVm.MyShip.TaskDone(_currentTaskId);
+        }
+        private void PersonalTaskDone()
+        {
+            if (_prevTask == Task.None)
+            {
+                StrCurrentTask = " - ";
+                _currentTask = Task.None;
+                _isBusy = false;
+            }
+            else
+            {
+                _currentTask = _prevTask;
+                StrCurrentTask = _strPrevTask;
+            }
+
         }
         private Task GetEngineerTask(string command)
         {

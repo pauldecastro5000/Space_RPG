@@ -30,6 +30,8 @@
                           Style="{StaticResource Basic}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+                        <!--<TextBlock Text="{Binding Hunger}"
+                                   Style="{StaticResource BaseStyleItalic}" />-->
                         <TextBlock Text="{Binding StrCurrentTask}"
                                    Style="{StaticResource BaseStyleItalic}" />
                     </DataTemplate>

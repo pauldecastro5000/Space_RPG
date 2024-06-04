@@ -230,7 +230,6 @@ namespace Space_RPG
                 _CaptainsOrders.RemoveAll(x => x.Id == taskId);
             }
         }
-    
         public void AddCrewTask(Crew.CrewJob job, string command)
         {
             lock (_lockCommands)
@@ -255,7 +254,7 @@ namespace Space_RPG
         public string GetCrewTask(Crew.CrewJob job, out int taskId)
         {
             taskId = -1;
-            var task = _CaptainsOrders.FirstOrDefault(x => x.Job == job);
+            var task = _CaptainsOrders.FirstOrDefault(x => (x.Job == job || x.Job == Crew.CrewJob.All));
             if (task != null)
             { 
                 taskId = task.Id;
@@ -263,6 +262,15 @@ namespace Space_RPG
             }
             else
                 return "";
+        }
+        public bool AllCrewSeated()
+        {
+            foreach (var crew in Crews)
+            {
+                if (crew.CurrentTask != Crew.Task.Seated && crew.Job != Crew.CrewJob.Pilot)
+                    return false;
+            }
+            return true;
         }
         #endregion Public Methods
 

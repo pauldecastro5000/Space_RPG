@@ -29,8 +29,7 @@ namespace Space_RPG
             string assignedTo = "";
 
             // Get the type of command
-            if (!GetType(command, out CommandType type, out err))
-                return false;
+            GetType(command, out CommandType type);
 
             switch (type)
             {
@@ -95,20 +94,27 @@ namespace Space_RPG
                     return true;
                 }
             }
-            err = $"Unkown command: {command}";
+
+            if (cmd.Contains("PREPARE") && cmd.Contains("LIFTOFF"))
+            {
+                job = Crew.CrewJob.All;
+                return true;
+            }
+
+            err = $"Unknown command: {command}";
             return false;
         }
-        private bool GetType(string command, out CommandType type, out string err)
+        private void GetType(string command, out CommandType type)
         {
             var cmd = command.ToUpper();
             type = CommandType.Unknown;
-            err = string.Empty;
+
 
             // ASSIGNMENT
             if (cmd.Contains("ASSIGN"))
             {
                 type = CommandType.Assignment;
-                return true;
+                return;
             }
             // HIRING
             if (cmd.Contains("HIRE"))
@@ -121,17 +127,15 @@ namespace Space_RPG
                 {
                     type = CommandType.Hire;
                 }
-                return true;
+                return;
             }
-            // CREW TASKS
-            if (cmd.Contains("ENGINE"))
-            {
-                type = CommandType.CrewTask;
-                return true;
-            }
-
-            err = $"Unkown Command: {command}";
-            return false;
+            //// CREW TASKS
+            //if (cmd.Contains("ENGINE"))
+            //{
+            //    type = CommandType.CrewTask;
+            //    return;
+            //}
+            type = CommandType.CrewTask;
         }
         private bool GetAssignment(string command, out string name, out string assignedTo, out string err)
         {

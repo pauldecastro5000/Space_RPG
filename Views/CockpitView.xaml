@@ -77,6 +77,21 @@
             </StackPanel>
         </Grid>
       
+        <!-- ROW SET 3-->
+        <Grid Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Cash"
+                           Style="{StaticResource baseStyle}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                <TextBlock Text="{Binding MyShip.Captain.Cash, StringFormat='{}{0:C}'}"
+                           Style="{StaticResource BodyValue}" />
+            </StackPanel>
+        </Grid>
         
     </Grid>
 </UserControl>

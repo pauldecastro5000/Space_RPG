@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Space_RPG.Views"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -16,28 +17,7 @@
         <TextBlock Text="{Binding MyShip.State}"
                    Style="{StaticResource baseStyle}"
                    HorizontalAlignment="Center" />
-        <Border Grid.Row="1"
-                Width="190"
-                HorizontalAlignment="Right"
-                BorderBrush="Black">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                <StackPanel>
-                    <TextBlock Text="Cash"
-                               Style="{StaticResource baseStyle}" />
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding MyShip.Captain.Cash, StringFormat='{}{0:C}'}"
-                               Style="{StaticResource BodyValue}" />
-                </StackPanel>
-            </Grid>
-        </Border>
+        <Image Grid.Row="1"
+               gif:ImageBehavior.AnimatedSource="{Binding CockpitImage}" />
     </Grid>
 </UserControl>

@@ -148,10 +148,22 @@ namespace Space_RPG
                     switch (_currentTask)
                     {
                         case Task.StartEngine:
+                            if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
+                            {
+                                CrewLog("The engine is already on sir.");
+                                TaskDone();
+                                return;
+                            }
                             StartTask("Starting the engine");
                             MainWindow.mainVm.MyShip.StartEngine();
                             break;
                         case Task.ShutOffEngine:
+                            if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                            {
+                                CrewLog("The engine is already shut down sir.");
+                                TaskDone();
+                                return;
+                            }
                             StartTask("Shutting off the engine");
                             MainWindow.mainVm.MyShip.ShutOffEngine();
                             break;
@@ -201,7 +213,6 @@ namespace Space_RPG
 
             return Task.None;
         }
-
         private void TaskDone()
         {
             StrCurrentTask = " - ";
@@ -222,6 +233,13 @@ namespace Space_RPG
 
 
             return Task.None;
+        }
+        private void CrewLog(string message)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow.mainVm.Log.Add($"{Name}: {message}");
+            });
         }
         #endregion Private Methods
 

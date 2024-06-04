@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Space_RPG.ViewModel
 {
@@ -77,6 +78,13 @@ namespace Space_RPG.ViewModel
         {
             get { return _engineState; }
             set { _engineState = value; OnPropertyChanged(); }
+        }
+
+        private string _cockpitImage = "../Resources/DOCKED.jpg";
+        public string CockpitImage
+        {
+            get { return _cockpitImage; }
+            set { _cockpitImage = value; OnPropertyChanged(); }
         }
 
         BackgroundWorker _bgwUpdate;

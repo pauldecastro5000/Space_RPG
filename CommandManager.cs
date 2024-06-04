@@ -17,6 +17,9 @@ namespace Space_RPG
             Hiring,     // hire new crew
             Hire,       // hire
             CrewTask
+                // Start the engine
+                // Shutoff the engine
+                // Take off
         }
         #region Public Methods
         public bool ProcessCommand(string command, out string err)

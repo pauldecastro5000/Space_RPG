@@ -165,9 +165,17 @@ namespace Space_RPG
             Captain = newCrew;
             Crews.Add(newCrew);
         }
-        public void HireApplicant(Crew crew)
+        public bool HireApplicant(Crew crew, out string err)
         {
+            err = "";
+            if (crew.Price > MainWindow.mainVm.MyShip.Captain.Cash)
+            {
+                err = $"You don't have enough cash to hire {crew.Name}";
+                return false;
+            }
+            MainWindow.mainVm.MyShip.Captain.Cash -= crew.Price;
             Crews.Add(crew);
+            return true;
         }
         public void RemoveAssignment(Crew crew)
         {

@@ -43,16 +43,28 @@ namespace Space_RPG
                     break;
 
                 case CommandType.Hiring:
+                    if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
+                    {
+                        err = "There is no applicant in space...";
+                        return false;
+                    }
                     MainWindow.Crew.FindApplicant();
                     MainWindow.Crew.DisplayApplicant();
                     break;
 
                 case CommandType.Hire:
+                    if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
+                    {
+                        err = "There is no applicant in space...";
+                        return false;
+                    }
                     name = command.Split(' ').Last();
                     if (!MainWindow.Crew.GetApplicant(name, out Crew crew, out err))
                         return false;
 
-                    MainWindow.mainVm.MyShip.HireApplicant(crew);
+                    if (!MainWindow.mainVm.MyShip.HireApplicant(crew, out err))
+                        return false;
+
                     MainWindow.Crew.RemoveApplicant(crew);
                     break;
                 case CommandType.CrewTask:

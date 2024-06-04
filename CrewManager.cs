@@ -150,11 +150,13 @@ namespace Space_RPG
             {
                 name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
             } while (CrewNameExist(name));
-            var aiming = RandomNumber(0, 100);
-            var piloting = RandomNumber(0, 100);
-            var engineRepair = RandomNumber(0, 100);
-            var weaponsRepair = RandomNumber(0, 100);
+            var aiming = RandomNumber(0, 80);
+            var piloting = RandomNumber(0, 80);
+            var engineRepair = RandomNumber(0, 80);
+            var weaponsRepair = RandomNumber(0, 80);
             var job = Crew.CrewJob.None;
+
+            var price = CalculatePrice(aiming, piloting, engineRepair, weaponsRepair);
 
             var newCrew = new Crew()
             {
@@ -162,6 +164,7 @@ namespace Space_RPG
                 Job = job,
                 Hunger = 100,
                 Cash = 500,
+                Price = price,
                 Skills = new Crew.skills() {
                     Piloting = piloting,
                     Aiming = aiming, 
@@ -179,6 +182,7 @@ namespace Space_RPG
             Log("Aiming: " + _applicant.Skills.Aiming);
             Log("EngineRepair: " + _applicant.Skills.EngineRepair);
             Log("WeaponsRepair: " + _applicant.Skills.WeaponsRepair);
+            Log("Price: $" + _applicant.Price.ToString("n0"));
             Log("");
         }
         public void HireApplicant(string name)
@@ -263,6 +267,15 @@ namespace Space_RPG
         private void Log(string message)
         {
             MainWindow.mainVm.Log.Add(message);
+        }
+        private int CalculatePrice(int Stat1, int Stat2, int Stat3, int Stat4)
+        {
+            var basePrice = 100;
+            var price = (Stat1 * basePrice) +
+                        (Stat2 * basePrice) +
+                        (Stat3 * basePrice) +
+                        (Stat4 * basePrice);
+            return price;
         }
         #endregion Private Methods
     }

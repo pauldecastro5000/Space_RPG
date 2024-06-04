@@ -82,6 +82,12 @@ namespace Space_RPG
             get { return _strCurrentTask; }
             set { _strCurrentTask = value; OnPropertyChanged(); }
         }
+        private int _price = 0;
+        public int Price
+        {
+            get { return _price; }
+            set { _price = value; OnPropertyChanged(); }
+        }
         #endregion Public Properties
 
         #region Private Properties

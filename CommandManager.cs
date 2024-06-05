@@ -95,7 +95,7 @@ namespace Space_RPG
                 }
             }
 
-            if (cmd.Contains("PREPARE") && cmd.Contains("LIFTOFF"))
+            if (cmd.Contains("LIFTOFF"))
             {
                 job = Crew.CrewJob.All;
                 return true;

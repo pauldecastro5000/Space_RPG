@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
 
@@ -18,6 +19,7 @@ namespace Space_RPG
         {
             None,
             Docked,
+            LiftingOff,
             Landed,
             Warping,
             Hovering
@@ -83,6 +85,7 @@ namespace Space_RPG
         private static object _lockCommands = new object();
         private List<Order> _CaptainsOrders = new List<Order>();
         private double _engineFuelDepletionRate = 0.23;
+        private double _LiftoffFuelDepletionRate = 1;
         #endregion Private Properties
 
         #region Constructor
@@ -114,12 +117,14 @@ namespace Space_RPG
                 {
                     case "CAPTAIN":
                         RemoveAssignment(crew);
+                        RemoveAssignment(Captain);
                         crew.Job = Crew.CrewJob.Captain;
                         Captain = crew;
                         break;
 
                     case "PILOT":
                         RemoveAssignment(crew);
+                        RemoveAssignment(Pilot);
                         crew.Job = Crew.CrewJob.Pilot;
                         Pilot = crew;
                         break;
@@ -131,6 +136,7 @@ namespace Space_RPG
                             if (crewJob.ToUpper() == weapon.Name.ToUpper())
                             {
                                 RemoveAssignment(crew);
+                                RemoveAssignment(weapon.Gunner);
                                 weapon.Gunner = crew;
                                 return true;
                             }
@@ -180,13 +186,13 @@ namespace Space_RPG
         public void RemoveAssignment(Crew crew)
         {
             // CAPTAIN
-            if (Captain?.Name == crew.Name)
+            if (Captain?.Name == crew?.Name)
             {
                 Captain = null;
                 return;
             }
             // PILOT
-            if (Pilot?.Name == crew.Name)
+            if (Pilot?.Name == crew?.Name)
             {
                 Pilot = null;
                 return;
@@ -194,7 +200,7 @@ namespace Space_RPG
             // WEAPONS
             foreach (var weapon in Weapons)
             {
-                if (weapon.Gunner?.Name == crew.Name)
+                if (weapon.Gunner?.Name == crew?.Name)
                 {
                     weapon.Gunner = null;
                     return;
@@ -217,10 +223,23 @@ namespace Space_RPG
             await Task.Run(() =>
             {
                 System.Threading.Thread.Sleep(2000);
-                if (engine.CurrentFuel > 0)
+                SetEngineState(Engine.state.Off);
+            });
+        }
+        public async void Liftoff()
+        {
+            State = state.LiftingOff;
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < 50; i++)
                 {
-                    SetEngineState(Engine.state.Off);
+                    System.Threading.Thread.Sleep(200);
+                    if (engine.CurrentFuel <= 0)
+                    {
+                        ShutOffEngine();
+                    }
                 }
+                State = state.Hovering;
             });
         }
         public void TaskDone(int taskId)
@@ -267,7 +286,9 @@ namespace Space_RPG
         {
             foreach (var crew in Crews)
             {
-                if (crew.CurrentTask != Crew.Task.Seated && crew.Job != Crew.CrewJob.Pilot)
+                if (crew.Job == Crew.CrewJob.Captain || crew.Job == Crew.CrewJob.Pilot)
+                    continue;
+                if (crew.CurrentTask != Crew.Task.TakeSeat && crew.Job != Crew.CrewJob.Pilot)
                     return false;
             }
             return true;
@@ -285,7 +306,12 @@ namespace Space_RPG
         {
             if (engine.State == Engine.state.On)
             {
-                engine.ConsumeFuel(_engineFuelDepletionRate);
+                if (State == state.LiftingOff)
+                {
+                    engine.ConsumeFuel(_LiftoffFuelDepletionRate);
+                }
+                else
+                    engine.ConsumeFuel(_engineFuelDepletionRate);
             }
         }
         #endregion Private Methods

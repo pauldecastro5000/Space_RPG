@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="CommandManager.cs" />
     <Compile Include="Crew.cs" />
+    <Compile Include="ImageManager.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="PlanetManager.cs" />
     <Compile Include="Ship.cs" />
@@ -151,6 +152,9 @@
     <Resource Include="Resources\DOCKED.jpg" />
     <Resource Include="Resources\SPACE_EARTH.gif" />
     <Resource Include="Resources\SPACE_EMPTY.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SPACE_EARTH_STATIC.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

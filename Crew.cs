@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Converters;
@@ -21,24 +22,46 @@ namespace Space_RPG
             Engineer
         }
 
-        public enum Task
+        public enum State
         {
             None,
             // General Tasks
             Eating,
             Seated,
-            PrepareToLiftoff,
-            Liftingoff,
-            PrepareToLand,
-            Landing,
+            StandbyForInstruction,
+            PreparingToLiftoff, 
+            Liftingoff,          
+            PreparingToLand,    
+            Landing,             
 
             // Pilot Tasks
-            StartEngine,     // Start the engine
-            ShutOffEngine,   // shutoff the engine
+            StartingEngine,      
+            ShuttingdownEngine,   
 
             // Mechanic Tasks
-            FixEngine,       // fix the engine
-            FixWeapon        // fix weapon#
+            FixingEngine,        
+            FixingWeapon         
+        }
+
+        public enum Task
+        {
+            None,
+            // General Tasks
+            Eat,
+            TakeSeat,
+            StandbyForInstruction,
+            PrepareToLiftoff, // Prepare to liftoff
+            Liftoff,          // Liftoff
+            PrepareToLand,    // Prepare to land
+            Land,             // Land
+
+            // Pilot Tasks
+            StartEngine,      // Start the engine
+            ShutdownEngine,    // shutoff the engine
+
+            // Mechanic Tasks
+            FixEngine,        // fix the engine
+            FixWeapon         // fix weapon#
         }
 
         #region Public Properties
@@ -96,6 +119,12 @@ namespace Space_RPG
             get { return _price; }
             set { _price = value; OnPropertyChanged(); }
         }
+        private State _state;
+        public State state
+        {
+            get { return _state; }
+            set { _state = value; OnPropertyChanged(); }
+        }
         public Task CurrentTask { get; set; } = Task.None;
         #endregion Public Properties
 
@@ -119,7 +148,7 @@ namespace Space_RPG
         {
             if (Alive)
             {
-                if (CurrentTask != Task.Eating)
+                if (CurrentTask != Task.Eat)
                     Hunger -= MainWindow.Crew.hungerDepletion;
             }
             else
@@ -128,26 +157,23 @@ namespace Space_RPG
 
 
             // CHECK IF CREW IS HUNGRY
-            if (Hunger < 70 && CurrentTask != Task.Eating)
+            if (Hunger < 70 && CurrentTask != Task.Eat)
             {
                 if (MainWindow.mainVm.MyShip.Food > 0)
                 {
                     MainWindow.mainVm.MyShip.Food--;
-                    _prevTask = CurrentTask;
-                    _strPrevTask = StrCurrentTask;
-                    CurrentTask = Task.Eating;
-                    StrCurrentTask = "Eating";
-                    _isBusy = true;
+                    SavePrevTask();
+                    StartTask(Task.Eat);
                     return;
                 }
             }
 
-            // CHECK CURRENT TASK
+            // CHECK CURRENT TASK STATUS
             if (_isBusy)
             {
                 switch (CurrentTask)
                 {       // GENERAL TASKS
-                    case Task.Eating:
+                    case Task.Eat:
                         var foodFill = 1.5; // 30 hunger in 20 mins. // TODO: must be in settings
                         Hunger = Hunger + foodFill < 100 ? Hunger + foodFill : 100;
                         if (Hunger >= 100)
@@ -158,32 +184,23 @@ namespace Space_RPG
                     case Task.PrepareToLiftoff:
                         if (Job != CrewJob.Pilot)
                         {
-                            StartTask("Seated");
-                            CurrentTask = Task.Seated;
+                            StartTask(Task.TakeSeat);
                         }
                         else
                         {
                             if (!MainWindow.mainVm.MyShip.AllCrewSeated())
                                 return;
-                            CrewLog("All crew are ready.");
-                            CrewLog("Initiate liftoff.");
-                            StrCurrentTask = "Liftingoff ship";
-                            CurrentTask = Task.Liftingoff;
+                            CrewLog("All crew are seated.");
+                            CrewLog("Ship is ready for liftoff on your command Captain.");
+                            TaskDone();
                         }
                         break;
 
                     // PILOT TASKS
                     case Task.StartEngine:
-                        if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
-                            TaskDone();
-                        break;
-                    case Task.ShutOffEngine:
-                        if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
-                            TaskDone();
-                        break;
-
-                    case Task.Liftingoff:
-
+                    case Task.ShutdownEngine:
+                    case Task.Liftoff:
+                        DoPilotTask(CurrentTask);
                         break;
 
 
@@ -191,8 +208,8 @@ namespace Space_RPG
                 return;
             }
 
+            // GET NEW TASK
             var task = "";
-
             StrCurrentTask = " - ";
             task = MainWindow.mainVm.MyShip.GetCrewTask(Job, out int TaskId);
             if (task == "")
@@ -202,43 +219,7 @@ namespace Space_RPG
             switch (Job)
             {
                 case CrewJob.Pilot:
-                    CurrentTask = GetPilotTask(task);
-                    switch (CurrentTask)
-                    {
-                        case Task.StartEngine:
-                            if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
-                            {
-                                CrewLog("The engine is already on sir.");
-                                TaskDone();
-                                return;
-                            }
-                            StartTask("Starting the engine");
-                            MainWindow.mainVm.MyShip.StartEngine();
-                            break;
-                        case Task.ShutOffEngine:
-                            if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
-                            {
-                                CrewLog("The engine is already shut down sir.");
-                                TaskDone();
-                                return;
-                            }
-                            StartTask("Shutting off the engine");
-                            MainWindow.mainVm.MyShip.ShutOffEngine();
-                            break;
-                        case Task.PrepareToLiftoff:
-                            if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
-                            {
-                                CrewLog("The engine is not on sir.");
-                                TaskDone();
-                                return;
-                            }
-                            StartTask("Preparing to liftoff");
-                            break;
-
-                        case Task.PrepareToLand:
-
-                            break;
-                    }
+                    GetPilotTask(task);
                     break;
 
                 case CrewJob.Weapons:
@@ -262,7 +243,7 @@ namespace Space_RPG
                     switch (CurrentTask)
                     {
                         case Task.PrepareToLiftoff:
-                            StartTask("Preparing for liftoff");
+                            StartTask(CurrentTask);
                             break;
 
                         case Task.PrepareToLand:
@@ -284,22 +265,32 @@ namespace Space_RPG
         #endregion Public Methods
 
         #region Private Methods
-        private void StartTask(string task)
+        private void StartTask(Task task)
         {
-            StrCurrentTask = task;
+            CurrentTask = task;
+            StrCurrentTask = GetTaskActionText(task);
             _isBusy = true;
         }
-        private Task GetPilotTask(string command)
+        private void DoPrevTask()
+        {
+            CurrentTask = _prevTask;
+            StrCurrentTask = _strPrevTask;
+        }
+        private void ClearTask()
+        {
+            StrCurrentTask = " - ";
+            CurrentTask = Task.None;
+            _isBusy = false;
+        }
+        private Task DecodePilotTask(string command)
         {
             var cmd = command.ToUpper();
+
+            if (DecodeForAllTask(command, out Task task))
+                return task;
+
             // Highest Priority
-            if (cmd.Contains("PREPARE"))
-            {
-                if (cmd.Contains("LIFTOFF"))
-                    return Task.PrepareToLiftoff;
-                if (cmd.Contains("LAND"))
-                    return Task.PrepareToLand;
-            }
+
 
             // Medium Priority
             if (cmd.Contains("ENGINE"))
@@ -307,25 +298,128 @@ namespace Space_RPG
                 if (cmd.Contains("START"))
                     return Task.StartEngine;
                 else if (cmd.Contains("SHUTOFF"))
-                    return Task.ShutOffEngine;
+                    return Task.ShutdownEngine;
             }
 
             return Task.None;
+        }
+        private void GetPilotTask(string task)
+        {
+            CurrentTask = DecodePilotTask(task);
+
+            switch (CurrentTask)
+            {
+                case Task.StartEngine:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
+                    {
+                        CrewLog("The engine is already on sir.");
+                        TaskDone();
+                        return;
+                    }
+                    StartTask(CurrentTask);
+                    MainWindow.mainVm.MyShip.StartEngine();
+                    break;
+                case Task.ShutdownEngine:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                    {
+                        CrewLog("The engine is already shut down sir.");
+                        TaskDone();
+                        return;
+                    }
+                    StartTask(CurrentTask);
+                    MainWindow.mainVm.MyShip.ShutOffEngine();
+                    break;
+                case Task.PrepareToLiftoff:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                    {
+                        CrewLog("The engine is not on sir.");
+                        TaskDone();
+                        return;
+                    }
+                    StartTask(CurrentTask);
+                    break;
+                case Task.Liftoff:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                    {
+                        CrewLog("The engine is not on sir.");
+                        TaskDone();
+                        return;
+                    }
+                    StartTask(CurrentTask);
+                    MainWindow.mainVm.MyShip.Liftoff();
+                    break;
+                case Task.PrepareToLand:
+
+                    break;
+            }
+        }
+        private void DoPilotTask(Task task)
+        {
+            switch (task)
+            {
+                case Task.StartEngine:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.On)
+                        TaskDone();
+                    break;
+                case Task.ShutdownEngine:
+                    if (MainWindow.mainVm.MyShip.engine.State == Ship.Engine.state.Off)
+                        TaskDone();
+                    break;
+                case Task.Liftoff:
+                    if (MainWindow.mainVm.MyShip.State == Ship.state.Hovering)
+                    {
+                        CrewLog("We have successfully exited the planet");
+                        TaskDone();
+                    }
+                    break;
+            }
         }
         private Task GetNoJobTask(string command)
         {
             var cmd = command.ToUpper();
 
+            if (DecodeForAllTask(command, out Task task))
+                return task;
+
             // Highest Priority
-            if (cmd.Contains("PREPARE"))
-            {
-                if (cmd.Contains("LIFTOFF"))
-                    return Task.PrepareToLiftoff;
-                if (cmd.Contains("LAND"))
-                    return Task.PrepareToLand;
-            }
 
             return Task.None;
+        }
+        private bool DecodeForAllTask(string command, out Task task)
+        {
+            var cmd = command.ToUpper();
+            task = Task.None;
+
+            // Highest Priority
+            if (cmd.Contains("LIFTOFF"))
+            {
+                if (cmd.Contains("PREPARE"))
+                { 
+                    task = Task.PrepareToLiftoff;
+                    return true;
+                }
+                else
+                {
+                    task = Task.Liftoff;
+                    return true;
+                } 
+            }
+
+            if (cmd.Contains("LAND"))
+            {
+                if (cmd.Contains("PREPARE"))
+                { 
+                    task = Task.PrepareToLand;
+                    return true;
+                }
+                else
+                { 
+                    task = Task.Land;
+                    return true;
+                }
+            }
+
+            return false;
         }
         private void TaskDone()
         {
@@ -338,16 +432,12 @@ namespace Space_RPG
         {
             if (_prevTask == Task.None)
             {
-                StrCurrentTask = " - ";
-                CurrentTask = Task.None;
-                _isBusy = false;
+                ClearTask();
             }
             else
             {
-                CurrentTask = _prevTask;
-                StrCurrentTask = _strPrevTask;
+                DoPrevTask();
             }
-
         }
         private Task GetEngineerTask(string command)
         {
@@ -355,7 +445,7 @@ namespace Space_RPG
 
             // High Priority
             if (Hunger < 70)
-                return Task.Eating;
+                return Task.Eat;
 
             // Medium Priority
 
@@ -369,6 +459,58 @@ namespace Space_RPG
             {
                 MainWindow.mainVm.Log.Add($"{Name}: {message}");
             });
+        }
+        private void SavePrevTask()
+        {
+            _prevTask = CurrentTask;
+            _strPrevTask = StrCurrentTask;
+        }
+        private string GetTaskActionText(Task task)
+        {
+            switch (task)
+            {
+                case Task.Eat:
+                    state = State.Eating;
+                    return "Eating";
+
+                case Task.TakeSeat:
+                    state = State.Seated;
+                    return "Seated";
+
+                case Task.StandbyForInstruction:
+                    return "Waiting for instruction";
+
+                case Task.PrepareToLiftoff:
+                    return "Preparing for liftoff";
+
+                case Task.Liftoff:
+                    return "Lifting off";
+
+                case Task.PrepareToLand:
+                    return "Preparing for landing";
+
+                case Task.Land:
+                    return "Landing";
+
+                // Pilot Tasks
+                case Task.StartEngine:
+                    return "Starting the engine";
+
+                case Task.ShutdownEngine:
+                    return "Shutting down engine";
+
+                // Mechanic Tasks
+                case Task.FixEngine:
+                    return "Fixing the engine";
+
+                case Task.FixWeapon:
+                    return "Fixing the weapon";
+
+                case Task.None:
+                    state = State.None;
+                    return " - ";
+            }
+            return "Unknown Task item";
         }
         #endregion Private Methods
 

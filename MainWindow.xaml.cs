@@ -29,6 +29,8 @@ namespace Space_RPG
         public static Utilities Util = new Utilities();
         public static CommandManager Command = new CommandManager();
         public static TaskManager TaskMgr = new TaskManager();
+        public static ImageManager ImgMgr = new ImageManager();
+
         public static MainVM mainVm = new MainVM();
 
         private string _prevCommand;

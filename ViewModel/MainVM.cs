@@ -86,7 +86,12 @@ namespace Space_RPG.ViewModel
             get { return _cockpitImage; }
             set { _cockpitImage = value; OnPropertyChanged(); }
         }
-
+        private double _mainImgOpacity = 1;
+        public double MainImgOpacity
+        {
+            get { return _mainImgOpacity; }
+            set { _mainImgOpacity = value; OnPropertyChanged(); }
+        }
         BackgroundWorker _bgwUpdate;
 
         public MainVM()

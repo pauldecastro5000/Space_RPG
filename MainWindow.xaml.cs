@@ -71,9 +71,10 @@ namespace Space_RPG
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            mainVm.MyShip.Weapons[1].CurrentHealth -= 1;
-            mainVm.MyShip.Food -= 1;
-            mainVm.MyShip.engine.Health -= 1;
+            //mainVm.MyShip.Weapons[1].CurrentHealth -= 1;
+            //mainVm.MyShip.Food -= 1;
+            //mainVm.MyShip.engine.Health -= 1;
+            mainVm.MyShip.State = Space_RPG.Ship.state.Hovering;
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

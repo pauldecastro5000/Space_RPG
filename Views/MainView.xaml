@@ -18,6 +18,6 @@
                    Style="{StaticResource baseStyle}"
                    HorizontalAlignment="Center" />
         <Image Grid.Row="1"
-               gif:ImageBehavior.AnimatedSource="{Binding CockpitImage}" />
+               gif:ImageBehavior.AnimatedSource="{Binding CockpitImage}" Opacity="{Binding MainImgOpacity}"/>
     </Grid>
 </UserControl>

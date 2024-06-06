@@ -159,5 +159,8 @@
   <ItemGroup>
     <Resource Include="Resources\EMPTY.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EARTH_CLOUD.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

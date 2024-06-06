@@ -28,7 +28,7 @@ namespace Space_RPG
                     break;
 
                 case Ship.state.LiftingOff:
-                    _newImgPath = "../Resources/EMPTY.jpg";
+                    _newImgPath = "../Resources/EARTH_CLOUD.gif";
                     if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
                     {
                         ChangeImage(_newImgPath);

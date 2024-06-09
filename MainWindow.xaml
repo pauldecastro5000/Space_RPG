@@ -7,8 +7,8 @@
         xmlns:views="clr-namespace:Space_RPG.Views"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="768"
-        Width="1024"
+        Height="1080"
+        Width="1360"
         Background="Black">
     <Grid Margin="0,-1,0,1">
         <Grid.RowDefinitions>
@@ -17,18 +17,20 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="1.3*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <!-- TOP LEFT -->
+        <!-- TOP OUTER LEFT -->
         <Border Grid.Row="0">
             <views:ShipStatusView />
         </Border>
 
-        <!-- TOP MIDDLE -->
+        <!-- TOP CENTER -->
         <Border Grid.Row="0"
-                Grid.Column="1">
+                Grid.Column="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*" />
@@ -39,21 +41,21 @@
             </Grid>
         </Border>
 
-        <!-- TOP RIGHT -->
+        <!-- TOP INNER RIGHT -->
         <Border Grid.Row="0"
-                Grid.Column="2">
+                Grid.Column="3">
             <views:CrewListView />
         </Border>
 
-        <!-- BOTTOM LEFT -->
+        <!-- BOTTOM OUTER LEFT -->
         <Border Grid.Row="1"
                 Grid.Column="0">
             <views:PlanetView />
         </Border>
 
-        <!-- BOTTOM MIDDLE -->
+        <!-- BOTTOM INNER LEFT -->
         <Border Grid.Row="1"
-                Grid.Column="1">
+                Grid.Column="2">
             <Grid Margin="0,0,0,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
@@ -79,9 +81,9 @@
             </Grid>
         </Border>
 
-        <!-- BOTTOM RIGHT -->
+        <!-- BOTTOM INNTER RIGHT -->
         <Border Grid.Row="1"
-                Grid.Column="2">
+                Grid.Column="3">
             <Button Content="Test"
                     Click="btnTest_Click"
                     Background="Black"

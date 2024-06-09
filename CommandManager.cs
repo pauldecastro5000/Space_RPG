@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace Space_RPG
 {
@@ -16,6 +17,8 @@ namespace Space_RPG
             Assignment, // assign xx to/as xx
             Hiring,     // hire new crew
             Hire,       // hire
+            Save,
+            Load,
             CrewTask
                 // Start the engine
                 // Shutoff the engine
@@ -66,6 +69,17 @@ namespace Space_RPG
 
                     MainWindow.Crew.RemoveApplicant(crew);
                     break;
+
+                case CommandType.Save:
+                    if (!MainWindow.saveLoad.Save(out err))
+                        return false;
+                    break;
+
+                case CommandType.Load:
+                    if (!MainWindow.saveLoad.Load(out err))
+                        return false;
+                    break;
+
                 case CommandType.CrewTask:
                     if (!ProcessCrewTask(command, out Crew.CrewJob Job, out err))
                         return false;
@@ -127,6 +141,18 @@ namespace Space_RPG
                 {
                     type = CommandType.Hire;
                 }
+                return;
+            }
+
+            // SAVE/LOAD
+            if (cmd.Contains("SAVE"))
+            {
+                type = CommandType.Save;
+                return;
+            }
+            if (cmd.Contains("LOAD"))
+            {
+                type = CommandType.Load;
                 return;
             }
             //// CREW TASKS

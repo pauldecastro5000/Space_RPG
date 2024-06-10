@@ -11,7 +11,7 @@
              Background="Black">
     <Grid Margin="4">
         <StackPanel>
-            <TextBlock Text="STRUCTURE"
+            <TextBlock Text="RESOURCES"
                    Style="{StaticResource Title}" />
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -19,89 +19,21 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <TextBlock Text="Engine"
-                           Style="{StaticResource Body}" />
-                    
-                    <ItemsControl ItemsSource="{Binding MyShip.Weapons}" Style="{StaticResource Basic}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Margin="20,0"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding MyShip.engine.Health}"
-                           Style="{StaticResource BodyValue}" />
-
-                    <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
-                                  Style="{StaticResource Basic}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Health}" Style="{StaticResource BodyValue}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Grid>
-            <TextBlock Text="RESOURCES"
-                   Style="{StaticResource Title}"
-                   Margin="0,20,0,0" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel>
                     <TextBlock Text="Food"
-                           Style="{StaticResource Body}" />
+                               Style="{StaticResource Body}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="{Binding MyShip.Food}"
-                           Style="{StaticResource BodyValue}" />
+                               Style="{StaticResource BodyValue}" />
                 </StackPanel>
             </Grid>
-            <TextBlock Text="ASSIGNMENT"
-                       Style="{StaticResource Title}"
-                       Margin="0,80,0,0" />
+            <TextBlock Text="FACILITIES"
+                       Style="{StaticResource Title}" Margin="0,20,0,0"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.5*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                
-                <!-- LEFT ASSIGNMENT-->
-                <StackPanel>
-                    <TextBlock Text="Captain"
-                               Style="{StaticResource Body}" />
-                    <TextBlock Text="Pilot"
-                               Style="{StaticResource Body}" />
-                    <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
-                                  Style="{StaticResource Basic}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"
-                                           Margin="20,0" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-                
-                <!-- RIGHT -->
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding MyShip.Captain.Name}"
-                               Style="{StaticResource BodyValue}" />
-                    <TextBlock Text="{Binding MyShip.Pilot.Name}"
-                               Style="{StaticResource BodyValue}" />
-                    <ItemsControl ItemsSource="{Binding MyShip.Weapons}"
-                                  Style="{StaticResource Basic}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Gunner.Name}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
             </Grid>
         </StackPanel>
     </Grid>

@@ -26,7 +26,7 @@
                TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource baseStyle}">
             <Setter Property="Margin"
-                    Value="20,0" />
+                    Value="10,0" />
             <Setter Property="HorizontalAlignment"
                     Value="Left" />
         </Style>
@@ -56,7 +56,17 @@
             <Setter Property="BorderThickness"
                     Value="1" />
         </Style>
-        
-        
+        <Style x:Key="ICBody"
+               TargetType="{x:Type ItemsControl}"
+               BasedOn="{StaticResource Basic}">
+            <Setter Property="Margin"
+                    Value="10,0" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Left" />
+        </Style>
+        <Style x:Key="ICBasic"
+               TargetType="{x:Type ItemsControl}"
+               BasedOn="{StaticResource Basic}">
+        </Style>
     </Application.Resources>
 </Application>

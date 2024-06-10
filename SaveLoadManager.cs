@@ -47,6 +47,7 @@ namespace Space_RPG
                 MainWindow.mainVm.PlanetType = vm.PlanetType;
                 MainWindow.mainVm.EngineState = vm.EngineState;
                 MainWindow.mainVm.CockpitImage = vm.CockpitImage;
+                MainWindow.mainVm.dateTime = vm.dateTime;
             }
             return true;
         }

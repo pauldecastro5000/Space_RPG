@@ -57,16 +57,18 @@ namespace Space_RPG
             // Initialize my ship
             mainVm.MyShip = Ship.Ships.First();              // load first ship as my ship
             mainVm.MyShip.AddCaptain();                      // add caption to my ship
-            
+
             // Initialize planets
             mainVm.Planets = Planet.Planets;                 // assign planets
             mainVm.CurrentPlanet = Planet.Planets.First();   // load first planet as my current planet
 
-            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type), 
+            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
                 Planet.Planets.First().type);
             mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
                 mainVm.MyShip.engine.State);
-            
+
+            mainVm.dateTime = new DateTime(2024, 1, 1, 12, 0, 0);
+
             UniverseTime.TimeStart();
         }
 

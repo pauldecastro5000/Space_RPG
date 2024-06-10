@@ -54,6 +54,7 @@ namespace Space_RPG
                     {
                         if (_sw.Elapsed.TotalSeconds >= 1)
                         {
+                            MainWindow.mainVm.dateTime = MainWindow.mainVm.dateTime.AddMinutes(1);
                             OnTickPerMin(EventArgs.Empty);
                             break;
                         }

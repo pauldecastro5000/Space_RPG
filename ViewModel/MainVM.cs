@@ -78,6 +78,15 @@ namespace Space_RPG.ViewModel
             get { return _mainImgOpacity; }
             set { _mainImgOpacity = value; OnPropertyChanged(); }
         }
+        private DateTime _dateTime;
+        public DateTime dateTime
+        {
+            get { return _dateTime; }
+            set { _dateTime = value; OnPropertyChanged(); }
+        }
+
+
+
         BackgroundWorker _bgwUpdate;
 
         public MainVM()

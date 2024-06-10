@@ -24,6 +24,15 @@ namespace Space_RPG
             Warping,
             Hovering
         }
+        public enum FacilityType
+        {
+            Bridge,
+            Kitchen,
+            MedicalBay,
+            CrewQuarters,
+            Cargo
+
+        }
         #endregion Public Members
 
         #region Public Properties
@@ -420,6 +429,12 @@ namespace Space_RPG
             public Crew.CrewJob Job { get; set; }
             public string Command { get; set; }
             public DateTime Timestamp { get; set; }
+        }
+        public class Facility
+        {
+            public string name { get; set; }
+            public List<Crew> crews { get; set; }
+
         }
         #endregion Public Class
     }

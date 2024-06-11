@@ -26,12 +26,16 @@ namespace Space_RPG
         }
         public enum FacilityType
         {
+            Armoury,
+            Bar,
             Bridge,
+            Cargo,
+            CrewQuarters,
+            Garden,
+            Gym,
             Kitchen,
             MedicalBay,
-            CrewQuarters,
-            Cargo
-
+            VehicleRoom
         }
         #endregion Public Members
 
@@ -61,6 +65,12 @@ namespace Space_RPG
         {
             get { return _weapons; }
             set { _weapons = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<Facility> _facilities;
+        public ObservableCollection<Facility> Facilities
+        {
+            get { return _facilities; }
+            set { _facilities = value; OnPropertyChanged(); }
         }
         private state _state;
         public state State
@@ -432,9 +442,9 @@ namespace Space_RPG
         }
         public class Facility
         {
-            public string name { get; set; }
+            public string Name { get; set; }
+            public FacilityType type { get; set; }
             public List<Crew> crews { get; set; }
-
         }
         #endregion Public Class
     }

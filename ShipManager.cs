@@ -33,6 +33,7 @@ namespace Space_RPG
         public void CreateMyShip()
         {
             var weapons = new ObservableCollection<Ship.Weapon>();
+            var facilities = new ObservableCollection<Ship.Facility>();
 
             for (int i = 0; i < 3; i++)
             {
@@ -42,6 +43,11 @@ namespace Space_RPG
                     MaxHealth = 100,
                     CurrentHealth = 100,
                 });
+            }
+
+            foreach (var facilityType in (Ship.FacilityType[]) Enum.GetValues(typeof(Ship.FacilityType)))
+            {
+                facilities.Add(new Ship.Facility() { type = facilityType, Name = facilityType.ToString() });
             }
 
             Ships.Add(new Ship()
@@ -54,6 +60,7 @@ namespace Space_RPG
                 State = Ship.state.Docked,
                 Location = _planet.Location,
                 Weapons = weapons,
+                Facilities = facilities,
                 Food = 1000
             });
         }

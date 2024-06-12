@@ -190,6 +190,35 @@ namespace Space_RPG
             Captain = newCrew;
             Crews.Add(newCrew);
         }
+
+        public void AddCrewToFacility(FacilityType facilityType)
+        {
+            var newCrew = new Crew()
+            {
+                Name = "Temp",
+                Job = Crew.CrewJob.None,
+                Hunger = 100,
+                Cash = 100000,
+                Skills = new Crew.skills()
+                {
+                    Piloting = 90,
+                    Aiming = 90,
+                    EngineRepair = 90,
+                    WeaponsRepair = 90,
+                },
+            };
+
+            var facility = Facilities.FirstOrDefault(x => x.type == facilityType);
+            if (facility != null)
+            {
+                facility.Crews.Add(newCrew);
+            } else
+            {
+                MainWindow.mainVm.Log.Add($"facility [{facilityType.ToString()}] cannot be found");
+            }
+
+        }
+
         public bool HireApplicant(Crew crew, out string err)
         {
             err = "";
@@ -444,7 +473,7 @@ namespace Space_RPG
         {
             public string Name { get; set; }
             public FacilityType type { get; set; }
-            public List<Crew> crews { get; set; }
+            public ObservableCollection<Crew> Crews { get; set; } = new ObservableCollection<Crew>();
         }
         #endregion Public Class
     }

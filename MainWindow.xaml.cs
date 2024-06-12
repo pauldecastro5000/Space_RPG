@@ -52,7 +52,7 @@ namespace Space_RPG
 
             Ship.CreateMyShip();
 
-            Crew.AddCaptain();
+            //Crew.AddCaptain();
 
             // Initialize my ship
             mainVm.MyShip = Ship.Ships.First();              // load first ship as my ship
@@ -77,7 +77,8 @@ namespace Space_RPG
             //mainVm.MyShip.Weapons[1].CurrentHealth -= 1;
             //mainVm.MyShip.Food -= 1;
             //mainVm.MyShip.engine.Health -= 1;
-            mainVm.MyShip.State = Space_RPG.Ship.state.Hovering;
+            //mainVm.MyShip.State = Space_RPG.Ship.state.Hovering;
+            mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Bridge);
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

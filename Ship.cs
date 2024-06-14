@@ -26,16 +26,14 @@ namespace Space_RPG
         }
         public enum FacilityType
         {
+            MainDeck,
+            Cafeteria,
             Armoury,
-            Bar,
-            Bridge,
-            Cargo,
             CrewQuarters,
             Garden,
             Gym,
-            Kitchen,
             MedicalBay,
-            VehicleRoom
+            Cargo,
         }
         #endregion Public Members
 
@@ -188,7 +186,8 @@ namespace Space_RPG
                 },
             };
             Captain = newCrew;
-            Crews.Add(newCrew);
+            //Crews.Add(newCrew);
+            PlaceCrew(FacilityType.MainDeck, newCrew);
         }
 
         public void AddCrewToFacility(FacilityType facilityType)
@@ -360,6 +359,14 @@ namespace Space_RPG
                 }
                 else
                     engine.ConsumeFuel(_engineFuelDepletionRate);
+            }
+        }
+        private void PlaceCrew(FacilityType facilityType, Crew crew)
+        {
+            var facility = Facilities.FirstOrDefault(x => x.type == facilityType);
+            if (facility != null)
+            {
+                facility.Crews.Add(crew);
             }
         }
         #endregion Private Methods

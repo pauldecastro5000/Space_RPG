@@ -41,7 +41,7 @@ namespace Space_RPG
             InitializeComponent();
             DataContext = mainVm;
 
-            // Generate Planet
+            // Generate Planets
             Planet.CreateColonizedPlanet();
             for (int i = 0; i < 100; i++)
             {
@@ -78,7 +78,7 @@ namespace Space_RPG
             //mainVm.MyShip.Food -= 1;
             //mainVm.MyShip.engine.Health -= 1;
             //mainVm.MyShip.State = Space_RPG.Ship.state.Hovering;
-            mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Bridge);
+            mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Cargo);
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

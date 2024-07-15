@@ -12,6 +12,7 @@ namespace Space_RPG
 {
     public class Crew : ViewModelBase
     {
+        #region Public Members
         public enum CrewJob
         {
             None,
@@ -21,7 +22,6 @@ namespace Space_RPG
             Weapons,
             Engineer
         }
-
         public enum State
         {
             None,
@@ -42,7 +42,6 @@ namespace Space_RPG
             FixingEngine,        
             FixingWeapon         
         }
-
         public enum Task
         {
             None,
@@ -63,6 +62,7 @@ namespace Space_RPG
             FixEngine,        // fix the engine
             FixWeapon         // fix weapon#
         }
+        #endregion Public Members
 
         #region Public Properties
         private string _name = "unknown";
@@ -139,23 +139,24 @@ namespace Space_RPG
         #region Constructor
         public Crew()
         {
-            //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+        }
+
+        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        {
+            if (Alive)
+            {
+                if (CurrentTask != Task.Eat)
+                    Hunger -= MainWindow.Crew.hungerDepletionRate;
+
+                TaskLoop();
+            }
         }
         #endregion Constructor
 
         #region Public Methods
         public void TaskLoop()
         {
-            if (Alive)
-            {
-                if (CurrentTask != Task.Eat)
-                    Hunger -= MainWindow.Crew.hungerDepletion;
-            }
-            else
-                return;
-
-
-
             // CHECK IF CREW IS HUNGRY
             if (Hunger < 70 && CurrentTask != Task.Eat)
             {
@@ -175,7 +176,7 @@ namespace Space_RPG
                 {       // GENERAL TASKS
                     case Task.Eat:
                         var foodFill = 1.5; // 30 hunger in 20 mins. // TODO: must be in settings
-                        Hunger = Hunger + foodFill < 100 ? Hunger + foodFill : 100;
+                        Hunger = Hunger + foodFill < 100 ? Hunger + foodFill : 100; // Slowly add to hunger
                         if (Hunger >= 100)
                         {
                             PersonalTaskDone();
@@ -543,6 +544,10 @@ namespace Space_RPG
             }
         }
         #endregion Public Class
+
+        #region Private Class
+
+        #endregion Private Class
     }
 
 

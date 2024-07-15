@@ -102,7 +102,7 @@ namespace Space_RPG
             set { _crews = value; OnPropertyChanged(); }
         }
 
-        public double hungerDepletion { get; } = 0.125;
+        public double hungerDepletionRate { get; } = 0.125;
         #endregion Public Properties
 
         #region Private Variables
@@ -114,7 +114,7 @@ namespace Space_RPG
         #region Constructor
         public CrewManager()
         {
-            MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+            //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
         }
         #endregion Constructor
 
@@ -247,13 +247,13 @@ namespace Space_RPG
 
         #region Private Methods
 
-        private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
-        {
-            foreach (var crew in MainWindow.mainVm.MyShip.Crews)
-            {
-                crew.TaskLoop();
-            }
-        }
+        //private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
+        //{
+        //    foreach (var crew in MainWindow.mainVm.MyShip.Crews)
+        //    {
+        //        crew.TaskLoop();
+        //    }
+        //}
         private bool CrewNameExist(string name)
         {
             if (Crews == null)

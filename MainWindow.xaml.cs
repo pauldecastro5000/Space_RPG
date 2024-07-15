@@ -31,6 +31,7 @@ namespace Space_RPG
         public static TaskManager TaskMgr = new TaskManager();
         public static ImageManager ImgMgr = new ImageManager();
         public static SaveLoadManager saveLoad = new SaveLoadManager();
+        public static VehicleManager Vehicle = new VehicleManager();
 
         public static MainVM mainVm = new MainVM();
 
@@ -41,8 +42,10 @@ namespace Space_RPG
             InitializeComponent();
             DataContext = mainVm;
 
-            // Generate Planets
+            // Generate the first planet that is colonized
             Planet.CreateColonizedPlanet();
+
+            // Generate all other planets
             for (int i = 0; i < 100; i++)
             {
                 Planet.CreateRandomPlanet();

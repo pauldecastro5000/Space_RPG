@@ -73,6 +73,7 @@
     <Compile Include="TaskManager.cs" />
     <Compile Include="UniverseTime.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="VehicleManager.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
     <Compile Include="Views\CockpitView.xaml.cs">

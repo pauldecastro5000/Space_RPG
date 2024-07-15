@@ -189,7 +189,6 @@ namespace Space_RPG
             //Crews.Add(newCrew);
             PlaceCrew(FacilityType.MainDeck, newCrew);
         }
-
         public void AddCrewToFacility(FacilityType facilityType)
         {
             var newCrew = new Crew()
@@ -217,7 +216,6 @@ namespace Space_RPG
             }
 
         }
-
         public bool HireApplicant(Crew crew, out string err)
         {
             err = "";

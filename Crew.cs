@@ -12,6 +12,7 @@ namespace Space_RPG
 {
     public class Crew : ViewModelBase
     {
+        #region Public Members
         public enum CrewJob
         {
             None,
@@ -21,7 +22,6 @@ namespace Space_RPG
             Weapons,
             Engineer
         }
-
         public enum State
         {
             None,
@@ -29,20 +29,19 @@ namespace Space_RPG
             Eating,
             Seated,
             StandbyForInstruction,
-            PreparingToLiftoff, 
-            Liftingoff,          
-            PreparingToLand,    
-            Landing,             
+            PreparingToLiftoff,
+            Liftingoff,
+            PreparingToLand,
+            Landing,
 
             // Pilot Tasks
-            StartingEngine,      
-            ShuttingdownEngine,   
+            StartingEngine,
+            ShuttingdownEngine,
 
             // Mechanic Tasks
-            FixingEngine,        
-            FixingWeapon         
+            FixingEngine,
+            FixingWeapon
         }
-
         public enum Task
         {
             None,
@@ -63,6 +62,7 @@ namespace Space_RPG
             FixEngine,        // fix the engine
             FixWeapon         // fix weapon#
         }
+        #endregion Public Members
 
         #region Public Properties
         private string _name = "unknown";
@@ -149,7 +149,7 @@ namespace Space_RPG
             if (Alive)
             {
                 if (CurrentTask != Task.Eat)
-                    Hunger -= MainWindow.Crew.hungerDepletion;
+                    Hunger -= MainWindow.CrewMgr.hungerDepletion;
             }
             else
                 return;

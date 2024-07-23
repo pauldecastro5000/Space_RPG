@@ -22,15 +22,15 @@ namespace Space_RPG
     public partial class MainWindow : Window
     {
         public static UniverseTime UniverseTime = new UniverseTime();
-        public static PlanetManager Planet = new PlanetManager();
-        public static CrewManager Crew = new CrewManager();
-        public static ShipManager Ship = new ShipManager();
-        public static StorageManager Storage = new StorageManager();
+        public static PlanetManager PlanetMgr = new PlanetManager();
+        public static CrewManager CrewMgr = new CrewManager();
+        public static ShipManager ShipMgr = new ShipManager();
+        public static StorageManager StorageMgr = new StorageManager();
         public static Utilities Util = new Utilities();
-        public static CommandManager Command = new CommandManager();
+        public static CommandManager CommandMgr = new CommandManager();
         public static TaskManager TaskMgr = new TaskManager();
         public static ImageManager ImgMgr = new ImageManager();
-        public static SaveLoadManager saveLoad = new SaveLoadManager();
+        public static SaveLoadManager saveLoadMgr = new SaveLoadManager();
 
         public static MainVM mainVm = new MainVM();
 
@@ -42,28 +42,28 @@ namespace Space_RPG
             DataContext = mainVm;
 
             // Generate Planets
-            Planet.CreateColonizedPlanet();
+            PlanetMgr.CreateColonizedPlanet();
             for (int i = 0; i < 100; i++)
             {
-                Planet.CreateRandomPlanet();
+                PlanetMgr.CreateRandomPlanet();
             }
 
-            Ship.loadPlanet(Planet.Planets.First());
+            ShipMgr.loadPlanet(PlanetMgr.Planets.First());
 
-            Ship.CreateMyShip();
+            ShipMgr.CreateMyShip();
 
-            //Crew.AddCaptain();
+            //CrewMgr.AddCaptain();
 
             // Initialize my ship
-            mainVm.MyShip = Ship.Ships.First();              // load first ship as my ship
+            mainVm.MyShip = ShipMgr.Ships.First();              // load first ship as my ship
             mainVm.MyShip.AddCaptain();                      // add caption to my ship
 
             // Initialize planets
-            mainVm.Planets = Planet.Planets;                 // assign planets
-            mainVm.CurrentPlanet = Planet.Planets.First();   // load first planet as my current planet
+            mainVm.Planets = PlanetMgr.Planets;                 // assign planets
+            mainVm.CurrentPlanet = PlanetMgr.Planets.First();   // load first planet as my current planet
 
             mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
-                Planet.Planets.First().type);
+                PlanetMgr.Planets.First().type);
             mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
                 mainVm.MyShip.engine.State);
 
@@ -77,7 +77,7 @@ namespace Space_RPG
             //mainVm.MyShip.Weapons[1].CurrentHealth -= 1;
             //mainVm.MyShip.Food -= 1;
             //mainVm.MyShip.engine.Health -= 1;
-            //mainVm.MyShip.State = Space_RPG.Ship.state.Hovering;
+            //mainVm.MyShip.State = Space_RPG.ShipMgr.state.Hovering;
             mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Cargo);
         }
 
@@ -85,7 +85,7 @@ namespace Space_RPG
         {
             if (e.Key == Key.Return)
             {
-                if (!Command.ProcessCommand(mainVm.Command, out string err))
+                if (!CommandMgr.ProcessCommand(mainVm.Command, out string err))
                 {
                     Log($"Command: [{mainVm.Command}] returns error.");
                     Log($"ERROR: {err}");

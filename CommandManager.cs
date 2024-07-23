@@ -50,8 +50,8 @@ namespace Space_RPG
                         err = "There is no applicant in space...";
                         return false;
                     }
-                    MainWindow.Crew.FindApplicant();
-                    MainWindow.Crew.DisplayApplicant();
+                    MainWindow.CrewMgr.FindApplicant();
+                    MainWindow.CrewMgr.DisplayApplicant();
                     break;
 
                 case CommandType.Hire:
@@ -61,22 +61,22 @@ namespace Space_RPG
                         return false;
                     }
                     name = command.Split(' ').Last();
-                    if (!MainWindow.Crew.GetApplicant(name, out Crew crew, out err))
+                    if (!MainWindow.CrewMgr.GetApplicant(name, out Crew crew, out err))
                         return false;
 
                     if (!MainWindow.mainVm.MyShip.HireApplicant(crew, out err))
                         return false;
 
-                    MainWindow.Crew.RemoveApplicant(crew);
+                    MainWindow.CrewMgr.RemoveApplicant(crew);
                     break;
 
                 case CommandType.Save:
-                    if (!MainWindow.saveLoad.Save(out err))
+                    if (!MainWindow.saveLoadMgr.Save(out err))
                         return false;
                     break;
 
                 case CommandType.Load:
-                    if (!MainWindow.saveLoad.Load(out err))
+                    if (!MainWindow.saveLoadMgr.Load(out err))
                         return false;
                     break;
 

@@ -130,15 +130,15 @@ namespace Space_RPG
         //    var pilot = RandomNumber(0, 100);
         //    var engineRepair = RandomNumber(0, 100);
         //    var weaponsRepair = RandomNumber(0, 100);
-        //    var job = (Crew.CrewJob)RandomNumber(1, 3);
+        //    var job = (CrewMgr.CrewJob)RandomNumber(1, 3);
 
-        //    var newCrew = new Crew()
+        //    var newCrew = new CrewMgr()
         //    {
         //        Name = name,
         //        Job = job,
         //        Hunger = 90,
         //        Cash = 500,
-        //        Skills = new Crew.skills()
+        //        Skills = new CrewMgr.skills()
         //    };
 
         //    Crews.Add(newCrew);

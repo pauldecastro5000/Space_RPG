@@ -91,7 +91,7 @@ namespace Space_RPG.ViewModel
 
         public MainVM()
         {
-            CrewManager = MainWindow.Crew;
+            CrewManager = MainWindow.CrewMgr;
         }
     }
 }

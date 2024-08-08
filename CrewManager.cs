@@ -251,7 +251,11 @@ namespace Space_RPG
         {
             foreach (var crew in MainWindow.mainVm.MyShip.Crews)
             {
-                crew.TaskLoop();
+                if (crew.Alive)
+                {
+                    crew.UpdateHunger();
+                    crew.TaskLoop();
+                }
             }
         }
         private bool CrewNameExist(string name)

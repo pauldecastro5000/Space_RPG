@@ -335,7 +335,7 @@ namespace Space_RPG
             {
                 if (crew.Job == Crew.CrewJob.Captain || crew.Job == Crew.CrewJob.Pilot)
                     continue;
-                if (crew.CurrentTask != Crew.Task.TakeSeat && crew.Job != Crew.CrewJob.Pilot)
+                if (crew.CurrentTask != Crew.TaskType.TakeSeat && crew.Job != Crew.CrewJob.Pilot)
                     return false;
             }
             return true;

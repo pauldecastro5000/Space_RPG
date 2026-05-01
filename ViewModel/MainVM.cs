@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Space_RPG.Helpers;
+using Space_RPG.Models;
+using Space_RPG.Windows;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Space_RPG.ViewModel
@@ -85,13 +89,48 @@ namespace Space_RPG.ViewModel
             set { _dateTime = value; OnPropertyChanged(); }
         }
 
+        #region Applicants
+        public ObservableCollection<Applicant> AcceptedApplicants { get; set; }
 
+        public RelayCommand OpenApplicantsCommand { get; }
+
+        #endregion Applicants
 
         BackgroundWorker _bgwUpdate;
 
         public MainVM()
         {
             CrewManager = MainWindow.CrewMgr;
+
+            #region Applicants
+            AcceptedApplicants = new ObservableCollection<Applicant>();
+            OpenApplicantsCommand = new RelayCommand(OpenApplicants);
+            #endregion Applicants
         }
+
+        #region Applicants
+        private void OpenApplicants()
+        {
+            var vm = new ApplicantSelectionViewModel();
+
+            var window = new ApplicantSelectionWindow
+            {
+                DataContext = vm,
+                Owner = Application.Current.MainWindow
+            };
+
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                AcceptedApplicants.Clear();
+
+                foreach (var applicant in vm.SelectedApplicants)
+                {
+                    AcceptedApplicants.Add(applicant);
+                }
+            }
+        }
+        #endregion Applicants
     }
 }

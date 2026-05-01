@@ -77,6 +77,11 @@
                         Click="btnTest_Click"
                         Background="Black"
                         Foreground="White" />
+                <Button Content="Open Applicants"
+                        Grid.Row="1"
+                        Width="150"
+                        Height="40"
+                        Command="{Binding OpenApplicantsCommand}" />
             </Grid>
 
          

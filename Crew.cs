@@ -18,9 +18,14 @@ namespace Space_RPG
             None,
             All,
             Captain,
-            Pilot,
-            Weapons,
-            Engineer
+            Pilot,    // Navigate Ship
+            TurretGunners,  // 
+            Engineer,
+            Expolorer,
+            ExpeditionGuard,
+            Miners,
+            Driver,
+
         }
         public enum State
         {
@@ -221,7 +226,7 @@ namespace Space_RPG
                     GetPilotTask(task);
                     break;
 
-                case CrewJob.Weapons:
+                case CrewJob.TurretGunners:
 
                     break;
 

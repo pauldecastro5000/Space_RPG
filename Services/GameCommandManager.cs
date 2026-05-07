@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
+using Space_RPG.Models;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
-    public class CommandManager
+    public class GameCommandManager
     {
         private enum CommandType
         {
@@ -28,90 +29,90 @@ namespace Space_RPG
         public bool ProcessCommand(string command, out string err)
         {
             err = "";
-            string name = "";
-            string assignedTo = "";
+            //string name = "";
+            //string assignedTo = "";
 
-            // Get the type of command
-            GetType(command, out CommandType type);
+            //// Get the type of command
+            //GetType(command, out CommandType type);
 
-            switch (type)
-            {
-                case CommandType.Assignment:
-                    if (!GetAssignment(command, out name, out assignedTo, out err))
-                        return false;
+            //switch (type)
+            //{
+            //    case CommandType.Assignment:
+            //        //if (!GetAssignment(command, out name, out assignedTo, out err))
+            //        //    return false;
 
-                    if (!MainWindow.mainVm.MyShip.Assign(name, assignedTo, out err))
-                        return false;
-                    break;
+            //        //if (!MainWindow.mainVm.MyShip.Assign(name, assignedTo, out err))
+            //        //    return false;
+            //        break;
 
-                case CommandType.Hiring:
-                    if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
-                    {
-                        err = "There is no applicant in space...";
-                        return false;
-                    }
-                    MainWindow.CrewMgr.FindApplicant();
-                    MainWindow.CrewMgr.DisplayApplicant();
-                    break;
+            //    case CommandType.Hiring:
+            //        //if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
+            //        //{
+            //        //    err = "There is no applicant in space...";
+            //        //    return false;
+            //        //}
+            //        //MainWindow.CrewMgr.FindApplicant();
+            //        //MainWindow.CrewMgr.DisplayApplicant();
+            //        break;
 
-                case CommandType.Hire:
-                    if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
-                    {
-                        err = "There is no applicant in space...";
-                        return false;
-                    }
-                    name = command.Split(' ').Last();
-                    if (!MainWindow.CrewMgr.GetApplicant(name, out Crew crew, out err))
-                        return false;
+            //    case CommandType.Hire:
+            //        if (MainWindow.mainVm.MyShip.State != Ship.state.Docked)
+            //        {
+            //            err = "There is no applicant in space...";
+            //            return false;
+            //        }
+            //        name = command.Split(' ').Last();
+            //        if (!MainWindow.CrewMgr.GetApplicant(name, out Crew crew, out err))
+            //            return false;
 
-                    if (!MainWindow.mainVm.MyShip.HireApplicant(crew, out err))
-                        return false;
+            //        if (!MainWindow.mainVm.MyShip.HireApplicant(crew, out err))
+            //            return false;
 
-                    MainWindow.CrewMgr.RemoveApplicant(crew);
-                    break;
+            //        MainWindow.CrewMgr.RemoveApplicant(crew);
+            //        break;
 
-                case CommandType.Save:
-                    if (!MainWindow.saveLoadMgr.Save(out err))
-                        return false;
-                    break;
+            //    case CommandType.Save:
+            //        if (!MainWindow.saveLoadMgr.Save(out err))
+            //            return false;
+            //        break;
 
-                case CommandType.Load:
-                    if (!MainWindow.saveLoadMgr.Load(out err))
-                        return false;
-                    break;
+            //    case CommandType.Load:
+            //        if (!MainWindow.saveLoadMgr.Load(out err))
+            //            return false;
+            //        break;
 
-                case CommandType.CrewTask:
-                    if (!ProcessCrewTask(command, out Crew.CrewJob Job, out err))
-                        return false;
-                    MainWindow.mainVm.MyShip.AddCrewTask(Job, command);
-                    break;
-            }
+            //    case CommandType.CrewTask:
+            //        if (!ProcessCrewTask(command, out Job Job, out err))
+            //            return false;
+            //        MainWindow.mainVm.MyShip.AddCrewTask(Job, command);
+            //        break;
+            //}
             return true;
         }
         #endregion Public Methods
 
         #region Private Methods
-        private bool ProcessCrewTask(string command, out Crew.CrewJob job, out string err)
+        private bool ProcessCrewTask(string command, out Job job, out string err)
         {
             err = "";
-            job = Crew.CrewJob.None;
+            job = Job.None;
             var cmd = command.ToUpper();
             if (cmd.Contains("ENGINE"))
             {
                 if (cmd.Contains("START") || cmd.Contains("SHUTOFF"))
                 {
-                    job = Crew.CrewJob.Pilot;
+                    job = Job.Pilot;
                     return true;
                 } else if (cmd.Contains("FIX"))
                 {
-                    job = Crew.CrewJob.Engineer;
+                    job = Job.Engineer;
                     return true;
                 }
             }
 
             if (cmd.Contains("LIFTOFF"))
             {
-                job = Crew.CrewJob.All;
+                job = Job.All;
                 return true;
             }
 

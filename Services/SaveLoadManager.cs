@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Space_RPG.ViewModel;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
     public class SaveLoadManager
     {
@@ -39,7 +39,7 @@ namespace Space_RPG
                 string json = r.ReadToEnd();
                 MainVM vm = JsonConvert.DeserializeObject<MainVM>(json);
                 MainWindow.mainVm.MyShip = vm.MyShip;
-                MainWindow.mainVm.CrewManager = vm.CrewManager;
+                //MainWindow.mainVm.CrewManager = vm.CrewManager;
                 MainWindow.mainVm.Command = vm.Command;
                 MainWindow.mainVm.Log = vm.Log;
                 MainWindow.mainVm.Planets = vm.Planets;

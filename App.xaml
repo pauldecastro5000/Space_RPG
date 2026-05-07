@@ -50,12 +50,7 @@
             <Setter Property="FontWeight"
                     Value="Bold" />
         </Style>
-        <Style TargetType="{x:Type Border}">
-            <Setter Property="BorderBrush"
-                    Value="#333333" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-        </Style>
+
         <Style x:Key="ICBody"
                TargetType="{x:Type ItemsControl}"
                BasedOn="{StaticResource Basic}">
@@ -68,5 +63,29 @@
                TargetType="{x:Type ItemsControl}"
                BasedOn="{StaticResource Basic}">
         </Style>
+
+        <!-- GLOBAL -->
+        <Style TargetType="{x:Type Button}"
+               BasedOn="{StaticResource Basic}">
+            <Setter Property="Background"
+                    Value="Black" />
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="FontFamily"
+                    Value="Century Gothic" />
+        </Style>
+
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush"
+                    Value="#333333" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+        </Style>
+        
     </Application.Resources>
 </Application>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
     public class ImageManager
     {
@@ -17,33 +17,33 @@ namespace Space_RPG
 
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
-            switch (MainWindow.mainVm.MyShip.State)
-            {
-                case Ship.state.Docked:
-                    _newImgPath = "../Resources/DOCKED.jpg";
-                    if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
-                    {
-                        ChangeImage(_newImgPath);
-                    }
-                    break;
+            //switch (MainWindow.mainVm.MyShip.State)
+            //{
+            //    case Ship.state.Docked:
+            //        _newImgPath = "../Resources/DOCKED.jpg";
+            //        if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
+            //        {
+            //            ChangeImage(_newImgPath);
+            //        }
+            //        break;
 
-                case Ship.state.LiftingOff:
-                    _newImgPath = "../Resources/EARTH_CLOUD.gif";
-                    if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
-                    {
-                        ChangeImage(_newImgPath);
-                    }
-                    break;
+            //    case Ship.state.LiftingOff:
+            //        _newImgPath = "../Resources/EARTH_CLOUD.gif";
+            //        if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
+            //        {
+            //            ChangeImage(_newImgPath);
+            //        }
+            //        break;
 
-                case Ship.state.Hovering:
-                    _newImgPath = "../Resources/SPACE_EARTH_STATIC.jpg";
-                    if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
-                    {
-                        ChangeImage(_newImgPath);
-                    }
-                    break;
+            //    case Ship.state.Hovering:
+            //        _newImgPath = "../Resources/SPACE_EARTH_STATIC.jpg";
+            //        if (_newImgPath != MainWindow.mainVm.CockpitImage && !_isInTransition)
+            //        {
+            //            ChangeImage(_newImgPath);
+            //        }
+            //        break;
 
-            }
+            //}
         }
 
         private async void ChangeImage(string imgPath)

@@ -4,7 +4,9 @@
         Title="Select Applicants"
         Width="900"
         Height="650"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Background="Black"
+        WindowState="Maximized">
 
     <DockPanel Margin="15">
 
@@ -26,16 +28,49 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Gray"
-                            BorderThickness="1"
+                    <Border BorderThickness="2"
                             CornerRadius="8"
                             Margin="8"
-                            Padding="10">
+                            Padding="10"
+                            Cursor="Hand"
+                            MouseLeftButtonUp="ApplicantBorder_MouseLeftButtonUp">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+
+                                <Setter Property="BorderBrush"
+                                        Value="Gray" />
+                                <Setter Property="Background"
+                                        Value="#222222" />
+
+                                <Style.Triggers>
+
+                                    <!-- Hover -->
+                                    <Trigger Property="IsMouseOver"
+                                             Value="True">
+                                        <Setter Property="BorderBrush"
+                                                Value="DarkBlue" />
+                                        <Setter Property="BorderThickness"
+                                                Value="3" />
+                                    </Trigger>
+
+                                    <!-- Selected -->
+                                    <DataTrigger Binding="{Binding IsSelected}"
+                                                 Value="True">
+                                        <Setter Property="BorderBrush"
+                                                Value="LimeGreen" />
+                                        <Setter Property="BorderThickness"
+                                                Value="4" />
+                                        <Setter Property="Background"
+                                                Value="#2E3F2E" />
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+
+                            </Style>
+                        </Border.Style>
 
                         <StackPanel>
-
-                            <CheckBox IsChecked="{Binding IsSelected}"
-                                      HorizontalAlignment="Right" />
 
                             <Image Source="{Binding PhotoPath}"
                                    Height="100"
@@ -45,13 +80,20 @@
                             <TextBlock Text="{Binding Name}"
                                        FontWeight="Bold"
                                        FontSize="14"
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"
+                                       Foreground="White" />
 
-                            <TextBlock Text="{Binding Age, StringFormat=Age: {0}}" />
-                            <TextBlock Text="{Binding Skills, StringFormat=Skills: {0}}" />
-                            <TextBlock Text="{Binding Price, StringFormat=Price: ${0}}" />
+                            <TextBlock Text="{Binding Age, StringFormat=Age: {0}}"
+                                       Foreground="White" />
+
+                            <TextBlock Text="{Binding Skills, StringFormat=Skills: {0}}"
+                                       Foreground="White" />
+
+                            <TextBlock Text="{Binding Price, StringFormat=Price: ${0}}"
+                                       Foreground="White" />
 
                         </StackPanel>
+
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

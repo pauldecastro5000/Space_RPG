@@ -1,4 +1,5 @@
 ﻿using Space_RPG.ViewModel;
+using Space_RPG.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Space_RPG
         public static ShipManager ShipMgr = new ShipManager();
         public static StorageManager StorageMgr = new StorageManager();
         public static Utilities Util = new Utilities();
-        public static CommandManager CommandMgr = new CommandManager();
+        public static GameCommandManager CommandMgr = new GameCommandManager();
         public static TaskManager TaskMgr = new TaskManager();
         public static ImageManager ImgMgr = new ImageManager();
         public static SaveLoadManager saveLoadMgr = new SaveLoadManager();
@@ -48,24 +49,22 @@ namespace Space_RPG
                 PlanetMgr.CreateRandomPlanet();
             }
 
-            ShipMgr.loadPlanet(PlanetMgr.Planets.First());
+           // ShipMgr.loadPlanet(PlanetMgr.Planets.First());
 
             ShipMgr.CreateMyShip();
 
-            //CrewMgr.AddCaptain();
-
             // Initialize my ship
-            mainVm.MyShip = ShipMgr.Ships.First();              // load first ship as my ship
-            mainVm.MyShip.AddCaptain();                      // add caption to my ship
+            //mainVm.MyShip = ShipMgr.Ships.First();              // load first ship as my ship
+            //mainVm.MyShip.AddCaptain();                      // add caption to my ship
 
             // Initialize planets
-            mainVm.Planets = PlanetMgr.Planets;                 // assign planets
-            mainVm.CurrentPlanet = PlanetMgr.Planets.First();   // load first planet as my current planet
+            //mainVm.Planets = PlanetMgr.Planets;                 // assign planets
+            //mainVm.CurrentPlanet = PlanetMgr.Planets.First();   // load first planet as my current planet
 
-            mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
-                PlanetMgr.Planets.First().type);
-            mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
-                mainVm.MyShip.engine.State);
+            //mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
+            //    PlanetMgr.Planets.First().type);
+            //mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+            //    mainVm.MyShip.engine.State);
 
             mainVm.dateTime = new DateTime(2024, 1, 1, 12, 0, 0);
 
@@ -78,7 +77,7 @@ namespace Space_RPG
             //mainVm.MyShip.Food -= 1;
             //mainVm.MyShip.engine.Health -= 1;
             //mainVm.MyShip.State = Space_RPG.ShipMgr.state.Hovering;
-            mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Cargo);
+            //mainVm.MyShip.AddCrewToFacility(Space_RPG.Ship.FacilityType.Cargo);
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)

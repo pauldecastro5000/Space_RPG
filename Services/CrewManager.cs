@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Space_RPG.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
     public class CrewManager : ViewModelBase
     {
@@ -154,7 +155,7 @@ namespace Space_RPG
             var piloting = RandomNumber(0, 80);
             var engineRepair = RandomNumber(0, 80);
             var weaponsRepair = RandomNumber(0, 80);
-            var job = Crew.CrewJob.None;
+            var job = Job.None;
 
             var price = CalculatePrice(aiming, piloting, engineRepair, weaponsRepair);
 
@@ -163,27 +164,27 @@ namespace Space_RPG
                 Name = name,
                 Job = job,
                 Hunger = 100,
-                Cash = 500,
+                //Cash = 500,
                 Price = price,
-                Skills = new Crew.skills() {
-                    Piloting = piloting,
-                    Aiming = aiming, 
-                    EngineRepair = engineRepair, 
-                    WeaponsRepair = weaponsRepair 
-                } 
+                //Skills = new Crew.skills() {
+                //    Piloting = piloting,
+                //    Aiming = aiming, 
+                //    EngineRepair = engineRepair, 
+                //    WeaponsRepair = weaponsRepair 
+                //} 
             };
 
             _applicant = newCrew;
         }
         public void DisplayApplicant()
         {
-            Log("Name: " + _applicant.Name);
-            Log("Piloting: " + _applicant.Skills.Piloting);
-            Log("Aiming: " + _applicant.Skills.Aiming);
-            Log("EngineRepair: " + _applicant.Skills.EngineRepair);
-            Log("WeaponsRepair: " + _applicant.Skills.WeaponsRepair);
-            Log("Price: $" + _applicant.Price.ToString("n0"));
-            Log("");
+            //Log("Name: " + _applicant.Name);
+            //Log("Piloting: " + _applicant.Skills.Piloting);
+            //Log("Aiming: " + _applicant.Skills.Aiming);
+            //Log("EngineRepair: " + _applicant.Skills.EngineRepair);
+            //Log("WeaponsRepair: " + _applicant.Skills.WeaponsRepair);
+            //Log("Price: $" + _applicant.Price.ToString("n0"));
+            //Log("");
         }
         public void HireApplicant(string name)
         {
@@ -229,16 +230,16 @@ namespace Space_RPG
             var newCrew = new Crew()
             {
                 Name = "Paul",
-                Job = Crew.CrewJob.Captain,
+                Job = Job.Captain,
                 Hunger = 100,
-                Cash = 100000,
-                Skills = new Crew.skills()
-                {
-                    Piloting = 90,
-                    Aiming = 90,
-                    EngineRepair = 90,
-                    WeaponsRepair = 90,
-                },
+                //Cash = 100000,
+                //Skills = new Crew.skills()
+                //{
+                //    Piloting = 90,
+                //    Aiming = 90,
+                //    EngineRepair = 90,
+                //    WeaponsRepair = 90,
+                //},
             };
             Crews.Add(newCrew);
         }
@@ -249,14 +250,14 @@ namespace Space_RPG
 
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
-            foreach (var crew in MainWindow.mainVm.MyShip.Crews)
-            {
-                if (crew.Alive)
-                {
-                    crew.UpdateHunger();
-                    crew.TaskLoop();
-                }
-            }
+            //foreach (var crew in MainWindow.mainVm.MyShip.Crews)
+            //{
+            //    //if (crew.Alive)
+            //    //{
+            //    //    crew.UpdateHunger();
+            //    //    crew.TaskLoop();
+            //    //}
+            //}
         }
         private bool CrewNameExist(string name)
         {

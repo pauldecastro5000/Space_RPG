@@ -61,18 +61,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandManager.cs" />
-    <Compile Include="Crew.cs" />
+    <Compile Include="Services\GameCommandManager.cs" />
+    <Compile Include="Models\Crew.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="ImageManager.cs" />
+    <Compile Include="Services\ImageManager.cs" />
     <Compile Include="Models\Applicant.cs" />
-    <Compile Include="Planet.cs" />
-    <Compile Include="PlanetManager.cs" />
-    <Compile Include="SaveLoadManager.cs" />
-    <Compile Include="Ship.cs" />
-    <Compile Include="ShipManager.cs" />
-    <Compile Include="StorageManager.cs" />
-    <Compile Include="TaskManager.cs" />
+    <Compile Include="Models\Engine.cs" />
+    <Compile Include="Models\GameState.cs" />
+    <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\Rover.cs" />
+    <Compile Include="Models\Planet.cs" />
+    <Compile Include="Services\PlanetManager.cs" />
+    <Compile Include="Services\SaveLoadManager.cs" />
+    <Compile Include="Models\Ship.cs" />
+    <Compile Include="Services\ShipManager.cs" />
+    <Compile Include="Services\StorageManager.cs" />
+    <Compile Include="Services\TaskManager.cs" />
     <Compile Include="UniverseTime.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ViewModelBase.cs" />
@@ -105,7 +109,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CrewManager.cs" />
+    <Compile Include="Services\CrewManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

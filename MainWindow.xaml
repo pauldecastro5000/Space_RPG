@@ -9,7 +9,7 @@
         Title="MainWindow"
         Height="840"
         Width="1550"
-        Background="Black">
+        Background="Black" WindowState="Maximized">
     <Grid Margin="0,-1,0,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

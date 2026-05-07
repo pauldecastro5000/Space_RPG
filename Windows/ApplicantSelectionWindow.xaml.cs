@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Space_RPG.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,15 @@ namespace Space_RPG.Windows
         public ApplicantSelectionWindow()
         {
             InitializeComponent();
+        }
+
+        private void ApplicantBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border border &&
+                border.DataContext is Applicant applicant)
+            {
+                applicant.IsSelected = !applicant.IsSelected;
+            }
         }
     }
 }

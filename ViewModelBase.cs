@@ -12,11 +12,21 @@ namespace Space_RPG
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string propName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual void Dispose() { }
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
     public class StorageManager
     {

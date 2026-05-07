@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Space_RPG
+namespace Space_RPG.Services
 {
     public class TaskManager
     {
@@ -25,7 +25,7 @@ namespace Space_RPG
         #region PILOT TASKS
         public void StartEngine()
         {
-            MainWindow.mainVm.MyShip.StartEngine();
+            //MainWindow.mainVm.MyShip.StartEngine();
         }
         #endregion PILOT TASKS
 

@@ -15,21 +15,27 @@ namespace Space_RPG.Models
     public class Ship
     {
         #region Public Properties
-        public Guid ShipGuid { get; set; }
-        public Engine engine { get; set; }
-        public Guid CaptainGuid { get; set; }
-        public Guid Pilot { get; set; }
-        //public ObservableCollection<Weapon> Weapons { get; set; }
-        //public ObservableCollection<Facility> Facilities { get; set; }
+        public Guid Id { get; set; }
+        public Engine Engine { get; set; }
+        //public Guid CaptainGuid { get; set; }
+        //public Guid Pilot { get; set; }
+        public ObservableCollection<ShipWeapon> Weapons { get; set; }
+        public ObservableCollection<Facility> Facilities { get; set; }
         //public state State { get; set; }
         public Point Location { get; set; }
         public int Food { get; set; }
-        public List<Guid> Crews { get; set; }
+        public ObservableCollection<Guid> Crews { get; set; } = new ObservableCollection<Guid>();
         public int OrderId { get; set; } = 0;
         #endregion Public Properties
 
 
-
+        #region Constructor
+        public Ship()
+        {
+           Id = Guid.NewGuid();
+           Engine = new Engine();  
+        }
+        #endregion Constructor
 
         //#region Public Members
         //public enum state
@@ -54,7 +60,7 @@ namespace Space_RPG.Models
         //}
         //#endregion Public Members
 
-     
+
 
         //#region Private Properties
         //private static object _lockCommands = new object();
@@ -63,12 +69,7 @@ namespace Space_RPG.Models
         //private double _LiftoffFuelDepletionRate = 1;
         //#endregion Private Properties
 
-        //#region Constructor
-        //public Ship()
-        //{
-        //    MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
-        //}
-        //#endregion Constructor
+
 
         //#region Public Methods
         //public bool Assign(string name, string crewJob, out string err)
@@ -372,7 +373,7 @@ namespace Space_RPG.Models
         //        set { _ammo = value; OnPropertyChanged(); }
         //    }
         //}
-      
+
         //public class Order
         //{
         //    public int Id { get; set; }

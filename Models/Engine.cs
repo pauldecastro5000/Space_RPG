@@ -6,18 +6,25 @@ using System.Threading.Tasks;
 
 namespace Space_RPG.Models
 {
+    public enum EngineState
+    {
+        On,
+        Off
+    }
     public class Engine
     {
-
-        public int Health { get; set; }
-        public double FuelCapacity { get; set; } = 10000.0;
-        public double CurrentFuel { get; set; } = 10000.0;
+        public double Health { get; set; }
+        public double FuelCapacity { get; set; }
+        public double CurrentFuel { get; set; }
         public double FuelPercent => CurrentFuel / FuelCapacity;
+        public EngineState State { get; set; }
 
         public Engine()
         {
-            FuelCapacity = 10000;
-            CurrentFuel = 10000;
+            Health = 100.0;
+            FuelCapacity = 10000.0;
+            CurrentFuel = 10000.0;
+            State = EngineState.Off;
         }
 
 

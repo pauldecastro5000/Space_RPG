@@ -21,23 +21,37 @@ namespace Space_RPG.ViewModel
 
         public ApplicantSelectionViewModel()
         {
-            Applicants = new ObservableCollection<Applicant>
+            Applicants = new ObservableCollection<Applicant>();
+            for (int i = 0; i < 12; i++)
             {
-                new Applicant { Name="Applicant 1", Age=25, Skills="C#, WPF", Price=100, PhotoPath="/Images/applicant1.png" },
-                new Applicant { Name="Applicant 2", Age=28, Skills="SQL, PLC", Price=120, PhotoPath="/Images/applicant2.png" },
-                new Applicant { Name="Applicant 3", Age=24, Skills="Vision, C++", Price=150, PhotoPath="/Images/applicant3.png" },
-                new Applicant { Name="Applicant 4", Age=30, Skills="MVVM", Price=130, PhotoPath="/Images/applicant4.png" },
+                var crew = MainWindow.CrewMgr.CreateRandomCrew();
+                var applicant = new Applicant()
+                {
+                    Name = crew.Name,
+                    Age = crew.Age,
+                    Price = crew.Price
+                };
+                Applicants.Add(applicant);
+            }
 
-                new Applicant { Name="Applicant 5", Age=26, Skills="C#", Price=110, PhotoPath="/Images/applicant5.png" },
-                new Applicant { Name="Applicant 6", Age=29, Skills="Automation", Price=140, PhotoPath="/Images/applicant6.png" },
-                new Applicant { Name="Applicant 7", Age=23, Skills="UI Design", Price=90, PhotoPath="/Images/applicant7.png" },
-                new Applicant { Name="Applicant 8", Age=31, Skills="Database", Price=160, PhotoPath="/Images/applicant8.png" },
 
-                new Applicant { Name="Applicant 9", Age=27, Skills="Motion Control", Price=170, PhotoPath="/Images/applicant9.png" },
-                new Applicant { Name="Applicant 10", Age=25, Skills="Testing", Price=100, PhotoPath="/Images/applicant10.png" },
-                new Applicant { Name="Applicant 11", Age=32, Skills="Debugging", Price=180, PhotoPath="/Images/applicant11.png" },
-                new Applicant { Name="Applicant 12", Age=24, Skills="C++, WPF", Price=130, PhotoPath="/Images/applicant12.png" },
-            };
+            //Applicants = new ObservableCollection<Applicant>
+            //{
+            //    new Applicant { Name="Applicant 1", Age=25, Skills="C#, WPF", Price=100, PhotoPath="/Images/applicant1.png" },
+            //    new Applicant { Name="Applicant 2", Age=28, Skills="SQL, PLC", Price=120, PhotoPath="/Images/applicant2.png" },
+            //    new Applicant { Name="Applicant 3", Age=24, Skills="Vision, C++", Price=150, PhotoPath="/Images/applicant3.png" },
+            //    new Applicant { Name="Applicant 4", Age=30, Skills="MVVM", Price=130, PhotoPath="/Images/applicant4.png" },
+
+            //    new Applicant { Name="Applicant 5", Age=26, Skills="C#", Price=110, PhotoPath="/Images/applicant5.png" },
+            //    new Applicant { Name="Applicant 6", Age=29, Skills="Automation", Price=140, PhotoPath="/Images/applicant6.png" },
+            //    new Applicant { Name="Applicant 7", Age=23, Skills="UI Design", Price=90, PhotoPath="/Images/applicant7.png" },
+            //    new Applicant { Name="Applicant 8", Age=31, Skills="Database", Price=160, PhotoPath="/Images/applicant8.png" },
+
+            //    new Applicant { Name="Applicant 9", Age=27, Skills="Motion Control", Price=170, PhotoPath="/Images/applicant9.png" },
+            //    new Applicant { Name="Applicant 10", Age=25, Skills="Testing", Price=100, PhotoPath="/Images/applicant10.png" },
+            //    new Applicant { Name="Applicant 11", Age=32, Skills="Debugging", Price=180, PhotoPath="/Images/applicant11.png" },
+            //    new Applicant { Name="Applicant 12", Age=24, Skills="C++, WPF", Price=130, PhotoPath="/Images/applicant12.png" },
+            //};
 
             SelectedApplicants = new ObservableCollection<Applicant>();
 

@@ -107,54 +107,105 @@ namespace Space_RPG.Services
         #endregion Public Properties
 
         #region Private Variables
-        private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
         private Crew _applicant;
+        private readonly Utilities _utilities;
         #endregion Private Variables
 
         #region Constructor
-        public CrewManager()
+        public CrewManager(Utilities utilities)
         {
             MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+            _utilities = utilities;
         }
         #endregion Constructor
 
         #region Public Methods
-        //public void AddRandomCrew()
-        //{
-        //    var name = String.Empty;
-        //    do
-        //    {
-        //        name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
-        //    } while (CrewNameExist(name));
-        //    var aiming = RandomNumber(0, 100);
-        //    var pilot = RandomNumber(0, 100);
-        //    var engineRepair = RandomNumber(0, 100);
-        //    var weaponsRepair = RandomNumber(0, 100);
-        //    var job = (CrewMgr.CrewJob)RandomNumber(1, 3);
+        public Crew CreatePlayer(string name)
+        {
+            var aiming = _utilities.RandomNumber(0, 100);
+            var pilot = _utilities.RandomNumber(0, 100);
+            var engineRepair = _utilities.RandomNumber(0, 100);
+            var weaponsRepair = _utilities.RandomNumber(0, 100);
 
-        //    var newCrew = new CrewMgr()
-        //    {
-        //        Name = name,
-        //        Job = job,
-        //        Hunger = 90,
-        //        Cash = 500,
-        //        Skills = new CrewMgr.skills()
-        //    };
+            var job = Job.Captain;
 
-        //    Crews.Add(newCrew);
-        //}
+            var newCrew = new Crew()
+            {
+                Name = name,
+                Job = job,
+                Hunger = 90,
+                Cash = 10000000,
+                //Skills = new CrewMgr.skills()
+            };
+
+            return newCrew;
+        }
+        public ObservableCollection<Guid> GetCrewsId(ObservableCollection<Crew> crews)
+        {
+            if (crews.Count == 0 || crews == null)
+                return null;
+
+            var crewsId = new ObservableCollection<Guid>();
+            foreach (Crew crew in crews)
+            {
+                crewsId.Add(crew.Id);
+            }
+            return crewsId;
+        }
+        public ObservableCollection<Crew> ApplicantsToCrews(ObservableCollection<Applicant> Applicants)
+        {
+            if (Applicants.Count == 0)
+                return null;
+
+            var newCrews = new ObservableCollection<Crew>();
+            foreach (var applicant in Applicants)
+            {
+                var newCrew = new Crew()
+                {
+                    Name = applicant.Name,
+                    Age = applicant.Age,
+                    Price = applicant.Price,
+                };
+                newCrews.Add(newCrew);
+            }
+            return newCrews;
+        }
+        public Crew CreateRandomCrew()
+        {
+            var name = String.Empty;
+            do
+            {
+                name = ((CrewNameEnum)_utilities.RandomNumber(0, 77)).ToString();
+            } while (CrewNameExist(name));
+            var aiming = _utilities.RandomNumber(0, 100);
+            var pilot = _utilities.RandomNumber(0, 100);
+            var engineRepair = _utilities.RandomNumber(0, 100);
+            var weaponsRepair = _utilities.RandomNumber(0, 100);
+            var age = _utilities.RandomNumber(18, 30);
+            //var job = (CrewMgr.CrewJob)RandomNumber(1, 3);
+
+            var newCrew = new Crew()
+            {
+                Name = name,
+                Hunger = 100,
+                Cash = 500,
+                Age = age,
+            };
+
+            return newCrew;
+        }
         public void FindApplicant()
         {
             var name = String.Empty;
             do
             {
-                name = ((CrewNameEnum)RandomNumber(0, 77)).ToString();
+                name = ((CrewNameEnum)_utilities.RandomNumber(0, 77)).ToString();
             } while (CrewNameExist(name));
-            var aiming = RandomNumber(0, 80);
-            var piloting = RandomNumber(0, 80);
-            var engineRepair = RandomNumber(0, 80);
-            var weaponsRepair = RandomNumber(0, 80);
+            var aiming = _utilities.RandomNumber(0, 80);
+            var piloting = _utilities.RandomNumber(0, 80);
+            var engineRepair = _utilities.RandomNumber(0, 80);
+            var weaponsRepair = _utilities.RandomNumber(0, 80);
             var job = Job.None;
 
             var price = CalculatePrice(aiming, piloting, engineRepair, weaponsRepair);
@@ -269,13 +320,6 @@ namespace Space_RPG.Services
                 return false;
             else
                 return true;
-        }
-        private static int RandomNumber(int min, int max)
-        {
-            lock (syncLock)
-            { // synchronize
-                return random.Next(min, max);
-            }
         }
         private void Log(string message)
         {

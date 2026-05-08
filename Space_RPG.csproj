@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\CrewIdsToCrewsConverter.cs" />
+    <Compile Include="Models\Facility.cs" />
+    <Compile Include="Models\ShipWeapon.cs" />
     <Compile Include="Services\GameCommandManager.cs" />
     <Compile Include="Models\Crew.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />

@@ -14,6 +14,6 @@ namespace Space_RPG
     /// </summary>
     public partial class App : Application
     {
-   
+        public static Utilities Util = new Utilities();
     }
 }

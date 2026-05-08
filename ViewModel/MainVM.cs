@@ -1,5 +1,6 @@
 ﻿using Space_RPG.Helpers;
 using Space_RPG.Models;
+using Space_RPG.Services;
 using Space_RPG.Windows;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace Space_RPG.ViewModel
         private readonly Dispatcher _uiDispatcher;
         private readonly Stopwatch _gameLoopStopwatch;
 
+        private readonly PlanetManager planetMgr = new PlanetManager();
+        private readonly CrewManager crewMgr;
+        private readonly Utilities util;
+        private readonly ShipManager shipMgr = new ShipManager();
+
         private GameState _state;
         private int _gameLoopCallbackQueued;
         private long _lastGameLoopMs;
@@ -51,6 +57,20 @@ namespace Space_RPG.ViewModel
             get { return _myShip; }
             set { _myShip = value; OnPropertyChanged(); }
         }
+
+        private ObservableCollection<Crew> _crews = new ObservableCollection<Crew>();
+        public ObservableCollection<Crew> Crews
+        {
+            get { return _crews; }
+            set { _crews = value; OnPropertyChanged(); }
+        }
+
+        //private Crew _player;
+        //public Crew Player
+        //{
+        //    get { return _player; }
+        //    set { _player = value; OnPropertyChanged(); }
+        //}
 
         //private CrewManager _crewManager;
         //public CrewManager CrewManager
@@ -121,7 +141,7 @@ namespace Space_RPG.ViewModel
         #endregion Properties
 
         #region Applicants
-        public ObservableCollection<Applicant> AcceptedApplicants { get; set; }
+        public ObservableCollection<Crew> AcceptedApplicants { get; set; }
 
         public RelayCommand OpenApplicantsCommand { get; }
 
@@ -129,14 +149,17 @@ namespace Space_RPG.ViewModel
 
         #region Constructor
   
-        public MainVM()
+        public MainVM(CrewManager CrewMgr, Utilities utilities)
         {
+            crewMgr = CrewMgr;
+            util = utilities;
             //CrewManager = MainWindow.CrewMgr;
             LogEntries = new ObservableCollection<string>();
             #region Applicants
-            AcceptedApplicants = new ObservableCollection<Applicant>();
+            AcceptedApplicants = new ObservableCollection<Crew>();
             OpenApplicantsCommand = new RelayCommand(OpenApplicants);
             #endregion Applicants
+
 
             _uiDispatcher = Dispatcher.CurrentDispatcher;
             _gameLoopStopwatch = Stopwatch.StartNew();
@@ -158,6 +181,41 @@ namespace Space_RPG.ViewModel
             SyncAll();
         }
 
+        private void CreateFirstPlanet()
+        {
+            Planets = new ObservableCollection<Planet>();
+            var newPlanet = planetMgr.CreateColonizedPlanet(Planets);
+            Planets.Add(newPlanet);
+        }
+
+        private void CreateMyShip()
+        {
+            MyShip = shipMgr.CreateMyShip();
+        }
+
+        private void CreatePlayer()
+        {
+            var newPlayer = crewMgr.CreatePlayer("Paul");
+            newPlayer.IsInShip = true;
+            newPlayer.ShipId = MyShip.Id;
+            Crews.Add(newPlayer);
+        }
+
+        private void PlaceShipInFirstPlanet()
+        {
+            MyShip.Location = Planets[0].Location;
+            PlanetType = Planets[0].Type.ToString();
+        }
+
+        private void PlacePlayerInFirstShip()
+        {
+            var facility = MyShip.Facilities.FirstOrDefault(x => x.Type == Facility.FacilityType.MainDeck);
+            if (facility != null)
+            {
+                facility.CrewIds.Add(Crews[0].Id);
+            }
+        }
+
         private GameState CreateNewGame()
         {
             GameState state = new GameState();
@@ -165,6 +223,13 @@ namespace Space_RPG.ViewModel
 
             state.TimeOfDay = 360;
             state.MinutesPerTick = 1;
+
+
+            CreateFirstPlanet();
+            CreateMyShip();
+            CreatePlayer();
+            PlaceShipInFirstPlanet();
+            PlacePlayerInFirstShip();
             //state.WorldMap = CreateMap(MapSize, MapSize);
 
             //int center = MapSize / 2;
@@ -209,10 +274,19 @@ namespace Space_RPG.ViewModel
             {
                 AcceptedApplicants.Clear();
 
-                foreach (var applicant in vm.SelectedApplicants)
+                var newCrews = crewMgr.ApplicantsToCrews(vm.SelectedApplicants);
+             
+                foreach ( var crew in newCrews)
                 {
-                    AcceptedApplicants.Add(applicant);
+                    crew.IsInShip = true;
+                    crew.ShipId = MyShip.Id;
+                    MyShip.Facilities[0].CrewIds.Add(crew.Id);
                 }
+
+                util.AddRange(Crews, newCrews);
+                var crewsId = crewMgr.GetCrewsId(newCrews);
+
+                //util.AddRange(MyShip.Facilities[0].CrewIds, crewsId);
             }
         }
         #endregion Applicants
@@ -222,7 +296,7 @@ namespace Space_RPG.ViewModel
         {
             if (Interlocked.Exchange(ref _gameLoopCallbackQueued, 1) == 1)
                 return;
-
+             
             _uiDispatcher.BeginInvoke(new Action(ProcessGameLoop), DispatcherPriority.Normal);
         }
 
@@ -398,7 +472,8 @@ namespace Space_RPG.ViewModel
 
         private void SyncAll()
         {
-            //OnPropertyChanged(nameof(Wood));
+            OnPropertyChanged(nameof(MyShip));
+            OnPropertyChanged(nameof(Crews));
             //OnPropertyChanged(nameof(Food));
             //OnPropertyChanged(nameof(Meat));
   

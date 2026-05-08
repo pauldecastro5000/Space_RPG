@@ -20,7 +20,7 @@ namespace Space_RPG.Models
 
         public string Skills { get; set; }
 
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         public bool IsSelected
         {

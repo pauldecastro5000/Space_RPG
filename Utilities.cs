@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,14 @@ namespace Space_RPG
             //var distance = Math.Sqrt((Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)))
             distance = Math.Sqrt((Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2)));
             return distance;
+        }
+
+        public void AddRange<T>(ObservableCollection<T> target, IEnumerable<T> items)
+        {
+            foreach (T item in items)
+            {
+                target.Add(item);
+            }
         }
 
         #endregion Public Methods

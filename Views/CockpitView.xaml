@@ -32,9 +32,9 @@
             <!-- right -->
             <StackPanel Grid.Column="1"
                         Margin="10,0,0,0">
-                <TextBlock Text="{Binding EngineState}"
+                <TextBlock Text="{Binding MyShip.Engine.State}"
                            Style="{StaticResource BodyValue}" />
-                <TextBlock Text="{Binding MyShip.engine.FuelPercent, StringFormat='{}{0:N1} %'}"
+                <TextBlock Text="{Binding MyShip.Engine.FuelPercent, StringFormat='{}{0:N1} %'}"
                            Style="{StaticResource BodyValue}" />
             </StackPanel>
         </Grid>
@@ -88,7 +88,7 @@
                            Style="{StaticResource baseStyle}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                <TextBlock Text="{Binding MyShip.Captain.Cash, StringFormat='{}{0:C}'}"
+                <TextBlock Text="{Binding Player.Cash, StringFormat='{}{0:C}'}"
                            Style="{StaticResource BodyValue}" />
             </StackPanel>
         </Grid>

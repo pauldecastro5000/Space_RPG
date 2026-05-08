@@ -10,30 +10,22 @@ namespace Space_RPG.Models
 {
     public class Planet
     {
+        #region Enums
+        public enum PlanetType
+        {
+            Unknown,
+            Colonized,
+            Uncolonized
+        }
+        #endregion
+
         #region Public Properties
         //public PlanetResources Resources { get; set; }
+        public Guid Id { get; set; }
         public Point Location { get; set; }
-        //public PlanetType Type { get; set; }
+        public PlanetType Type { get; set; }
 
         #endregion Public Properties
-
-
-
-
-
-        //#region Enums
-        //public enum PlanetType
-        //{
-        //    Unknown,
-        //    Colonized,
-        //    Uncolonized
-        //}
-        //#endregion
-
-        //#region Private Variables
-        //private static readonly Random random = new Random();
-        //private static readonly object syncLock = new object();
-        //#endregion Private Variables
 
         #region Constructor
         public Planet()
@@ -46,6 +38,14 @@ namespace Space_RPG.Models
             //Type = Type.Unknown
         }
         #endregion Constructor
+
+
+        //#region Private Variables
+        //private static readonly Random random = new Random();
+        //private static readonly object syncLock = new object();
+        //#endregion Private Variables
+
+
 
 
 

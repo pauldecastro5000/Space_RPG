@@ -1,56 +1,86 @@
 ﻿<UserControl x:Class="Space_RPG.Views.ShipStatusView"
+             x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Space_RPG.Views"
+             xmlns:Conv="clr-namespace:Space_RPG.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="200"
              Background="Black">
+
+    <UserControl.Resources>
+        <Conv:CrewIdsToCrewsConverter x:Key="CrewIdsToCrewsConverter" />
+    </UserControl.Resources>
+
     <Grid Margin="4">
         <StackPanel>
             <TextBlock Text="RESOURCES"
                        Style="{StaticResource Title}" />
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.5*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
+
                 <StackPanel>
                     <TextBlock Text="Food"
                                Style="{StaticResource Body}" />
                 </StackPanel>
+
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="{Binding MyShip.Food}"
                                Style="{StaticResource BodyValue}" />
                 </StackPanel>
             </Grid>
+
             <TextBlock Text="FACILITIES"
                        Style="{StaticResource Title}"
                        Margin="0,20,0,0" />
+
             <StackPanel>
                 <ItemsControl ItemsSource="{Binding MyShip.Facilities}"
                               Style="{StaticResource Basic}">
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}"
+
+                                    <TextBlock Text="{Binding Type}"
                                                Style="{StaticResource baseStyle}" />
-                                    <ItemsControl ItemsSource="{Binding Crews}"
-                                                  Style="{StaticResource ICBasic}" Margin="0,0,0,10">
+
+                                    <ItemsControl Style="{StaticResource ICBasic}"
+                                                  Margin="0,0,0,10">
+
+                                        <ItemsControl.ItemsSource>
+                                            <MultiBinding Converter="{StaticResource CrewIdsToCrewsConverter}">
+                                                <Binding Path="CrewIds" />
+
+                                                <Binding Path="DataContext.Crews"
+                                                         Source="{x:Reference Root}" />
+                                            </MultiBinding>
+                                        </ItemsControl.ItemsSource>
+
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Right" Margin="10,0"/>
+                                                <TextBlock Text="{Binding Name}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="10,0" />
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
+
                                     </ItemsControl>
+
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+
                 </ItemsControl>
             </StackPanel>
         </StackPanel>

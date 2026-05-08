@@ -25,10 +25,10 @@ namespace Space_RPG
         #region Constructor
         public UniverseTime()
         {
-            _bgwUniverseTime = new BackgroundWorker();
-            _bgwUniverseTime.WorkerSupportsCancellation = true;
-            _bgwUniverseTime.DoWork += _bgwUniverseTime_DoWork;
-            _bgwUniverseTime.RunWorkerAsync();
+            //_bgwUniverseTime = new BackgroundWorker();
+            //_bgwUniverseTime.WorkerSupportsCancellation = true;
+            //_bgwUniverseTime.DoWork += _bgwUniverseTime_DoWork;
+            //_bgwUniverseTime.RunWorkerAsync();
         }
         #endregion Constructor
 

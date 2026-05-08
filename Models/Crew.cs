@@ -12,10 +12,14 @@ namespace Space_RPG.Models
 {
     public class Crew
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
+        public int Age { get; set; }
         public bool IsPlayer { get; set; }
+        public bool IsInShip { get; set; }
+        public bool IsInRover { get; set; }
+        public bool IsInPlanet { get; set; }
         public Job Job { get; set; }
-
 
         #region Skills
         public double Pilot { get; set; }
@@ -32,6 +36,7 @@ namespace Space_RPG.Models
         public bool IsSleeping { get; set; }
         public bool IsEating { get; set; }
         public int Price { get; set; }
+        public int Cash { get; set; }
 
 
         public int Health { get; set; }
@@ -41,7 +46,20 @@ namespace Space_RPG.Models
 
         #endregion Status
 
+        public Action SelectionChangedAction { get; set; }
         public string DeathReason { get; set; }
+
+        public Guid ShipId { get; set; }
+        public Guid RoverId { get; set; }
+        public Guid PlanetId { get; set; }
+
+        #region Constructor
+        public Crew()
+        {
+            Id = Guid.NewGuid();
+            //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
+        }
+        #endregion Constructor
 
         //public TaskType CurrentTask { get; set; } = TaskType.None;
 
@@ -93,7 +111,7 @@ namespace Space_RPG.Models
         //#endregion Public Members
 
         //#region Public Properties
-      
+
         //#endregion Public Properties
 
         //#region Private Properties
@@ -104,12 +122,7 @@ namespace Space_RPG.Models
         //private int _currentTaskId = 0;
         //#endregion Private Properties
 
-        //#region Constructor
-        //public Crew()
-        //{
-        //    //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
-        //}
-        //#endregion Constructor
+
 
         //#region Public Methods
         //public void UpdateHunger()
@@ -484,7 +497,7 @@ namespace Space_RPG.Models
         //public class skills : ViewModelBase
         //{
 
- 
+
 
 
         //}

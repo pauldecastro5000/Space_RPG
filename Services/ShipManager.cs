@@ -26,39 +26,35 @@ namespace Space_RPG.Services
         #endregion Constructor
 
         #region Public Methods
-        public void CreateMyShip()
+        public Ship CreateMyShip()
         {
-            //var weapons = new ObservableCollection<Ship.Weapon>();
-            //var facilities = new ObservableCollection<Ship.Facility>();
+            // Create Weapons
+            var weapons = new ObservableCollection<ShipWeapon>();
+            for (int i = 0; i < 2; i++)
+            {
+                weapons.Add(new ShipWeapon()
+                {
+                    Type = WeaponType.Turret
+                });
+            }
 
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    weapons.Add(new Ship.Weapon() { 
-            //        Name = $"Turret{i+1}",
-            //        Damage = 10, 
-            //        MaxHealth = 100,
-            //        CurrentHealth = 100,
-            //    });
-            //}
+            // Create Facilities
+            var facilities = new ObservableCollection<Facility>();
+            for (int i = 0; i < Enum.GetValues(typeof(Facility.FacilityType)).Length - 1; i++)
+            {
+                facilities.Add(new Facility()
+                {
+                    Type = (Facility.FacilityType)Enum.GetValues(typeof(Facility.FacilityType)).GetValue(i)
+                });
+            }
 
-            //foreach (var facilityType in (Ship.FacilityType[]) Enum.GetValues(typeof(Ship.FacilityType)))
-            //{
-            //    facilities.Add(new Ship.Facility() { type = facilityType, Name = facilityType.ToString() });
-            //}
+            var newShip = new Ship()
+            {
+                Weapons = weapons,
+                Facilities = facilities
+            };
 
-            //Ships.Add(new Ship()
-            //{
-            //    engine = new Ship.Engine() { 
-            //        Health = 1000, 
-            //        FuelCapacity = 10000, 
-            //        State = Ship.Engine.state.Off 
-            //    },
-            //    State = Ship.state.Docked,
-            //    Location = _planet.Location,
-            //    Weapons = weapons,
-            //    Facilities = facilities,
-            //    Food = 1000
-            //});
+            return newShip;
         }
         public void loadPlanet(Planet planet)
         {

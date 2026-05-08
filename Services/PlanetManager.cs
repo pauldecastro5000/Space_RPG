@@ -1,4 +1,5 @@
 ﻿using System;
+using Space_RPG.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -49,31 +50,33 @@ namespace Space_RPG.Services
             //newPlanet.Location = loc;
             //Planets.Add(newPlanet);
         }
-        public void CreateColonizedPlanet()
+        public Planet CreateColonizedPlanet(ObservableCollection<Planet> Planets)
         {
-            //var distBetweenPlanets = 20;
-            //bool distOK = true;
-            //var loc = new Point(0, 0);
+            var distBetweenPlanets = 20;
+            bool distOK = true;
+            var loc = new Point(0, 0);
 
-            //do
-            //{
-            //    loc = new Point(MainWindow.Util.RandomNumber(1, 1000), MainWindow.Util.RandomNumber(1, 1000));
-            //    distOK = true;
-            //    foreach (var planet in Planets)
-            //    {
-            //        var dist = MainWindow.Util.Distance2Points(loc, planet.Location);
-            //        if (dist < distBetweenPlanets)
-            //        {
-            //            distOK = false;
-            //            break;
-            //        }
-            //    }
-            //} while (!distOK);
+            do
+            {
+                loc = new Point(MainWindow.Util.RandomNumber(1, 1000), MainWindow.Util.RandomNumber(1, 1000));
+                distOK = true;
+                foreach (var planet in Planets)
+                {
+                    var dist = MainWindow.Util.Distance2Points(loc, planet.Location);
+                    if (dist < distBetweenPlanets)
+                    {
+                        distOK = false;
+                        break;
+                    }
+                }
+            } while (!distOK);
 
-            //var newPlanet = new Planet();
-            //newPlanet.type = Planet.Type.Colonized;
-            //newPlanet.Location = loc;
+            var newPlanet = new Planet();
+            newPlanet.Type = Planet.PlanetType.Colonized;
+            newPlanet.Location = loc;
+            newPlanet.Id = new Guid();
             //Planets.Add(newPlanet);
+            return newPlanet;
         }
         #endregion Public Methods
     }

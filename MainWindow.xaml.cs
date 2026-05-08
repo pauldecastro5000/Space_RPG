@@ -24,7 +24,7 @@ namespace Space_RPG
     {
         public static UniverseTime UniverseTime = new UniverseTime();
         public static PlanetManager PlanetMgr = new PlanetManager();
-        public static CrewManager CrewMgr = new CrewManager();
+        public static CrewManager CrewMgr = new CrewManager(App.Util);
         public static ShipManager ShipMgr = new ShipManager();
         public static StorageManager StorageMgr = new StorageManager();
         public static Utilities Util = new Utilities();
@@ -33,7 +33,7 @@ namespace Space_RPG
         public static ImageManager ImgMgr = new ImageManager();
         public static SaveLoadManager saveLoadMgr = new SaveLoadManager();
 
-        public static MainVM mainVm = new MainVM();
+        public static MainVM mainVm = new MainVM(CrewMgr, App.Util);
 
         private string _prevCommand;
 
@@ -42,33 +42,33 @@ namespace Space_RPG
             InitializeComponent();
             DataContext = mainVm;
 
-            // Generate Planets
-            PlanetMgr.CreateColonizedPlanet();
-            for (int i = 0; i < 100; i++)
-            {
-                PlanetMgr.CreateRandomPlanet();
-            }
+           // // Generate Planets
+           // PlanetMgr.CreateColonizedPlanet();
+           // for (int i = 0; i < 100; i++)
+           // {
+           //     PlanetMgr.CreateRandomPlanet();
+           // }
 
-           // ShipMgr.loadPlanet(PlanetMgr.Planets.First());
+           //// ShipMgr.loadPlanet(PlanetMgr.Planets.First());
 
-            ShipMgr.CreateMyShip();
+           // ShipMgr.CreateMyShip();
 
-            // Initialize my ship
-            //mainVm.MyShip = ShipMgr.Ships.First();              // load first ship as my ship
-            //mainVm.MyShip.AddCaptain();                      // add caption to my ship
+           // // Initialize my ship
+           // //mainVm.MyShip = ShipMgr.Ships.First();              // load first ship as my ship
+           // //mainVm.MyShip.AddCaptain();                      // add caption to my ship
 
-            // Initialize planets
-            //mainVm.Planets = PlanetMgr.Planets;                 // assign planets
-            //mainVm.CurrentPlanet = PlanetMgr.Planets.First();   // load first planet as my current planet
+           // // Initialize planets
+           // //mainVm.Planets = PlanetMgr.Planets;                 // assign planets
+           // //mainVm.CurrentPlanet = PlanetMgr.Planets.First();   // load first planet as my current planet
 
-            //mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
-            //    PlanetMgr.Planets.First().type);
-            //mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
-            //    mainVm.MyShip.engine.State);
+           // //mainVm.PlanetType = Enum.GetName(typeof(Planet.Type),
+           // //    PlanetMgr.Planets.First().type);
+           // //mainVm.EngineState = Enum.GetName(typeof(Ship.Engine.state),
+           // //    mainVm.MyShip.engine.State);
 
-            mainVm.dateTime = new DateTime(2024, 1, 1, 12, 0, 0);
+           // mainVm.dateTime = new DateTime(2024, 1, 1, 12, 0, 0);
 
-            UniverseTime.TimeStart();
+           // UniverseTime.TimeStart();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)

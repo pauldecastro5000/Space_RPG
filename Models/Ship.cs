@@ -33,7 +33,8 @@ namespace Space_RPG.Models
         public Ship()
         {
            Id = Guid.NewGuid();
-           Engine = new Engine();  
+           Engine = new Engine();
+            Food = 100;
         }
         #endregion Constructor
 

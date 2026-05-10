@@ -40,11 +40,11 @@ namespace Space_RPG.Services
 
             // Create Facilities
             var facilities = new ObservableCollection<Facility>();
-            for (int i = 0; i < Enum.GetValues(typeof(Facility.FacilityType)).Length - 1; i++)
+            for (int i = 0; i < Enum.GetValues(typeof(FacilityType)).Length - 1; i++)
             {
                 facilities.Add(new Facility()
                 {
-                    Type = (Facility.FacilityType)Enum.GetValues(typeof(Facility.FacilityType)).GetValue(i)
+                    Type = (FacilityType)Enum.GetValues(typeof(FacilityType)).GetValue(i)
                 });
             }
 

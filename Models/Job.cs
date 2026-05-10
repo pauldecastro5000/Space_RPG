@@ -29,4 +29,12 @@ namespace Space_RPG.Models
         Completed = 3, 
         Cancelled = 4 
     }
+
+    public enum Activity
+    {
+        None = 0,
+        Working,
+        Walking,
+        Eating
+    }
 }

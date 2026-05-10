@@ -10,48 +10,225 @@ using System.Windows.Media.Converters;
 
 namespace Space_RPG.Models
 {
-    public class Crew
+    public enum CrewAction
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public bool IsPlayer { get; set; }
-        public bool IsInShip { get; set; }
-        public bool IsInRover { get; set; }
-        public bool IsInPlanet { get; set; }
-        public Job Job { get; set; }
+        Eat,
+        Work,
+        Sleep
+    }
+
+    public class Crew : ViewModelBase
+    {
+        private Guid _id;
+        public Guid Id
+        {
+            get { return _id; }
+            set { _id = value; OnPropertyChanged(); }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; OnPropertyChanged(); }
+        }
+
+        private int _age;
+        public int Age
+        {
+            get { return _age; }
+            set { _age = value; OnPropertyChanged(); }
+        }
+
+        private bool _isPlayer;
+        public bool IsPlayer
+        {
+            get { return _isPlayer; }
+            set { _isPlayer = value; OnPropertyChanged(); }
+        }
+
+        private bool _isInShip;
+        public bool IsInShip
+        {
+            get { return _isInShip; }
+            set { _isInShip = value; OnPropertyChanged(); }
+        }
+
+        private bool _isInRover;
+        public bool IsInRover
+        {
+            get { return _isInRover; }
+            set { _isInRover = value; OnPropertyChanged(); }
+        }
+
+        private bool _isInPlanet;
+        public bool IsInPlanet
+        {
+            get { return _isInPlanet; }
+            set { _isInPlanet = value; OnPropertyChanged(); }
+        }
+
+        private Job _job;
+        public Job Job
+        {
+            get { return _job; }
+            set { _job = value; OnPropertyChanged(); }
+        }
+
+        private JobStatus _jobStatus;
+        public JobStatus JobStatus
+        {
+            get { return _jobStatus; }
+            set { _jobStatus = value; OnPropertyChanged(); }
+        }
+
+        private Activity _activity;
+        public Activity Activity
+        {
+            get { return _activity; }
+            set { _activity = value; OnPropertyChanged(); }
+        }
+
+        private CrewAction _action;
+        public CrewAction Action
+        {
+            get { return _action; }
+            set { _action = value; OnPropertyChanged(); }
+        }
 
         #region Skills
-        public double Pilot { get; set; }
-        public double Drive { get; set; }
-        public double Aim { get; set; }
-        public double Medic { get; set; }
-        public double Mine { get; set; }
-        public double Repair { get; set; }
+
+        private double _pilot;
+        public double Pilot
+        {
+            get { return _pilot; }
+            set { _pilot = value; OnPropertyChanged(); }
+        }
+
+        private double _drive;
+        public double Drive
+        {
+            get { return _drive; }
+            set { _drive = value; OnPropertyChanged(); }
+        }
+
+        private double _aim;
+        public double Aim
+        {
+            get { return _aim; }
+            set { _aim = value; OnPropertyChanged(); }
+        }
+
+        private double _medic;
+        public double Medic
+        {
+            get { return _medic; }
+            set { _medic = value; OnPropertyChanged(); }
+        }
+
+        private double _mine;
+        public double Mine
+        {
+            get { return _mine; }
+            set { _mine = value; OnPropertyChanged(); }
+        }
+
+        private double _repair;
+        public double Repair
+        {
+            get { return _repair; }
+            set { _repair = value; OnPropertyChanged(); }
+        }
 
         #endregion Skills
 
         #region Status
-        public bool IsAlive { get; set; }
-        public bool IsSleeping { get; set; }
-        public bool IsEating { get; set; }
-        public int Price { get; set; }
-        public int Cash { get; set; }
 
+        private bool _isAlive;
+        public bool IsAlive
+        {
+            get { return _isAlive; }
+            set { _isAlive = value; OnPropertyChanged(); }
+        }
 
-        public int Health { get; set; }
-        public int Fatigue { get; set; }
-        public double Hunger { get; set; }
+        private bool _isSleeping;
+        public bool IsSleeping
+        {
+            get { return _isSleeping; }
+            set { _isSleeping = value; OnPropertyChanged(); }
+        }
 
+        private bool _isEating;
+        public bool IsEating
+        {
+            get { return _isEating; }
+            set { _isEating = value; OnPropertyChanged(); }
+        }
+
+        private int _price;
+        public int Price
+        {
+            get { return _price; }
+            set { _price = value; OnPropertyChanged(); }
+        }
+
+        private int _cash;
+        public int Cash
+        {
+            get { return _cash; }
+            set { _cash = value; OnPropertyChanged(); }
+        }
+
+        private int _health;
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; OnPropertyChanged(); }
+        }
+
+        private float _fatigue;
+        public float Fatigue
+        {
+            get { return _fatigue; }
+            set { _fatigue = value; OnPropertyChanged(); }
+        }
+
+        private float _hunger;
+        public float Hunger
+        {
+            get { return _hunger; }
+            set { _hunger = value; OnPropertyChanged(); }
+        }
 
         #endregion Status
 
-        public Action SelectionChangedAction { get; set; }
-        public string DeathReason { get; set; }
+        private string _deathReason;
+        public string DeathReason
+        {
+            get { return _deathReason; }
+            set { _deathReason = value; OnPropertyChanged(); }
+        }
 
-        public Guid ShipId { get; set; }
-        public Guid RoverId { get; set; }
-        public Guid PlanetId { get; set; }
+        private Guid _shipId;
+        public Guid ShipId
+        {
+            get { return _shipId; }
+            set { _shipId = value; OnPropertyChanged(); }
+        }
+
+        private Guid _roverId;
+        public Guid RoverId
+        {
+            get { return _roverId; }
+            set { _roverId = value; OnPropertyChanged(); }
+        }
+
+        private Guid _planetId;
+        public Guid PlanetId
+        {
+            get { return _planetId; }
+            set { _planetId = value; OnPropertyChanged(); }
+        }
 
         #region Constructor
         public Crew()

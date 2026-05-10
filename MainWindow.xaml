@@ -21,7 +21,7 @@
 
         <!-- LEFT OUTER -->
         <Border>
-            <views:CrewListView />
+           
         </Border>
 
         <!-- LEFT INNER -->
@@ -40,19 +40,26 @@
                 </Grid.RowDefinitions>
                 <views:MainView />
                 <views:CockpitView Grid.Row="1" />
-                <ScrollViewer Grid.Row="2"
-                              ScrollChanged="scrollChanged"
-                              Name="scrollViewer">
-                    <ItemsControl ItemsSource="{Binding Log}"
-                                  Style="{StaticResource Basic}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}"
-                                           Foreground="White" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <TabControl Grid.Row="2" Background="Black">
+                    <TabItem Header="Log" Background="Black">
+                        <ScrollViewer ScrollChanged="scrollChanged"
+                                      Name="scrollViewer">
+                            <ItemsControl ItemsSource="{Binding Log}"
+                                          Style="{StaticResource Basic}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"
+                                                   Foreground="White" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Crew List" Background="Black">
+                        <views:CrewListView />
+                    </TabItem>
+                </TabControl>
+               
                 <TextBox Grid.Row="3"
                          Background="Black"
                          KeyDown="OnKeyDownHandler"

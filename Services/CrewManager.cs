@@ -153,6 +153,19 @@ namespace Space_RPG.Services
             }
             return crewsId;
         }
+        public FacilityType SetActionLocation(Crew crew, CrewAction action, CrewAction prevAction)
+        {
+            return FacilityType.MainDeck;
+            //if (prevAction == action)
+            //    return;
+            
+            //switch (action)
+            //{
+            //    case CrewAction.Eat:
+
+            //}
+
+        }
         public ObservableCollection<Crew> ApplicantsToCrews(ObservableCollection<Applicant> Applicants)
         {
             if (Applicants.Count == 0)
@@ -166,6 +179,10 @@ namespace Space_RPG.Services
                     Name = applicant.Name,
                     Age = applicant.Age,
                     Price = applicant.Price,
+                    Hunger = 100,
+                    Fatigue = 0,
+                    IsAlive = true
+                    
                 };
                 newCrews.Add(newCrew);
             }

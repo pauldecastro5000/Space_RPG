@@ -18,7 +18,7 @@ using System.Windows.Threading;
 
 namespace Space_RPG.ViewModel
 {
-    public class MainVM :ViewModelBase
+    public class MainVM : ViewModelBase
     {
         #region Members
         private const int GameTickIntervalMs = 650;
@@ -40,7 +40,7 @@ namespace Space_RPG.ViewModel
 
         private bool _isGameTickRunning;
         BackgroundWorker _bgwUpdate;
-        
+
         public ObservableCollection<string> LogEntries { get; private set; }
         #endregion Members
 
@@ -148,7 +148,7 @@ namespace Space_RPG.ViewModel
         #endregion Applicants
 
         #region Constructor
-  
+
         public MainVM(CrewManager CrewMgr, Utilities utilities)
         {
             crewMgr = CrewMgr;
@@ -175,7 +175,7 @@ namespace Space_RPG.ViewModel
         private void ResetGame()
         {
             _state = CreateNewGame();
-           
+
             LogEntries.Clear();
 
             SyncAll();
@@ -209,7 +209,7 @@ namespace Space_RPG.ViewModel
 
         private void PlacePlayerInFirstShip()
         {
-            var facility = MyShip.Facilities.FirstOrDefault(x => x.Type == Facility.FacilityType.MainDeck);
+            var facility = MyShip.Facilities.FirstOrDefault(x => x.Type == FacilityType.MainDeck);
             if (facility != null)
             {
                 facility.CrewIds.Add(Crews[0].Id);
@@ -275,8 +275,8 @@ namespace Space_RPG.ViewModel
                 AcceptedApplicants.Clear();
 
                 var newCrews = crewMgr.ApplicantsToCrews(vm.SelectedApplicants);
-             
-                foreach ( var crew in newCrews)
+
+                foreach (var crew in newCrews)
                 {
                     crew.IsInShip = true;
                     crew.ShipId = MyShip.Id;
@@ -296,7 +296,7 @@ namespace Space_RPG.ViewModel
         {
             if (Interlocked.Exchange(ref _gameLoopCallbackQueued, 1) == 1)
                 return;
-             
+
             _uiDispatcher.BeginInvoke(new Action(ProcessGameLoop), DispatcherPriority.Normal);
         }
 
@@ -347,19 +347,104 @@ namespace Space_RPG.ViewModel
             _state.TickCount++;
             AdvanceClock();
 
-            foreach (Crew crew in _state.Crews.Where(v => v.IsAlive && !v.IsPlayer))
+            foreach (Crew crew in Crews.Where(v => v.IsAlive && !v.IsPlayer))
             {
                 UpdateNeeds(crew);
                 UpdateCrew(crew);
             }
-
             SyncAll();
+        }
+
+        private void SendCrewToTargetLoc(Crew crew, CrewAction crewAction)
+        {
+            switch (crewAction)
+            {
+                case CrewAction.Eat:
+                    break;
+                case CrewAction.Work: 
+                    break;
+                case CrewAction.Sleep: 
+                    break;
+            }
+        }
+
+        private void UpdateCrewAction(Crew crew)
+        {
+            if (crew == null || !crew.IsAlive)
+                return;
+
+            //var action = AIActionSelector.GetAction(crew);
+            //SendCrewToTargetLoc(crew, action);
+
+
+            //if (crew.Activity == Activity.None)
+            //{
+
+            //}
+
+
+
+
+            //EnsureVillagerBedAssignment(crew);
+            //crew.IsReturningHome = true;
+
+            //if (crew.X != crew.HomeX || crew.Y != crew.HomeY)
+            //{
+            //    crew.IsSleeping = false;
+            //    crew.IsInsideBuilding = false;
+            //    MoveTowards(crew, crew.HomeX, crew.HomeY);
+            //    return;
+            //}
+
+            //if (crew.CarryingWood > 0 || crew.CarryingFood > 0 || crew.CarryingStone > 0)
+            //    ReturnHome(crew);
+
+            //if (crew.EquippedTool != ToolType.None)
+            //{
+            //    StoreToolInBuilding(GetHomeBuilding(crew), crew.EquippedTool);
+            //    AddLog(crew.Name + " put away " + crew.EquippedTool + " before sleeping.");
+            //    crew.EquippedTool = ToolType.None;
+            //}
+
+            //if (!crew.IsInsideBuilding)
+            //{
+            //    EnterVillagerHomeThroughDoor(crew);
+            //    return;
+            //}
+
+            //if (crew.InteriorX != crew.AssignedBedX || crew.InteriorY != crew.AssignedBedY)
+            //{
+            //    crew.IsSleeping = false;
+            //    MoveVillagerInsideTowards(crew, crew.AssignedBedX, crew.AssignedBedY, false);
+            //    return;
+            //}
+
+            //crew.IsSleeping = true;
+            //crew.IsReturningHome = true;
         }
 
         private void UpdateCrew(Crew crew)
         {
             if (!crew.IsAlive)
                 return;
+
+            // Get Desired Action
+            var action = AIActionSelector.GetAction(crew);
+
+            // Set Target location based on action
+
+
+            //
+
+
+
+            //// Rest if not in battle mode
+            //if (crew.Fatigue > 80 &&
+            //    ((!_state.IsInShipBattleMode && crew.IsInShip) || (!_state.IsInRoverBattleMode && crew.IsInRover)))
+            //{
+            //    SendCrewToSleep(crew);
+            //}
+
 
             //if (!IsDayTime())
             //{
@@ -410,11 +495,13 @@ namespace Space_RPG.ViewModel
             //PerformJobWork(crew, currentJob);
         }
 
-     
+
 
         private void UpdateNeeds(Crew crew)
         {
-            crew.Hunger = Math.Max(0, crew.Hunger - 0.01);
+            crew.Hunger = Math.Max(0, crew.Hunger - 0.1f);
+            return;
+
 
             if (crew.IsSleeping)
             {
@@ -474,9 +561,9 @@ namespace Space_RPG.ViewModel
         {
             OnPropertyChanged(nameof(MyShip));
             OnPropertyChanged(nameof(Crews));
-            //OnPropertyChanged(nameof(Food));
+            OnPropertyChanged(nameof(Planets));
             //OnPropertyChanged(nameof(Meat));
-  
+
             RaiseCommandStates();
         }
 

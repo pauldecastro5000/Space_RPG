@@ -17,7 +17,8 @@ namespace Space_RPG.Models
         Gym,
         MedicalBay,
         Cargo,
-        Corridor
+        Corridor,
+        Wall
     }
 
     public class Facility

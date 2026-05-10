@@ -17,11 +17,9 @@ namespace Space_RPG.Models
         #region Public Properties
         public Guid Id { get; set; }
         public Engine Engine { get; set; }
-        //public Guid CaptainGuid { get; set; }
-        //public Guid Pilot { get; set; }
+        public ObservableCollection<ShipTile> Tiles { get; set; }
         public ObservableCollection<ShipWeapon> Weapons { get; set; }
         public ObservableCollection<Facility> Facilities { get; set; }
-        //public state State { get; set; }
         public Point Location { get; set; }
         public int Food { get; set; }
         public ObservableCollection<Guid> Crews { get; set; } = new ObservableCollection<Guid>();

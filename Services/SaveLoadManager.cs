@@ -34,21 +34,21 @@ namespace Space_RPG.Services
                 err = $"File does not exist: {saveFilename}";
                 return false;
             }
-            using (StreamReader r = new StreamReader(saveFilename))
-            {
-                string json = r.ReadToEnd();
-                MainVM vm = JsonConvert.DeserializeObject<MainVM>(json);
-                MainWindow.mainVm.MyShip = vm.MyShip;
-                //MainWindow.mainVm.CrewManager = vm.CrewManager;
-                MainWindow.mainVm.Command = vm.Command;
-                MainWindow.mainVm.Log = vm.Log;
-                MainWindow.mainVm.Planets = vm.Planets;
-                MainWindow.mainVm.CurrentPlanet = vm.CurrentPlanet;
-                MainWindow.mainVm.PlanetType = vm.PlanetType;
-                MainWindow.mainVm.EngineState = vm.EngineState;
-                MainWindow.mainVm.CockpitImage = vm.CockpitImage;
-                MainWindow.mainVm.dateTime = vm.dateTime;
-            }
+            //using (StreamReader r = new StreamReader(saveFilename))
+            //{
+            //    string json = r.ReadToEnd();
+            //    MainVM vm = JsonConvert.DeserializeObject<MainVM>(json);
+            //    MainWindow.mainVm.MyShip = vm.MyShip;
+            //    //MainWindow.mainVm.CrewManager = vm.CrewManager;
+            //    MainWindow.mainVm.Command = vm.Command;
+            //    MainWindow.mainVm.Log = vm.Log;
+            //    MainWindow.mainVm.Planets = vm.Planets;
+            //    MainWindow.mainVm.CurrentPlanet = vm.CurrentPlanet;
+            //    MainWindow.mainVm.PlanetType = vm.PlanetType;
+            //    MainWindow.mainVm.EngineState = vm.EngineState;
+            //    MainWindow.mainVm.CockpitImage = vm.CockpitImage;
+            //    MainWindow.mainVm.dateTime = vm.dateTime;
+            //}
             return true;
         }
     }

@@ -88,7 +88,7 @@
                            Style="{StaticResource baseStyle}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                <TextBlock Text="{Binding Player.Cash, StringFormat='{}{0:C}'}"
+                <TextBlock Text="{Binding Crews[0].Cash, StringFormat='{}{0:C}'}"
                            Style="{StaticResource BodyValue}" />
             </StackPanel>
         </Grid>

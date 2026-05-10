@@ -51,19 +51,10 @@ namespace Space_RPG.ViewModel
             get { return _statusText; }
             set { _statusText = value; OnPropertyChanged(); }
         }
-        private Ship _myShip;
-        public Ship MyShip
-        {
-            get { return _myShip; }
-            set { _myShip = value; OnPropertyChanged(); }
-        }
 
-        private ObservableCollection<Crew> _crews = new ObservableCollection<Crew>();
-        public ObservableCollection<Crew> Crews
-        {
-            get { return _crews; }
-            set { _crews = value; OnPropertyChanged(); }
-        }
+        public Ship MyShip { get { return _state.MyShip; } }
+        public ObservableCollection<Crew> Crews { get { return _state.Crews; } }
+        public ObservableCollection<Planet> Planets { get { return _state.Planets; } }
 
         //private Crew _player;
         //public Crew Player
@@ -93,12 +84,6 @@ namespace Space_RPG.ViewModel
             set { _log = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<Planet> _planets;
-        public ObservableCollection<Planet> Planets
-        {
-            get { return _planets; }
-            set { _planets = value; OnPropertyChanged(); }
-        }
         private Planet _currentPlanet;
         public Planet CurrentPlanet
         {
@@ -176,6 +161,11 @@ namespace Space_RPG.ViewModel
         {
             _state = CreateNewGame();
 
+            CreateFirstPlanet();
+            CreateMyShip();
+            CreatePlayer();
+            PlaceShipInFirstPlanet();
+            PlacePlayerInFirstShip();
             LogEntries.Clear();
 
             SyncAll();
@@ -183,14 +173,13 @@ namespace Space_RPG.ViewModel
 
         private void CreateFirstPlanet()
         {
-            Planets = new ObservableCollection<Planet>();
-            var newPlanet = planetMgr.CreateColonizedPlanet(Planets);
-            Planets.Add(newPlanet);
+            var newPlanet = planetMgr.CreateColonizedPlanet(_state.Planets);
+            _state.Planets.Add(newPlanet);
         }
 
         private void CreateMyShip()
         {
-            MyShip = shipMgr.CreateMyShip();
+            _state.MyShip = shipMgr.CreateMyShip();
         }
 
         private void CreatePlayer()
@@ -198,18 +187,18 @@ namespace Space_RPG.ViewModel
             var newPlayer = crewMgr.CreatePlayer("Paul");
             newPlayer.IsInShip = true;
             newPlayer.ShipId = MyShip.Id;
-            Crews.Add(newPlayer);
+            _state.Crews.Add(newPlayer);
         }
 
         private void PlaceShipInFirstPlanet()
         {
-            MyShip.Location = Planets[0].Location;
-            PlanetType = Planets[0].Type.ToString();
+            _state.MyShip.Location = Planets[0].Location;
+            PlanetType = _state.Planets[0].Type.ToString();
         }
 
         private void PlacePlayerInFirstShip()
         {
-            var facility = MyShip.Facilities.FirstOrDefault(x => x.Type == FacilityType.MainDeck);
+            var facility = _state.MyShip.Facilities.FirstOrDefault(x => x.Type == FacilityType.MainDeck);
             if (facility != null)
             {
                 facility.CrewIds.Add(Crews[0].Id);
@@ -225,11 +214,7 @@ namespace Space_RPG.ViewModel
             state.MinutesPerTick = 1;
 
 
-            CreateFirstPlanet();
-            CreateMyShip();
-            CreatePlayer();
-            PlaceShipInFirstPlanet();
-            PlacePlayerInFirstShip();
+          
             //state.WorldMap = CreateMap(MapSize, MapSize);
 
             //int center = MapSize / 2;

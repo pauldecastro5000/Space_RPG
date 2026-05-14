@@ -45,6 +45,7 @@ namespace Space_RPG.ViewModel
         #endregion Members
 
         #region Properties
+
         private string _statusText;
         public string StatusText
         {
@@ -142,7 +143,7 @@ namespace Space_RPG.ViewModel
             LogEntries = new ObservableCollection<string>();
             #region Applicants
             AcceptedApplicants = new ObservableCollection<Crew>();
-            OpenApplicantsCommand = new RelayCommand(OpenApplicants);
+            OpenApplicantsCommand = new RelayCommand(OpenApplicants, CanOpenApplicants);
             #endregion Applicants
 
 
@@ -155,8 +156,14 @@ namespace Space_RPG.ViewModel
             ResetGame();
             _gameLoopTimer.Change(0, 50);
         }
+
+
         #endregion Constructor
 
+        private bool CanOpenApplicants()
+        {
+            return _state.ShipIsInPlanet;
+        }
         private void ResetGame()
         {
             _state = CreateNewGame();
@@ -195,6 +202,7 @@ namespace Space_RPG.ViewModel
         {
             _state.MyShip.Location = Planets[0].Location;
             PlanetType = _state.Planets[0].Type.ToString();
+            _state.ShipIsInPlanet = true;
         }
 
         private void PlacePlayerInFirstShip()

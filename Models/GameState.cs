@@ -9,6 +9,7 @@ namespace Space_RPG.Models
 {
     public class GameState
     {
+        public bool ShipIsInPlanet { get; set; }
         public bool IsInShipBattleMode { get; set; }
         public bool IsInRoverBattleMode { get; set; }
         public int TickCount { get; set; }

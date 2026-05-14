@@ -7,19 +7,7 @@ using System.Threading.Tasks;
 
 namespace Space_RPG.Models
 {
-    public enum FacilityType
-    {
-        MainDeck,
-        Cafeteria,
-        Armoury,
-        CrewQuarters,
-        Garden,
-        Gym,
-        MedicalBay,
-        Cargo,
-        Corridor,
-        Wall
-    }
+  
 
     public class Facility
     {

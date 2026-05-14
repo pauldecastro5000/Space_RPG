@@ -39,6 +39,10 @@ namespace Space_RPG.Services
             }
 
             // Create Facilities
+            
+
+
+
             var facilities = new ObservableCollection<Facility>();
             for (int i = 0; i < Enum.GetValues(typeof(FacilityType)).Length - 1; i++)
             {
@@ -51,11 +55,12 @@ namespace Space_RPG.Services
             var newShip = new Ship()
             {
                 Weapons = weapons,
-                Facilities = facilities
+             
             };
 
             return newShip;
         }
+
         public void loadPlanet(Planet planet)
         {
             _planet = planet;

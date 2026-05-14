@@ -62,9 +62,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\CrewIdsToCrewsConverter.cs" />
+    <Compile Include="Converters\FacilityTypeToBrushConverter.cs" />
+    <Compile Include="Converters\TilePositionConverter.cs" />
+    <Compile Include="Helpers\ShipMapBuilder.cs" />
     <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\ShipWeapon.cs" />
-    <Compile Include="Models\WorldTiles.cs" />
+    <Compile Include="Models\ShipInterior.cs" />
     <Compile Include="Services\AIActionSelector.cs" />
     <Compile Include="Services\GameCommandManager.cs" />
     <Compile Include="Models\Crew.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="Services\PlanetManager.cs" />
     <Compile Include="Services\SaveLoadManager.cs" />
     <Compile Include="Models\Ship.cs" />
+    <Compile Include="Services\ShipGenerator.cs" />
     <Compile Include="Services\ShipManager.cs" />
     <Compile Include="Services\StorageManager.cs" />
     <Compile Include="Services\TaskManager.cs" />
@@ -98,6 +102,9 @@
     </Compile>
     <Compile Include="Views\PlanetView.xaml.cs">
       <DependentUpon>PlanetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShipMapView.xaml.cs">
+      <DependentUpon>ShipMapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShipStatusView.xaml.cs">
       <DependentUpon>ShipStatusView.xaml</DependentUpon>
@@ -132,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlanetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShipMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

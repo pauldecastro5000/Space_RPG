@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Space_RPG.Views.ShipMapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#202020">
+
+    <Grid>
+        <ScrollViewer x:Name="MapScrollViewer"
+                      HorizontalScrollBarVisibility="Hidden"
+                      VerticalScrollBarVisibility="Hidden"
+                      PanningMode="Both">
+
+            <Canvas x:Name="ShipCanvas"
+                    Background="#111111"
+                    Width="1400"
+                    Height="1200"
+                    MouseLeftButtonDown="ShipCanvas_MouseLeftButtonDown"
+                    MouseLeftButtonUp="ShipCanvas_MouseLeftButtonUp"
+                    MouseMove="ShipCanvas_MouseMove"
+                    MouseLeave="ShipCanvas_MouseLeave" />
+
+        </ScrollViewer>
+    </Grid>
+</UserControl>

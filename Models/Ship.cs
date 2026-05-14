@@ -17,9 +17,8 @@ namespace Space_RPG.Models
         #region Public Properties
         public Guid Id { get; set; }
         public Engine Engine { get; set; }
-        public ObservableCollection<ShipTile> Tiles { get; set; }
+        public ShipInterior Interior { get; set; }
         public ObservableCollection<ShipWeapon> Weapons { get; set; }
-        public ObservableCollection<Facility> Facilities { get; set; }
         public Point Location { get; set; }
         public int Food { get; set; }
         public ObservableCollection<Guid> Crews { get; set; } = new ObservableCollection<Guid>();
@@ -33,6 +32,7 @@ namespace Space_RPG.Models
            Id = Guid.NewGuid();
            Engine = new Engine();
             Food = 100;
+           Weapons = new ObservableCollection<ShipWeapon>();
         }
         #endregion Constructor
 

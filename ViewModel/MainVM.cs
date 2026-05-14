@@ -179,7 +179,8 @@ namespace Space_RPG.ViewModel
 
         private void CreateMyShip()
         {
-            _state.MyShip = shipMgr.CreateMyShip();
+            //_state.MyShip = shipMgr.CreateMyShip();
+            _state.MyShip = ShipGenerator.GenerateDefaultShip();
         }
 
         private void CreatePlayer()
@@ -198,11 +199,11 @@ namespace Space_RPG.ViewModel
 
         private void PlacePlayerInFirstShip()
         {
-            var facility = _state.MyShip.Facilities.FirstOrDefault(x => x.Type == FacilityType.MainDeck);
-            if (facility != null)
-            {
-                facility.CrewIds.Add(Crews[0].Id);
-            }
+            //var facility = _state.MyShip.Facilities.FirstOrDefault(x => x.Type == FacilityType.MainDeck);
+            //if (facility != null)
+            //{
+            //    facility.CrewIds.Add(Crews[0].Id);
+            //}
         }
 
         private GameState CreateNewGame()
@@ -265,7 +266,7 @@ namespace Space_RPG.ViewModel
                 {
                     crew.IsInShip = true;
                     crew.ShipId = MyShip.Id;
-                    MyShip.Facilities[0].CrewIds.Add(crew.Id);
+                    //MyShip.Facilities[0].CrewIds.Add(crew.Id);
                 }
 
                 util.AddRange(Crews, newCrews);

@@ -7,41 +7,52 @@
         xmlns:views="clr-namespace:Space_RPG.Views"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="840"
-        Width="1550"
-        Background="Black" WindowState="Maximized">
+        Height="1200"
+        Width="1920"
+        Background="Black"
+        WindowState="Maximized">
     <Grid Margin="0,-1,0,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.8*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="1.1*" />
-            <ColumnDefinition Width="1.1*" />
+            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <!-- LEFT OUTER -->
-        <Border>
+        <!-- SHIP MAP VIEW -->
+        <Border Grid.Row="0"
+                Grid.Column="0">
+            <views:ShipMapView Ship="{Binding MyShip}" />
+        </Border>
+
+        <!-- MAIN VIEW -->
+        <Border Grid.Row="0" Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <views:MainView />
+                <views:CockpitView Grid.Row="1" />
+            </Grid>
            
         </Border>
-
-        <!-- LEFT INNER -->
-        <Border Grid.Column="1">
-            <views:ShipStatusView />
-        </Border>
-
-        <!-- CENTER -->
-        <Border Grid.Column="2">
-            <Grid Margin="0,0,0,10">
+        
+        <!-- LOGS / CREWS VIEW -->
+        <Border Grid.Row="1"
+                Grid.Column="1">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="2*" />
                     <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
-                <views:PlanetView />
-                <views:CockpitView Grid.Row="1" />
-                <TabControl Grid.Row="2" Background="Black">
-                    <TabItem Header="Log" Background="Black">
+                <TabControl Grid.Row="0"
+                            Background="Black">
+                    <TabItem Header="Log"
+                             Background="Black">
                         <ScrollViewer ScrollChanged="scrollChanged"
                                       Name="scrollViewer">
                             <ItemsControl ItemsSource="{Binding Log}"
@@ -55,47 +66,47 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="Crew List" Background="Black">
+                    <TabItem Header="Crew List"
+                             Background="Black">
                         <views:CrewListView />
                     </TabItem>
-                    <TabItem Header="Ship Map" Background="Black">
-                        <views:ShipMapView Ship="{Binding MyShip}" />
-                    </TabItem>
+
                 </TabControl>
-               
-                <TextBox Grid.Row="3"
+
+                <!-- TEXT COMMAND -->
+                <TextBox Grid.Row="1"
                          Background="Black"
                          KeyDown="OnKeyDownHandler"
                          Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="White" />
             </Grid>
         </Border>
+        
+        <!-- COMMANDS VIEW -->
+        <Border Grid.Row="1" Grid.Column="2">
+            <TabControl Background="Black">
+                <TabItem Header="Ship Commands" Background="Black">
 
-        <!-- RIGHT INNER -->
+                </TabItem>
+                <TabItem Header="Planet Commands" Background="Black">
+                    <Button Content="Open Applicants"
+                            Grid.Row="1"
+                            Width="150"
+                            Height="40"
+                            Command="{Binding OpenApplicantsCommand}" />
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- PLANET STATUS VIEW -->
         <Border Grid.Column="3">
             <views:PlanetView />
         </Border>
 
-        <!-- RIGHT OUTER -->
-        <Border Grid.Column="4">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                <Button Content="Test"
-                        Click="btnTest_Click"
-                        Background="Black"
-                        Foreground="White" />
-                <Button Content="Open Applicants"
-                        Grid.Row="1"
-                        Width="150"
-                        Height="40"
-                        Command="{Binding OpenApplicantsCommand}" />
-            </Grid>
-
-         
+        <!-- SHIP STATUS VIEW -->
+        <Border Grid.Row="1" Grid.Column="0">
+            
         </Border>
-        
+
     </Grid>
 </Window>

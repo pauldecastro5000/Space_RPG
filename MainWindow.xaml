@@ -84,11 +84,11 @@
         
         <!-- COMMANDS VIEW -->
         <Border Grid.Row="1" Grid.Column="2">
-            <TabControl Background="Black">
-                <TabItem Header="Ship Commands" Background="Black">
+            <TabControl>
+                <TabItem Header="Ship Commands">
 
                 </TabItem>
-                <TabItem Header="Planet Commands" Background="Black">
+                <TabItem Header="Planet Commands">
                     <Button Content="Open Applicants"
                             Grid.Row="1"
                             Width="150"

@@ -5,10 +5,13 @@
     <Grid Background="Black"
           Margin="5">
 
-        <DataGrid ItemsSource="{Binding Crews}"
+        <DataGrid ItemsSource="{Binding State.Crews}"
+                  SelectedItem="{Binding SelectedCrew, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  IsReadOnly="True"
+                  IsReadOnly="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
                   HeadersVisibility="Column"
                   GridLinesVisibility="All"
                   Background="Black"
@@ -48,40 +51,98 @@
                             Value="0,0,1,1" />
                     <Setter Property="Padding"
                             Value="4,2" />
+
+                    <Setter Property="Background"
+                            Value="#1E1E1E" />
+
+                    <Setter Property="Foreground"
+                            Value="White" />
+
+                    <Style.Triggers>
+
+                        <!-- Selected Row -->
+                        <Trigger Property="IsSelected"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="#3B3B3B" />
+                            <Setter Property="Foreground"
+                                    Value="White" />
+                        </Trigger>
+
+                        <!-- Mouse Hover -->
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="#2F2F2F" />
+                        </Trigger>
+
+                    </Style.Triggers>
                 </Style>
             </DataGrid.CellStyle>
 
             <DataGrid.Columns>
 
+                <!-- NAME -->
                 <DataGridTextColumn Header="Name"
                                     Binding="{Binding Name}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
+                <!-- HUNGER -->
                 <DataGridTextColumn Header="Hunger"
                                     Binding="{Binding Hunger, StringFormat=F1}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
+                <!-- FATIGUE -->
                 <DataGridTextColumn Header="Fatigue"
                                     Binding="{Binding Fatigue, StringFormat=F1}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
-                <DataGridTextColumn Header="Job"
-                                    Binding="{Binding Job}"
-                                    Width="Auto" />
+                <!-- JOB -->
+                <DataGridTemplateColumn Header="Job"
+                                        Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Job}"
+                                       Foreground="White"
+                                       VerticalAlignment="Center"
+                                       Padding="4,2" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
 
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding Job, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding DataContext.JobOptions,
+                                            RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                      Background="Black"
+                                      Foreground="White" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- JOB STATUS -->
                 <DataGridTextColumn Header="Job Status"
                                     Binding="{Binding JobStatus}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
+                <!-- ACTIVITY -->
                 <DataGridTextColumn Header="Activity"
                                     Binding="{Binding Activity}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
+                <!-- CREW ACTION -->
                 <DataGridTextColumn Header="Crew Action"
                                     Binding="{Binding Action}"
+                                    IsReadOnly="True"
                                     Width="Auto" />
 
             </DataGrid.Columns>
+
         </DataGrid>
 
     </Grid>

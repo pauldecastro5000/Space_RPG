@@ -19,6 +19,7 @@ namespace Space_RPG.Models
 
     public class Crew : ViewModelBase
     {
+        #region Profile
         private Guid _id;
         public Guid Id
         {
@@ -46,7 +47,33 @@ namespace Space_RPG.Models
             get { return _isPlayer; }
             set { _isPlayer = value; OnPropertyChanged(); }
         }
+        #endregion Profile
 
+        #region Location
+        private int _x;
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; OnPropertyChanged(); }
+        }
+        private int _y;
+        public int Y
+        {
+            get { return _y; }
+            set { _y = value; OnPropertyChanged(); }
+        }
+        private int _targetX;
+        public int TargetX
+        {
+            get { return _targetX; }
+            set { _targetX = value; OnPropertyChanged(); }
+        }
+        private int _targetY;
+        public int TargetY
+        {
+            get { return _targetY; }
+            set { _targetY = value; OnPropertyChanged(); }
+        }
         private bool _isInShip;
         public bool IsInShip
         {
@@ -67,12 +94,22 @@ namespace Space_RPG.Models
             get { return _isInPlanet; }
             set { _isInPlanet = value; OnPropertyChanged(); }
         }
+        #endregion Location
+
+
 
         private Job _job;
         public Job Job
         {
             get { return _job; }
-            set { _job = value; OnPropertyChanged(); }
+            set
+            {
+                if (_job != value)
+                {
+                    _job = value;
+                    OnPropertyChanged(nameof(Job));
+                }
+            }
         }
 
         private JobStatus _jobStatus;
@@ -234,6 +271,7 @@ namespace Space_RPG.Models
         public Crew()
         {
             Id = Guid.NewGuid();
+            Job = Job.None;
             //MainWindow.UniverseTime.UniverseTickPerMin += UniverseTime_UniverseTickPerMin;
         }
         #endregion Constructor

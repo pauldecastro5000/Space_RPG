@@ -32,7 +32,7 @@ namespace Space_RPG.ViewModel
         private readonly Utilities util;
         private readonly ShipManager shipMgr = new ShipManager();
 
-        private GameState _state;
+
         private int _gameLoopCallbackQueued;
         private long _lastGameLoopMs;
         private double _gameTickAccumulatorMs;
@@ -46,6 +46,13 @@ namespace Space_RPG.ViewModel
 
         #region Properties
 
+        private GameState _state;
+        public GameState State
+        {
+            get { return _state; }
+            set { _state = value; OnPropertyChanged(); }
+        }
+
         private string _statusText;
         public string StatusText
         {
@@ -53,9 +60,25 @@ namespace Space_RPG.ViewModel
             set { _statusText = value; OnPropertyChanged(); }
         }
 
-        public Ship MyShip { get { return _state.MyShip; } }
-        public ObservableCollection<Crew> Crews { get { return _state.Crews; } }
-        public ObservableCollection<Planet> Planets { get { return _state.Planets; } }
+        private Crew _selectedCrew;
+        public Crew SelectedCrew
+        {
+            get { return _selectedCrew; }
+            set
+            {
+                _selectedCrew = value;
+                OnPropertyChanged(nameof(SelectedCrew));
+            }
+        }
+
+        public Array JobOptions
+        {
+            get { return Enum.GetValues(typeof(Job)); }
+        }
+
+        public Ship MyShip { get { return State.MyShip; } }
+        //public ObservableCollection<Crew> Crews { get { return _state.Crews; } }
+        public ObservableCollection<Planet> Planets { get { return State.Planets; } }
 
         //private Crew _player;
         //public Crew Player
@@ -162,11 +185,11 @@ namespace Space_RPG.ViewModel
 
         private bool CanOpenApplicants()
         {
-            return _state.ShipIsInPlanet;
+            return State.ShipIsInPlanet;
         }
         private void ResetGame()
         {
-            _state = CreateNewGame();
+            State = CreateNewGame();
 
             CreateFirstPlanet();
             CreateMyShip();
@@ -180,14 +203,14 @@ namespace Space_RPG.ViewModel
 
         private void CreateFirstPlanet()
         {
-            var newPlanet = planetMgr.CreateColonizedPlanet(_state.Planets);
-            _state.Planets.Add(newPlanet);
+            var newPlanet = planetMgr.CreateColonizedPlanet(State.Planets);
+            State.Planets.Add(newPlanet);
         }
 
         private void CreateMyShip()
         {
             //_state.MyShip = shipMgr.CreateMyShip();
-            _state.MyShip = ShipGenerator.GenerateDefaultShip();
+            State.MyShip = ShipGenerator.GenerateDefaultShip();
         }
 
         private void CreatePlayer()
@@ -195,14 +218,14 @@ namespace Space_RPG.ViewModel
             var newPlayer = crewMgr.CreatePlayer("Paul");
             newPlayer.IsInShip = true;
             newPlayer.ShipId = MyShip.Id;
-            _state.Crews.Add(newPlayer);
+            State.Crews.Add(newPlayer);
         }
 
         private void PlaceShipInFirstPlanet()
         {
-            _state.MyShip.Location = Planets[0].Location;
-            PlanetType = _state.Planets[0].Type.ToString();
-            _state.ShipIsInPlanet = true;
+            State.MyShip.Location = Planets[0].Location;
+            PlanetType = State.Planets[0].Type.ToString();
+            State.ShipIsInPlanet = true;
         }
 
         private void PlacePlayerInFirstShip()
@@ -277,7 +300,7 @@ namespace Space_RPG.ViewModel
                     //MyShip.Facilities[0].CrewIds.Add(crew.Id);
                 }
 
-                util.AddRange(Crews, newCrews);
+                util.AddRange(State.Crews, newCrews);
                 var crewsId = crewMgr.GetCrewsId(newCrews);
 
                 //util.AddRange(MyShip.Facilities[0].CrewIds, crewsId);
@@ -338,10 +361,10 @@ namespace Space_RPG.ViewModel
 
         private void Tick()
         {
-            _state.TickCount++;
+            State.TickCount++;
             AdvanceClock();
 
-            foreach (Crew crew in Crews.Where(v => v.IsAlive && !v.IsPlayer))
+            foreach (Crew crew in State.Crews.Where(v => v.IsAlive && !v.IsPlayer))
             {
                 UpdateNeeds(crew);
                 UpdateCrew(crew);
@@ -428,7 +451,7 @@ namespace Space_RPG.ViewModel
             // Set Target location based on action
 
 
-            //
+            // Move to the target location
 
 
 
@@ -508,7 +531,7 @@ namespace Space_RPG.ViewModel
                 crew.Fatigue = Math.Min(100, crew.Fatigue + 1);
             }
 
-            if (crew.IsEating && _state.TickCount % 2 == 0)
+            if (crew.IsEating && State.TickCount % 2 == 0)
             {
                 crew.Hunger = Math.Min(100, crew.Hunger + 1);
             }
@@ -541,9 +564,9 @@ namespace Space_RPG.ViewModel
 
         private void AdvanceClock()
         {
-            _state.TimeOfDay += _state.MinutesPerTick;
-            if (_state.TimeOfDay >= 1440)
-                _state.TimeOfDay -= 1440;
+            State.TimeOfDay += State.MinutesPerTick;
+            if (State.TimeOfDay >= 1440)
+                State.TimeOfDay -= 1440;
         }
 
         private void MarkDirty()
@@ -554,9 +577,10 @@ namespace Space_RPG.ViewModel
         private void SyncAll()
         {
             OnPropertyChanged(nameof(MyShip));
-            OnPropertyChanged(nameof(Crews));
+            OnPropertyChanged(nameof(State.Crews));
             OnPropertyChanged(nameof(Planets));
-            //OnPropertyChanged(nameof(Meat));
+            OnPropertyChanged(nameof(State));
+            OnPropertyChanged(nameof(JobOptions));
 
             RaiseCommandStates();
         }

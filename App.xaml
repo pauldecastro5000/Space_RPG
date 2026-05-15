@@ -214,5 +214,144 @@
 
         </Style>
 
+        <!-- GLOBAL COMBOBOX STYLE -->
+        <!-- GLOBAL COMBOBOX STYLE -->
+        <Style TargetType="ComboBox">
+
+            <Setter Property="Background"
+                    Value="Black" />
+
+            <Setter Property="Foreground"
+                    Value="White" />
+
+            <Setter Property="BorderBrush"
+                    Value="#404040" />
+
+            <Setter Property="BorderThickness"
+                    Value="1" />
+
+            <Setter Property="Padding"
+                    Value="4,2" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="ComboBox">
+
+                        <Grid>
+
+                            <!-- MAIN DISPLAY -->
+                            <Border x:Name="MainBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+
+                                <Grid>
+
+                                    <ContentPresenter Margin="6,2,25,2"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+
+                                    <!-- DROPDOWN ARROW -->
+                                    <ToggleButton Grid.Column="1"
+                                                  HorizontalAlignment="Right"
+                                                  Width="22"
+                                                  Focusable="False"
+                                                  IsChecked="{Binding IsDropDownOpen,
+                                                              RelativeSource={RelativeSource TemplatedParent},
+                                                              Mode=TwoWay}">
+
+                                        <TextBlock Text="▼"
+                                                   Foreground="White"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </ToggleButton>
+
+                                </Grid>
+
+                            </Border>
+
+                            <!-- POPUP -->
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   Focusable="False"
+                                   AllowsTransparency="True">
+
+                                <Border Background="Black"
+                                        BorderBrush="#404040"
+                                        BorderThickness="1">
+
+                                    <ScrollViewer>
+                                        <StackPanel IsItemsHost="True" />
+                                    </ScrollViewer>
+
+                                </Border>
+
+                            </Popup>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- SELECTED / FOCUSED -->
+                            <Trigger Property="IsKeyboardFocusWithin"
+                                     Value="True">
+                                <Setter TargetName="MainBorder"
+                                        Property="Background"
+                                        Value="#4D4D4D" />
+                            </Trigger>
+
+                            <!-- MOUSE HOVER -->
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="MainBorder"
+                                        Property="Background"
+                                        Value="#3B3B3B" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <!-- GLOBAL COMBOBOX ITEM STYLE -->
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background"
+                    Value="Black" />
+
+            <Setter Property="Foreground"
+                    Value="White" />
+
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+
+            <Style.Triggers>
+
+                <!-- Hover -->
+                <Trigger Property="IsHighlighted"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#3B3B3B" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                </Trigger>
+
+                <!-- Selected -->
+                <Trigger Property="IsSelected"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#4D4D4D" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>

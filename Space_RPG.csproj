@@ -79,6 +79,7 @@
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Rover.cs" />
     <Compile Include="Models\Planet.cs" />
+    <Compile Include="Services\PathfindingService.cs" />
     <Compile Include="Services\PlanetManager.cs" />
     <Compile Include="Services\SaveLoadManager.cs" />
     <Compile Include="Models\Ship.cs" />

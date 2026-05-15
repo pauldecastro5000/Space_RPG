@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace Space_RPG.Models
 {
-    public class GameState
+    public class GameState : ViewModelBase
     {
         public bool ShipIsInPlanet { get; set; }
         public bool IsInShipBattleMode { get; set; }
         public bool IsInRoverBattleMode { get; set; }
         public int TickCount { get; set; }
         public int TimeOfDay { get; set; }
-        public ObservableCollection<Crew> Crews { get; set; }
-       public ObservableCollection<Planet> Planets { get; set; }
+        private ObservableCollection<Crew> _crews;
+        public ObservableCollection<Crew> Crews
+        {
+            get { return _crews; }
+            set { _crews = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<Planet> Planets { get; set; }
         public ObservableCollection<Rover> Rovers { get; set; }
         public Ship MyShip { get; set; }
         public int MinutesPerTick { get; set; }

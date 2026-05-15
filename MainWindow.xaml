@@ -25,7 +25,8 @@
         <!-- SHIP MAP VIEW -->
         <Border Grid.Row="0"
                 Grid.Column="0">
-            <views:ShipMapView Ship="{Binding MyShip}" />
+            <views:ShipMapView Ship="{Binding MyShip}"
+                               Crews="{Binding Crews}" />
         </Border>
 
         <!-- MAIN VIEW -->

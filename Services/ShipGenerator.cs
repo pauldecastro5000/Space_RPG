@@ -266,9 +266,9 @@ namespace Space_RPG.Services
             InteriorRoom cafeteria,
             InteriorRoom cargo)
         {
-            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 4, 1);
+            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 3);
             AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 2, 3);
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 6, 3);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 3);
 
             AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1);
             AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed);

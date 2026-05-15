@@ -10,63 +10,45 @@ namespace Space_RPG.Helpers
 {
     public static class Mapper
     {
-        public static Point GetWorkstationTargetPosition(
-    Ship ship,
-    Job job)
+        public static Point GetWorkstationTargetPosition(Ship ship, Job job)
         {
-            InteriorObjectType workstationType;
+            InteriorObjectType workstationType = CrewHelper.GetWorkstationType(job);
 
-            switch (job)
-            {
-                case Job.Pilot:
-                    workstationType = InteriorObjectType.Cockpit;
-                    break;
-
-                case Job.TurretGunner:
-                    workstationType = InteriorObjectType.WeaponsConsole;
-                    break;
-
-                case Job.Medic:
-                    workstationType = InteriorObjectType.MedicalConsole;
-                    break;
-
-                //case Job.Engineer:
-                //    workstationType = InteriorObjectType.Workbench;
-                //    break;
-
-                default:
-                    return new Point(-1, -1);
-            }
+            if (workstationType == InteriorObjectType.None)
+                return new Point(-1, -1);
 
             foreach (InteriorRoom room in ship.Interior.Rooms)
             {
-                InteriorObject workstation =
-                    room.Objects.FirstOrDefault(o => o.ObjectType == workstationType);
+                InteriorObject workstation = room.Objects
+                    .FirstOrDefault(o => o.ObjectType == workstationType);
 
                 if (workstation == null)
                     continue;
 
-                List<InteriorTile> objectTiles =
-                    room.Tiles
-                        .Where(t => t.ObjectId == workstation.Id)
-                        .ToList();
+                List<InteriorTile> objectTiles = room.Tiles
+                    .Where(t => t.ObjectId == workstation.Id)
+                    .ToList();
 
                 if (objectTiles.Count == 0)
                     continue;
 
-                // Return center tile of workstation
-                int minX = objectTiles.Min(t => t.X);
-                int maxX = objectTiles.Max(t => t.X);
+                List<InteriorTile> walkableNeighborTiles = new List<InteriorTile>();
 
-                int minY = objectTiles.Min(t => t.Y);
-                int maxY = objectTiles.Max(t => t.Y);
+                foreach (InteriorTile objectTile in objectTiles)
+                {
+                    walkableNeighborTiles.AddRange(
+                        GetWalkableNeighborTiles(room, objectTile.X, objectTile.Y));
+                }
 
-                int centerX = (minX + maxX) / 2;
-                int centerY = (minY + maxY) / 2;
+                InteriorTile targetTile = walkableNeighborTiles
+                    .FirstOrDefault();
+
+                if (targetTile == null)
+                    continue;
 
                 return new Point(
-    room.WorldX + centerX,
-    room.WorldY + centerY);
+                    room.WorldX + targetTile.X,
+                    room.WorldY + targetTile.Y);
             }
 
             return new Point(-1, -1);

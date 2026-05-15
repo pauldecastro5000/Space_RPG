@@ -5,7 +5,7 @@
     <Grid Background="Black"
           Margin="5">
 
-        <DataGrid ItemsSource="{Binding State.Crews}"
+        <DataGrid ItemsSource="{Binding Crews}"
                   SelectedItem="{Binding SelectedCrew, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
@@ -99,6 +99,26 @@
                                     Binding="{Binding Fatigue, StringFormat=F1}"
                                     IsReadOnly="True"
                                     Width="Auto" />
+                
+                <!-- X and Y -->
+                <DataGridTextColumn Header="X"
+                                    Binding="{Binding X}"
+                                    IsReadOnly="True"
+                                    Width="Auto" />
+                <DataGridTextColumn Header="Y"
+                                    Binding="{Binding Y}"
+                                    IsReadOnly="True"
+                                    Width="Auto" />
+
+                <!-- Target X and Y -->
+                <DataGridTextColumn Header="TX"
+                                    Binding="{Binding TargetX}"
+                                    IsReadOnly="True"
+                                    Width="Auto" />
+                <DataGridTextColumn Header="TY"
+                                    Binding="{Binding TargetY}"
+                                    IsReadOnly="True"
+                                    Width="Auto" />
 
                 <!-- JOB -->
                 <DataGridTemplateColumn Header="Job"
@@ -124,10 +144,10 @@
                 </DataGridTemplateColumn>
 
                 <!-- JOB STATUS -->
-                <DataGridTextColumn Header="Job Status"
+                <!--<DataGridTextColumn Header="Job Status"
                                     Binding="{Binding JobStatus}"
                                     IsReadOnly="True"
-                                    Width="Auto" />
+                                    Width="Auto" />-->
 
                 <!-- ACTIVITY -->
                 <DataGridTextColumn Header="Activity"

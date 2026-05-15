@@ -1,10 +1,12 @@
 ﻿using Space_RPG.Models;
+using Space_RPG.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Linq;
 
 namespace Space_RPG.Services
@@ -121,7 +123,7 @@ namespace Space_RPG.Services
         #endregion Constructor
 
         #region Public Methods
-        public Crew CreatePlayer(string name)
+        public Crew CreatePlayer(string name, Ship ship)
         {
             var aiming = _utilities.RandomNumber(0, 100);
             var pilot = _utilities.RandomNumber(0, 100);
@@ -136,9 +138,10 @@ namespace Space_RPG.Services
                 Job = job,
                 Hunger = 90,
                 Cash = 10000000,
+                
                 //Skills = new CrewMgr.skills()
             };
-
+            PlaceCrewInsideShip(ship, newCrew);
             return newCrew;
         }
         public ObservableCollection<Guid> GetCrewsId(ObservableCollection<Crew> crews)
@@ -166,26 +169,57 @@ namespace Space_RPG.Services
             //}
 
         }
-        public ObservableCollection<Crew> ApplicantsToCrews(ObservableCollection<Applicant> Applicants)
+        public void UpdateTargetXY(Crew crew, CrewAction action, CrewAction prevAction, Ship ship)
         {
-            if (Applicants.Count == 0)
+            if (action == prevAction)
+            {
+                return;
+            }
+
+            switch (action)
+            {
+                case CrewAction.Work:
+                    SetCrewToWork(ship, crew);
+                    break;
+
+                case CrewAction.Eat:
+                    SetCrewToEat(ship, crew);
+                    break;
+
+                case CrewAction.Sleep:
+                    SetCrewToSleep(crew);
+                    break;
+            }
+        }
+      
+        public ObservableCollection<Crew> ApplicantsToCrews(
+     ObservableCollection<Applicant> applicants,
+     Ship ship)
+        {
+            if (applicants == null || applicants.Count == 0)
                 return null;
 
             var newCrews = new ObservableCollection<Crew>();
-            foreach (var applicant in Applicants)
+
+            foreach (var applicant in applicants)
             {
                 var newCrew = new Crew()
                 {
+                    Id = Guid.NewGuid(),
                     Name = applicant.Name,
                     Age = applicant.Age,
                     Price = applicant.Price,
                     Hunger = 100,
                     Fatigue = 0,
                     IsAlive = true
-                    
                 };
+
+                PlaceCrewInsideShip(ship, newCrew);
+
                 newCrews.Add(newCrew);
+                ship.Crews.Add(newCrew.Id);
             }
+
             return newCrews;
         }
         public Crew CreateRandomCrew()
@@ -315,7 +349,30 @@ namespace Space_RPG.Services
         #endregion Public Methods
 
         #region Private Methods
+        private void PlaceCrewInsideShip(Ship ship, Crew crew)
+        {
+            ShipMapBuilder.RebuildGlobalTileMap(ship);
 
+            ShipMapTile spawnTile = ship.Interior.GlobalTileMap.Values
+                .FirstOrDefault(t =>
+                    t.FacilityType == FacilityType.MainDeck &&
+                    t.IsWalkable);
+
+            if (spawnTile == null)
+                return;
+
+            crew.X = spawnTile.X;
+            crew.Y = spawnTile.Y;
+
+            crew.TargetX = spawnTile.X;
+            crew.TargetY = spawnTile.Y;
+
+            crew.IsInShip = true;
+            crew.IsInPlanet = false;
+            crew.IsInRover = false;
+
+            crew.ShipId = ship.Id;
+        }
         private void UniverseTime_UniverseTickPerMin(object sender, EventArgs e)
         {
             //foreach (var crew in MainWindow.mainVm.MyShip.Crews)
@@ -338,9 +395,57 @@ namespace Space_RPG.Services
             else
                 return true;
         }
+
+        private Point GetTableInCafeteria(Ship ship, Crew crew)
+        {
+            InteriorRoom cafeteria = ship.Interior.Rooms.FirstOrDefault(r => r.RoomType == FacilityType.Cafeteria);
+
+            InteriorObject table = cafeteria.Objects.FirstOrDefault(o => o.ObjectType == InteriorObjectType.Table);
+
+            List<InteriorTile> tableTiles = cafeteria.Tiles.Where(t => t.ObjectId == table.Id).ToList();
+
+            // If the table is a 1-tile object:
+            InteriorTile tile = tableTiles.First();
+
+            int x = tile.X;
+            int y = tile.Y;
+
+            //If it is a multi - tile object:
+            //foreach (InteriorTile tile in tableTiles)
+            //{
+            //    Console.WriteLine($"Table tile at {tile.X}, {tile.Y}");
+            //}
+
+            return new Point(x, y);
+
+        }
         private void Log(string message)
         {
             MainWindow.mainVm.Log.Add(message);
+        }
+        private void SetCrewToWork(Ship ship, Crew crew)
+        {
+            var workPoint = Mapper.GetWorkstationTargetPosition(ship, crew.Job);
+            crew.TargetX = (int)workPoint.X;
+            crew.TargetY = (int)workPoint.Y;
+        }
+        private void SetCrewToEat(Ship ship,Crew crew)
+        {
+            Point target = Mapper.GetInteractionTargetPosition(
+       ship,
+       FacilityType.Cafeteria,
+       InteriorObjectType.Table);
+
+            if (target.X != -1 && target.Y != -1)
+            {
+                crew.TargetX = (int)target.X;
+                crew.TargetY = (int)target.Y;
+            }
+        }
+        private void SetCrewToSleep(Crew crew)
+        {
+            crew.TargetX = crew.AssignedBedX;
+            crew.TargetY = crew.AssignedBedY;
         }
         private int CalculatePrice(int Stat1, int Stat2, int Stat3, int Stat4)
         {

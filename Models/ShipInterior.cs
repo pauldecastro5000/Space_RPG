@@ -30,6 +30,7 @@ namespace Space_RPG.Models
         Cockpit,
         WeaponsConsole,
         MedicalConsole,
+        Workbench,
 
         Bed, 
         Table, 

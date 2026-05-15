@@ -23,6 +23,9 @@ namespace Space_RPG.ViewModel
         #region Members
         private const int GameTickIntervalMs = 650;
 
+        private const int ActionDecisionIntervalTicks = 10;
+        private const int MinimumActionDurationTicks = 30;
+
         private readonly Timer _gameLoopTimer;
         private readonly Dispatcher _uiDispatcher;
         private readonly Stopwatch _gameLoopStopwatch;
@@ -36,7 +39,7 @@ namespace Space_RPG.ViewModel
         private int _gameLoopCallbackQueued;
         private long _lastGameLoopMs;
         private double _gameTickAccumulatorMs;
-
+        private CrewAction _prevAction;
 
         private bool _isGameTickRunning;
         BackgroundWorker _bgwUpdate;
@@ -75,7 +78,7 @@ namespace Space_RPG.ViewModel
         {
             get { return Enum.GetValues(typeof(Job)); }
         }
-
+        public ObservableCollection<Crew> Crews { get { return State.Crews; } }
         public Ship MyShip { get { return State.MyShip; } }
         //public ObservableCollection<Crew> Crews { get { return _state.Crews; } }
         public ObservableCollection<Planet> Planets { get { return State.Planets; } }
@@ -215,7 +218,7 @@ namespace Space_RPG.ViewModel
 
         private void CreatePlayer()
         {
-            var newPlayer = crewMgr.CreatePlayer("Paul");
+            var newPlayer = crewMgr.CreatePlayer("Paul", State.MyShip);
             newPlayer.IsInShip = true;
             newPlayer.ShipId = MyShip.Id;
             State.Crews.Add(newPlayer);
@@ -291,7 +294,7 @@ namespace Space_RPG.ViewModel
             {
                 AcceptedApplicants.Clear();
 
-                var newCrews = crewMgr.ApplicantsToCrews(vm.SelectedApplicants);
+                var newCrews = crewMgr.ApplicantsToCrews(vm.SelectedApplicants, State.MyShip);
 
                 foreach (var crew in newCrews)
                 {
@@ -367,7 +370,7 @@ namespace Space_RPG.ViewModel
             foreach (Crew crew in State.Crews.Where(v => v.IsAlive && !v.IsPlayer))
             {
                 UpdateNeeds(crew);
-                UpdateCrew(crew);
+                UpdateCrew(crew, State.MyShip);
             }
             SyncAll();
         }
@@ -440,79 +443,170 @@ namespace Space_RPG.ViewModel
             //crew.IsReturningHome = true;
         }
 
-        private void UpdateCrew(Crew crew)
+        private void UpdateCrew(Crew crew, Ship ship)
         {
             if (!crew.IsAlive)
                 return;
 
-            // Get Desired Action
-            var action = AIActionSelector.GetAction(crew);
+            UpdateCurrentActionProgress(crew);
 
-            // Set Target location based on action
+            if (IsCrewBusy(crew))
+            {
+                UpdateCrewPath(ship, crew);
+                MoveCrewAlongPath(crew);
+                return;
+            }
 
+            if (State.TickCount < crew.NextActionDecisionTick)
+                return;
 
-            // Move to the target location
+            CrewAction nextAction = AIActionSelector.GetAction(crew);
 
-
-
-            //// Rest if not in battle mode
-            //if (crew.Fatigue > 80 &&
-            //    ((!_state.IsInShipBattleMode && crew.IsInShip) || (!_state.IsInRoverBattleMode && crew.IsInRover)))
-            //{
-            //    SendCrewToSleep(crew);
-            //}
-
-
-            //if (!IsDayTime())
-            //{
-            //    SendVillagerToBed(crew);
-            //    return;
-            //}
-
-            //if (crew.IsSleeping || crew.IsInsideBuilding)
-            //{
-            //    WakeVillager(crew);
-            //    if (crew.IsSleeping || crew.IsInsideBuilding)
-            //        return;
-            //}
-
-            //if (crew.IsReturningHome)
-            //{
-            //    ReturnHome(crew);
-            //    return;
-            //}
-
-            //if (crew.CurrentRole == VillagerTaskType.Idle)
-            //{
-            //    if (crew.X != crew.HomeX || crew.Y != crew.HomeY)
-            //        MoveTowards(crew, crew.HomeX, crew.HomeY);
-            //    return;
-            //}
-
-            //JobModel currentJob = ResolveCurrentJob(crew);
-
-            //if (currentJob == null)
-            //{
-            //    currentJob = FindBestJobForVillager(crew);
-            //    if (currentJob == null)
-            //        return;
-
-            //    ReserveJob(crew, currentJob);
-            //}
-
-            //if (!EnsureVillagerPreparedForJob(crew, currentJob))
-            //    return;
-
-            //if (crew.X != currentJob.WorkX || crew.Y != currentJob.WorkY)
-            //{
-            //    MoveTowards(crew, currentJob.WorkX, currentJob.WorkY);
-            //    return;
-            //}
-
-            //PerformJobWork(crew, currentJob);
+            StartCrewAction(crew, ship, nextAction);
         }
 
+        private void UpdateCrewPath(Ship ship, Crew crew)
+        {
+            if (crew.X == crew.TargetX &&
+                crew.Y == crew.TargetY)
+            {
+                ClearCrewPath(crew);
+                crew.Activity = Activity.None;
+                return;
+            }
 
+            if (crew.CurrentPath != null &&
+                crew.CurrentPathIndex < crew.CurrentPath.Count)
+            {
+                return;
+            }
+
+            ShipMapBuilder.RebuildGlobalTileMap(ship);
+
+            crew.CurrentPath = PathfindingService.FindPath(
+                ship,
+                crew.X,
+                crew.Y,
+                crew.TargetX,
+                crew.TargetY);
+
+            crew.CurrentPathIndex = 0;
+
+            if (crew.CurrentPath == null || crew.CurrentPath.Count == 0)
+            {
+                ClearCrewPath(crew);
+                return;
+            }
+
+            crew.Activity = Activity.Walking;
+        }
+        private void MoveCrewAlongPath(Crew crew)
+        {
+            if (crew.CurrentPath == null)
+                return;
+
+            if (crew.CurrentPathIndex >= crew.CurrentPath.Count)
+                return;
+
+            ShipMapTile nextTile = crew.CurrentPath[crew.CurrentPathIndex];
+
+            if (nextTile.X == crew.X && nextTile.Y == crew.Y)
+            {
+                crew.CurrentPathIndex++;
+
+                if (crew.CurrentPathIndex >= crew.CurrentPath.Count)
+                    return;
+
+                nextTile = crew.CurrentPath[crew.CurrentPathIndex];
+            }
+
+            crew.X = nextTile.X;
+            crew.Y = nextTile.Y;
+            crew.CurrentPathIndex++;
+
+            if (crew.X == crew.TargetX &&
+                crew.Y == crew.TargetY)
+            {
+                ClearCrewPath(crew);
+
+                if (crew.Action == CrewAction.Eat)
+                {
+                    crew.IsEating = true;
+                    crew.Activity = Activity.Eating;
+                }
+                else if (crew.Action == CrewAction.Sleep)
+                {
+                    crew.IsSleeping = true;
+                    crew.Activity = Activity.None;
+                }
+                else if (crew.Action == CrewAction.Work)
+                {
+                    crew.Activity = Activity.Working;
+                }
+            }
+        }
+        private void ClearCrewPath(Crew crew)
+        {
+            crew.CurrentPath = null;
+            crew.CurrentPathIndex = 0;
+        }
+
+        private void MoveCrewTowardsTarget(
+    Ship ship,
+    Crew crew)
+        {
+            // DO NOT USE THIS METHOD ANYMORE
+            if (crew.X == crew.TargetX &&
+                crew.Y == crew.TargetY)
+            {
+                return;
+            }
+
+            int nextX = crew.X;
+            int nextY = crew.Y;
+
+            // Horizontal movement first
+            if (crew.X < crew.TargetX)
+                nextX++;
+            else if (crew.X > crew.TargetX)
+                nextX--;
+
+            // Vertical movement
+            else if (crew.Y < crew.TargetY)
+                nextY++;
+            else if (crew.Y > crew.TargetY)
+                nextY--;
+
+            InteriorTile nextTile = GetTile(ship, nextX, nextY);
+
+            if (nextTile == null)
+                return;
+
+            if (!nextTile.IsWalkable)
+                return;
+
+            crew.X = nextX;
+            crew.Y = nextY;
+        }
+
+        private InteriorTile GetTile(
+    Ship ship,
+    int x,
+    int y)
+        {
+            foreach (InteriorRoom room in ship.Interior.Rooms)
+            {
+                InteriorTile tile = room.Tiles
+                    .FirstOrDefault(t =>
+                        t.X == x &&
+                        t.Y == y);
+
+                if (tile != null)
+                    return tile;
+            }
+
+            return null;
+        }
 
         private void UpdateNeeds(Crew crew)
         {
@@ -567,6 +661,99 @@ namespace Space_RPG.ViewModel
             State.TimeOfDay += State.MinutesPerTick;
             if (State.TimeOfDay >= 1440)
                 State.TimeOfDay -= 1440;
+        }
+
+        private bool IsCrewBusy(Crew crew)
+        {
+            if (crew.Activity == Activity.Walking)
+                return true;
+
+            if (crew.Activity == Activity.Eating)
+                return true;
+
+            if (crew.Activity == Activity.Working)
+                return true;
+
+            if (crew.IsSleeping)
+                return true;
+
+            return false;
+        }
+
+        private void StartCrewAction(
+    Crew crew,
+    Ship ship,
+    CrewAction action)
+        {
+            crew.Action = action;
+            crew.ActionStartedTick = State.TickCount;
+            crew.NextActionDecisionTick = State.TickCount + ActionDecisionIntervalTicks;
+
+            crew.IsEating = false;
+            crew.IsSleeping = false;
+
+            ClearCrewPath(crew);
+
+            crewMgr.UpdateTargetXY(
+                crew,
+                action,
+                CrewAction.None,
+                ship);
+
+            UpdateCrewPath(ship, crew);
+        }
+
+        private void UpdateCurrentActionProgress(Crew crew)
+        {
+            if (crew.Activity == Activity.Eating)
+            {
+                crew.Hunger += 2;
+
+                if (crew.Hunger >= 100)
+                {
+                    crew.Hunger = 100;
+                    FinishCrewAction(crew);
+                }
+
+                return;
+            }
+
+            if (crew.IsSleeping)
+            {
+                crew.Fatigue -= 2;
+
+                if (crew.Fatigue <= 0)
+                {
+                    crew.Fatigue = 0;
+                    FinishCrewAction(crew);
+                }
+
+                return;
+            }
+
+            if (crew.Activity == Activity.Working)
+            {
+                if (State.TickCount - crew.ActionStartedTick >= MinimumActionDurationTicks)
+                {
+                    FinishCrewAction(crew);
+                }
+
+                return;
+            }
+        }
+
+        private void FinishCrewAction(Crew crew)
+        {
+            crew.Action = CrewAction.None;
+            crew.Activity = Activity.None;
+
+            crew.IsEating = false;
+            crew.IsSleeping = false;
+
+            ClearCrewPath(crew);
+
+            crew.NextActionDecisionTick =
+                State.TickCount + ActionDecisionIntervalTicks;
         }
 
         private void MarkDirty()

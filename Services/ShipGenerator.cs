@@ -132,6 +132,9 @@ namespace Space_RPG.Services
             int worldX,
             int worldY)
         {
+
+
+
             InteriorRoom room = new InteriorRoom
             {
                 Id = Guid.NewGuid(),

@@ -12,11 +12,11 @@ namespace Space_RPG.Models
         All,
         Captain,
         Pilot,    // Navigate Ship
-        TurretGunners,  // 
+        TurretGunner,  // 
         Engineer,
         Expolorer,
         ExpeditionGuard,
-        Miners,
+        Miner,
         Driver,
         Medic
     }

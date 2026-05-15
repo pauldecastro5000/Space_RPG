@@ -64,6 +64,9 @@
     <Compile Include="Converters\CrewIdsToCrewsConverter.cs" />
     <Compile Include="Converters\FacilityTypeToBrushConverter.cs" />
     <Compile Include="Converters\TilePositionConverter.cs" />
+    <Compile Include="Helpers\CrewHelper.cs" />
+    <Compile Include="Helpers\Mapper.cs" />
+    <Compile Include="Helpers\OtherHelpers.cs" />
     <Compile Include="Helpers\ShipMapBuilder.cs" />
     <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\ShipWeapon.cs" />

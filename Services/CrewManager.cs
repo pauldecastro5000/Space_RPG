@@ -425,7 +425,7 @@ namespace Space_RPG.Services
         }
         private void SetCrewToWork(Ship ship, Crew crew)
         {
-            var workPoint = Mapper.GetWorkstationTargetPosition(ship, crew.Job);
+            var workPoint = Mapper.GetWorkstationTargetPosition(ship, crew.Job, crew.Id);
             crew.TargetX = (int)workPoint.X;
             crew.TargetY = (int)workPoint.Y;
         }

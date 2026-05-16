@@ -10,7 +10,10 @@ namespace Space_RPG.Helpers
 {
     public static class Mapper
     {
-        public static Point GetWorkstationTargetPosition(Ship ship, Job job)
+        public static Point GetWorkstationTargetPosition(
+     Ship ship,
+     Job job,
+     Guid crewId)
         {
             InteriorObjectType workstationType = CrewHelper.GetWorkstationType(job);
 
@@ -19,19 +22,79 @@ namespace Space_RPG.Helpers
 
             foreach (InteriorRoom room in ship.Interior.Rooms)
             {
-                InteriorObject workstation = room.Objects
-                    .FirstOrDefault(o => o.ObjectType == workstationType);
+                List<InteriorObject> workstations = room.Objects
+                    .Where(o => o.ObjectType == workstationType)
+                    .ToList();
 
-                if (workstation == null)
-                    continue;
+                foreach (InteriorObject workstation in workstations)
+                {
+                    if (!IsWorkstationAvailable(workstation, crewId))
+                        continue;
 
-                Point targetPoint = GetTargetPositionFromInteractionDirections(room, workstation);
+                    Point targetPoint = GetTargetPositionFromInteractionDirections(room, workstation);
 
-                if (targetPoint.X >= 0 && targetPoint.Y >= 0)
-                    return targetPoint;
+                    if (targetPoint.X >= 0 && targetPoint.Y >= 0)
+                    {
+                        workstation.ReservedByCrewId = crewId;
+                        return targetPoint;
+                    }
+                }
             }
 
             return new Point(-1, -1);
+        }
+
+        public static void MarkWorkstationOccupied(
+    Ship ship,
+    Guid crewId)
+        {
+            foreach (InteriorRoom room in ship.Interior.Rooms)
+            {
+                foreach (InteriorObject obj in room.Objects)
+                {
+                    if (obj.ReservedByCrewId == crewId)
+                    {
+                        obj.ReservedByCrewId = null;
+                        obj.OccupiedByCrewId = crewId;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public static void ReleaseWorkstation(
+    Ship ship,
+    Guid crewId)
+        {
+            foreach (InteriorRoom room in ship.Interior.Rooms)
+            {
+                foreach (InteriorObject obj in room.Objects)
+                {
+                    if (obj.ReservedByCrewId == crewId)
+                        obj.ReservedByCrewId = null;
+
+                    if (obj.OccupiedByCrewId == crewId)
+                        obj.OccupiedByCrewId = null;
+                }
+            }
+        }
+
+        private static bool IsWorkstationAvailable(
+    InteriorObject workstation,
+    Guid crewId)
+        {
+            if (workstation.AllowMultipleCrew)
+                return true;
+
+            if (workstation.ReservedByCrewId.HasValue &&
+                workstation.ReservedByCrewId.Value != crewId)
+                return false;
+
+            if (workstation.OccupiedByCrewId.HasValue &&
+                workstation.OccupiedByCrewId.Value != crewId)
+                return false;
+
+            return true;
         }
 
         public static Point GetInteractionTargetPosition(

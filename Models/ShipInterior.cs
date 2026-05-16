@@ -157,20 +157,16 @@ namespace Space_RPG.Models
         public Guid Id { get; set; }
 
         public InteriorObjectType ObjectType { get; set; }
-
         public InteriorTileType TileType { get; set; }
 
         public string Name { get; set; }
 
-        // Local room position
         public int X { get; set; }
-
         public int Y { get; set; }
 
         [JsonIgnore]
         public InteriorRoom ParentRoom { get; set; }
 
-        // World position
         [JsonIgnore]
         public int WorldX => ParentRoom.WorldX + X;
 
@@ -179,11 +175,20 @@ namespace Space_RPG.Models
 
         public List<InteractionDirection> AllowedInteractionDirections { get; set; }
 
+        public bool AllowMultipleCrew { get; set; }
+
+        public Guid? ReservedByCrewId { get; set; }
+
+        public Guid? OccupiedByCrewId { get; set; }
+
         public InteriorObject()
         {
             Id = Guid.NewGuid();
-
             AllowedInteractionDirections = new List<InteractionDirection>();
+
+            AllowMultipleCrew = false;
+            ReservedByCrewId = null;
+            OccupiedByCrewId = null;
         }
     }
     public class ShipMapTile

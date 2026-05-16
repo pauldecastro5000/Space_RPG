@@ -270,6 +270,10 @@ namespace Space_RPG.Services
             var Interaction_Left = new List<InteractionDirection>() { InteractionDirection.Left };
             var Interaction_Right = new List<InteractionDirection>() { InteractionDirection.Right };
             var Interaction_Top = new List<InteractionDirection>() { InteractionDirection.Top };
+            var IntAct_ALL = new List<InteractionDirection>() { InteractionDirection.Top, 
+                InteractionDirection.Bottom, 
+                InteractionDirection.Left, 
+                InteractionDirection.Right };
 
 
             AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 4, InteriorTileType.Cockpit);
@@ -289,7 +293,7 @@ namespace Space_RPG.Services
             AddObject(crew, InteriorObjectType.Table, "Small Table", 4, 3, InteriorTileType.Table);
 
             AddObject(cafeteria, InteriorObjectType.Stove, "Stove", 1, 1, InteriorTileType.KitchenCounter);
-            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 5, 3, InteriorTileType.Table);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 5, 3, InteriorTileType.Table, IntAct_ALL, true);
             AddObject(cafeteria, InteriorObjectType.Sofa, "Sofa", 8, 5, InteriorTileType.Sofa);
 
             AddObject(cargo, InteriorObjectType.None, "Storage Box 1", 2, 2, InteriorTileType.StorageBox);
@@ -299,17 +303,21 @@ namespace Space_RPG.Services
         }
 
         private static void AddObject(
-     InteriorRoom room,
-     InteriorObjectType objectType,
-     string name,
-     int x,
-     int y,
-     InteriorTileType tileType = InteriorTileType.Floor,
-     List<InteractionDirection> interactionDirections = null)
+      InteriorRoom room,
+      InteriorObjectType objectType,
+      string name,
+      int x,
+      int y,
+      InteriorTileType tileType = InteriorTileType.Floor,
+      List<InteractionDirection> interactionDirections = null,
+      bool allowMultipleCrew = false)
         {
             if (interactionDirections == null)
             {
-                interactionDirections = new List<InteractionDirection>() { InteractionDirection.Bottom };
+                interactionDirections = new List<InteractionDirection>
+        {
+            InteractionDirection.Bottom
+        };
             }
 
             InteriorObject obj = new InteriorObject
@@ -319,11 +327,10 @@ namespace Space_RPG.Services
                 Name = name,
                 X = x,
                 Y = y,
-                ParentRoom = room
+                ParentRoom = room,
+                AllowedInteractionDirections = interactionDirections,
+                AllowMultipleCrew = allowMultipleCrew
             };
-
-            if (interactionDirections != null)
-                obj.AllowedInteractionDirections = interactionDirections;
 
             room.Objects.Add(obj);
 

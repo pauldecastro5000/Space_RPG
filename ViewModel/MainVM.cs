@@ -249,7 +249,7 @@ namespace Space_RPG.ViewModel
             state.MinutesPerTick = 1;
 
 
-          
+
             //state.WorldMap = CreateMap(MapSize, MapSize);
 
             //int center = MapSize / 2;
@@ -369,7 +369,7 @@ namespace Space_RPG.ViewModel
 
             foreach (Crew crew in State.Crews.Where(v => v.IsAlive && !v.IsPlayer))
             {
-                UpdateNeeds(crew);
+                UpdateCrewStatus(crew);
                 UpdateCrew(crew, State.MyShip);
             }
             SyncAll();
@@ -381,9 +381,9 @@ namespace Space_RPG.ViewModel
             {
                 case CrewAction.Eat:
                     break;
-                case CrewAction.Work: 
+                case CrewAction.Work:
                     break;
-                case CrewAction.Sleep: 
+                case CrewAction.Sleep:
                     break;
             }
         }
@@ -472,7 +472,7 @@ namespace Space_RPG.ViewModel
             {
                 ClearCrewPath(crew);
                 Mapper.MarkWorkstationOccupied(ship, crew);
-                crew.Activity = Activity.None;
+                //crew.Activity = Activity.None;
                 return;
             }
 
@@ -526,9 +526,11 @@ namespace Space_RPG.ViewModel
             crew.CurrentPathIndex++;
 
             if (crew.X == crew.TargetX &&
-                crew.Y == crew.TargetY)
+     crew.Y == crew.TargetY)
             {
                 ClearCrewPath(crew);
+
+                Mapper.MarkWorkstationOccupied(State.MyShip, crew);
 
                 if (crew.Action == CrewAction.Eat)
                 {
@@ -609,32 +611,43 @@ namespace Space_RPG.ViewModel
             return null;
         }
 
-        private void UpdateNeeds(Crew crew)
+        private void UpdateCrewStatus(Crew crew)
         {
-            crew.Hunger = Math.Max(0, crew.Hunger - 0.1f);
-            return;
+            UpdateHunger(crew);
+            UpdateFatigue(crew);
+        }
 
-
-            if (crew.IsSleeping)
+        private void UpdateHunger(Crew crew)
+        {
+            if (crew.Activity == Activity.Eating) 
             {
-                // Sleeping crews should recover fatigue instead of gaining more fatigue.
-                // Keep this in UpdateNeeds so the value changes every game tick while they remain asleep.
-                crew.Fatigue = Math.Max(0, crew.Fatigue - 4);
+                crew.Hunger = Math.Min(100, crew.Hunger + 1f);
+            } else
+            {
+                // TODO: hunger depletion rate depends on activity type
+                crew.Hunger = Math.Max(0, crew.Hunger - 0.1f);
             }
-            else
-            {
-                crew.Fatigue = Math.Min(100, crew.Fatigue + 1);
-            }
+        }
 
-            if (crew.IsEating && State.TickCount % 2 == 0)
+        private void UpdateFatigue(Crew crew)
+        {
+            switch (crew.Activity)
             {
-                crew.Hunger = Math.Min(100, crew.Hunger + 1);
-            }
+                case Activity.Eating:
+                    crew.Fatigue = Math.Max(0, crew.Fatigue - 0.05f);
+                    break;
 
-            if (crew.Health <= 0)
-            {
-                string reason = "something";// damageReasons.Count > 0 ? string.Join(" and ", damageReasons) : "unknown causes";
-                Killcrew(crew, reason);
+                case Activity.Walking:
+                    crew.Fatigue = Math.Max(0, crew.Fatigue - 0.1f);
+                    break;
+
+                case Activity.Sleeping:
+                    crew.Fatigue = Math.Min(100, crew.Fatigue + 0.5f);
+                    break;
+
+                default:
+                    crew.Fatigue = Math.Max(0, crew.Fatigue - 0.2f);
+                    break;
             }
         }
 
@@ -708,7 +721,7 @@ namespace Space_RPG.ViewModel
         {
             if (crew.Activity == Activity.Eating)
             {
-                crew.Hunger += 2;
+                crew.Hunger += 0.1f;
 
                 if (crew.Hunger >= 100)
                 {

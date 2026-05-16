@@ -184,7 +184,8 @@ namespace Space_RPG.Models
     public class InteriorObject
     {
         public Guid Id { get; set; }
-
+        public Dictionary<string, Guid> ReservedInteractionTiles { get; set; }
+        public Dictionary<string, Guid> OccupiedInteractionTiles { get; set; }
         public InteriorObjectType ObjectType { get; set; }
         public InteriorTileType TileType { get; set; }
 
@@ -222,6 +223,9 @@ namespace Space_RPG.Models
             Height = 1;
 
             AllowedInteractionDirections = new List<InteractionDirection>();
+
+            ReservedInteractionTiles = new Dictionary<string, Guid>();
+            OccupiedInteractionTiles = new Dictionary<string, Guid>();
 
             AllowMultipleCrew = false;
             ReservedByCrewId = null;

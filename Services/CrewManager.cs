@@ -440,18 +440,23 @@ namespace Space_RPG.Services
             crew.TargetY = (int)workPoint.Y;
             crew.ReservedObjectId = selectedObjectId;
         }
-        private void SetCrewToEat(Ship ship,Crew crew)
+        private void SetCrewToEat(Ship ship, Crew crew)
         {
-            Point target = Mapper.GetInteractionTargetPosition(
-       ship,
-       FacilityType.Cafeteria,
-       InteriorObjectType.Table);
+            Guid? selectedObjectId;
 
-            if (target.X != -1 && target.Y != -1)
-            {
-                crew.TargetX = (int)target.X;
-                crew.TargetY = (int)target.Y;
-            }
+            Point target = Mapper.GetObjectInteractionTargetPosition(
+                ship,
+                FacilityType.Cafeteria,
+                InteriorObjectType.Table,
+                crew.Id,
+                out selectedObjectId);
+
+            if (target.X == -1 || target.Y == -1)
+                return;
+
+            crew.TargetX = (int)target.X;
+            crew.TargetY = (int)target.Y;
+            crew.ReservedObjectId = selectedObjectId;
         }
         private void SetCrewToSleep(Crew crew)
         {

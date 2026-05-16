@@ -35,6 +35,7 @@ namespace Space_RPG.Models
         None = 0,
         Working,
         Walking,
-        Eating
+        Eating,
+        Sleeping
     }
 }

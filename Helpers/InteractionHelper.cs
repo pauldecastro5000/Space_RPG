@@ -10,6 +10,39 @@ namespace Space_RPG.Helpers
 {
     public static class InteractionHelper
     {
+        public static string GetTileKey(int x, int y)
+        {
+            return x + "," + y;
+        }
+
+        public static Point? GetRandomAvailableInteractionTile(
+            InteriorObject obj,
+            Guid crewId,
+            Random random)
+        {
+            List<Point> availableTiles = GetInteractionTiles(obj)
+                .Where(p =>
+                {
+                    string key = GetTileKey((int)p.X, (int)p.Y);
+
+                    bool reservedByOther =
+                        obj.ReservedInteractionTiles.ContainsKey(key) &&
+                        obj.ReservedInteractionTiles[key] != crewId;
+
+                    bool occupiedByOther =
+                        obj.OccupiedInteractionTiles.ContainsKey(key) &&
+                        obj.OccupiedInteractionTiles[key] != crewId;
+
+                    return !reservedByOther && !occupiedByOther;
+                })
+                .OrderBy(x => random.Next())
+                .ToList();
+
+            if (availableTiles.Count == 0)
+                return null;
+
+            return availableTiles[0];
+        }
         public static List<Point> GetInteractionTiles(InteriorObject obj)
         {
             List<Point> result = new List<Point>();

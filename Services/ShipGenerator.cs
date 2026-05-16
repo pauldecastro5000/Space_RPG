@@ -281,15 +281,20 @@ namespace Space_RPG.Services
                 InteractionDirection.Right };
 
 
-            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 4, InteriorTileType.Cockpit, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 4, 5, InteriorTileType.Cockpit, 2, 1);
 
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 3, 2, InteriorTileType.WeaponsConsole, 2, 1);
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 2, InteriorTileType.WeaponsConsole, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 2, 1, InteriorTileType.WeaponsConsole, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 5, 1, InteriorTileType.WeaponsConsole, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 2, 3, InteriorTileType.WeaponsConsole, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 5, 3, InteriorTileType.WeaponsConsole, 2, 1);
 
-            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 2, 1, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 5, 1, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 2, 4, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 5, 4, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
 
-            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
-            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 5, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            //AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            //AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 5, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
 
             AddObject(crew, InteriorObjectType.Bed, "Bed 1", 1, 1, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
             AddObject(crew, InteriorObjectType.Bed, "Bed 2", 7, 1, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
@@ -298,9 +303,9 @@ namespace Space_RPG.Services
             AddObject(crew, InteriorObjectType.Table, "Small Table", 4, 3, InteriorTileType.Table);
 
             AddObject(cafeteria, InteriorObjectType.Stove, "Stove", 1, 1, InteriorTileType.KitchenCounter);
-            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 1, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
-            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 3, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
-            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 5, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 1, InteriorTileType.Table, 3, 1, true, Interaction_Bottom);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 3, InteriorTileType.Table, 3, 1, true, Interaction_Bottom);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 5, InteriorTileType.Table, 3, 1, true, Interaction_Bottom);
             //AddObject(cafeteria, InteriorObjectType.Sofa, "Sofa", 1, 6, InteriorTileType.Sofa, 5, 1);
 
             AddObject(cargo, InteriorObjectType.None, "Storage Box 1", 2, 2, InteriorTileType.StorageBox);

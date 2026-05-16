@@ -266,11 +266,19 @@ namespace Space_RPG.Services
             InteriorRoom cafeteria,
             InteriorRoom cargo)
         {
-            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 3);
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 2, 3);
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 3);
+            var Interaction_Bottom = new List<InteractionDirection>() { InteractionDirection.Bottom };
+            var Interaction_Left = new List<InteractionDirection>() { InteractionDirection.Left };
+            var Interaction_Right = new List<InteractionDirection>() { InteractionDirection.Right };
+            var Interaction_Top = new List<InteractionDirection>() { InteractionDirection.Top };
 
-            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1);
+
+            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 4, InteriorTileType.Cockpit);
+
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 3, 2, InteriorTileType.WeaponsConsole);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 2, InteriorTileType.WeaponsConsole);
+
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1, InteriorTileType.MedicalConsole);
+
             AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed);
             AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 5, 4, InteriorTileType.Bed);
 
@@ -291,30 +299,42 @@ namespace Space_RPG.Services
         }
 
         private static void AddObject(
-            InteriorRoom room,
-            InteriorObjectType objectType,
-            string name,
-            int x,
-            int y,
-            InteriorTileType tileType = InteriorTileType.Floor)
+     InteriorRoom room,
+     InteriorObjectType objectType,
+     string name,
+     int x,
+     int y,
+     InteriorTileType tileType = InteriorTileType.Floor,
+     List<InteractionDirection> interactionDirections = null)
         {
-            InteriorTile tile = room.Tiles.FirstOrDefault(t => t.X == x && t.Y == y);
-
-            if (tile == null)
-                return;
+            if (interactionDirections == null)
+            {
+                interactionDirections = new List<InteractionDirection>() { InteractionDirection.Bottom };
+            }
 
             InteriorObject obj = new InteriorObject
             {
-                Id = Guid.NewGuid(),
                 ObjectType = objectType,
-                Name = name
+                TileType = tileType,
+                Name = name,
+                X = x,
+                Y = y,
+                ParentRoom = room
             };
+
+            if (interactionDirections != null)
+                obj.AllowedInteractionDirections = interactionDirections;
 
             room.Objects.Add(obj);
 
-            tile.ObjectId = obj.Id;
-            tile.TileType = tileType;
-            tile.IsWalkable = false;
+            InteriorTile tile = room.GetTileFast(x, y);
+
+            if (tile != null)
+            {
+                tile.ObjectId = obj.Id;
+                tile.TileType = tileType;
+                tile.IsWalkable = false;
+            }
         }
     }
 }

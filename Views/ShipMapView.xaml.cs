@@ -308,6 +308,17 @@ namespace Space_RPG.Views
         {
             switch (tileType)
             {
+                #region Workstations
+                case InteriorTileType.Cockpit:
+                    return (Brush)new BrushConverter().ConvertFromString("#287FC7");
+
+                case InteriorTileType.WeaponsConsole:
+                    return (Brush)new BrushConverter().ConvertFromString("#A31459");
+
+                case InteriorTileType.MedicalConsole:
+                    return (Brush)new BrushConverter().ConvertFromString("#2271BF");
+                #endregion Workstations
+
                 case InteriorTileType.Floor:
                     return Brushes.DimGray;
 

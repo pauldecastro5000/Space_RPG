@@ -23,6 +23,8 @@ namespace Space_RPG.Models
         Corridor,
         EngineRoom
     }
+
+    // what the thing actually is / does
     public enum InteriorObjectType
     {
         None = 0,
@@ -38,17 +40,31 @@ namespace Space_RPG.Models
         Sofa
     }
 
+    // What is drawn on the map
     public enum InteriorTileType 
-    { 
-        Floor = 0, 
-        Wall = 1, 
-        Door = 2, 
-        Bed = 3, 
-        StorageBox = 4, 
-        Workbench = 5, 
-        KitchenCounter = 6, 
-        Table = 7, 
-        Sofa = 8
+    {
+        // Workstations
+        Cockpit,
+        WeaponsConsole,
+        MedicalConsole,
+
+        Floor, 
+        Wall, 
+        Door, 
+        Bed, 
+        StorageBox, 
+        Workbench, 
+        KitchenCounter,
+        Table, 
+        Sofa
+    }
+
+    public enum InteractionDirection
+    {
+        Top,
+        Bottom,
+        Left,
+        Right
     }
 
     public class ShipInterior
@@ -139,12 +155,35 @@ namespace Space_RPG.Models
     public class InteriorObject
     {
         public Guid Id { get; set; }
+
         public InteriorObjectType ObjectType { get; set; }
+
+        public InteriorTileType TileType { get; set; }
+
         public string Name { get; set; }
+
+        // Local room position
+        public int X { get; set; }
+
+        public int Y { get; set; }
+
+        [JsonIgnore]
+        public InteriorRoom ParentRoom { get; set; }
+
+        // World position
+        [JsonIgnore]
+        public int WorldX => ParentRoom.WorldX + X;
+
+        [JsonIgnore]
+        public int WorldY => ParentRoom.WorldY + Y;
+
+        public List<InteractionDirection> AllowedInteractionDirections { get; set; }
 
         public InteriorObject()
         {
             Id = Guid.NewGuid();
+
+            AllowedInteractionDirections = new List<InteractionDirection>();
         }
     }
     public class ShipMapTile

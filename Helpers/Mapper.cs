@@ -25,39 +25,19 @@ namespace Space_RPG.Helpers
                 if (workstation == null)
                     continue;
 
-                List<InteriorTile> objectTiles = room.Tiles
-                    .Where(t => t.ObjectId == workstation.Id)
-                    .ToList();
+                Point targetPoint = GetTargetPositionFromInteractionDirections(room, workstation);
 
-                if (objectTiles.Count == 0)
-                    continue;
-
-                List<InteriorTile> walkableNeighborTiles = new List<InteriorTile>();
-
-                foreach (InteriorTile objectTile in objectTiles)
-                {
-                    walkableNeighborTiles.AddRange(
-                        GetWalkableNeighborTiles(room, objectTile.X, objectTile.Y));
-                }
-
-                InteriorTile targetTile = walkableNeighborTiles
-                    .FirstOrDefault();
-
-                if (targetTile == null)
-                    continue;
-
-                return new Point(
-                    room.WorldX + targetTile.X,
-                    room.WorldY + targetTile.Y);
+                if (targetPoint.X >= 0 && targetPoint.Y >= 0)
+                    return targetPoint;
             }
 
             return new Point(-1, -1);
         }
 
         public static Point GetInteractionTargetPosition(
-    Ship ship,
-    FacilityType roomType,
-    InteriorObjectType objectType)
+      Ship ship,
+      FacilityType roomType,
+      InteriorObjectType objectType)
         {
             InteriorRoom room = ship.Interior.Rooms
                 .FirstOrDefault(r => r.RoomType == roomType);
@@ -71,32 +51,35 @@ namespace Space_RPG.Helpers
             if (targetObject == null)
                 return new Point(-1, -1);
 
-            List<InteriorTile> objectTiles = room.Tiles
-                .Where(t => t.ObjectId == targetObject.Id)
-                .ToList();
-
-            if (objectTiles.Count == 0)
-                return new Point(-1, -1);
-
-            List<InteriorTile> walkableNeighborTiles = new List<InteriorTile>();
-
-            foreach (InteriorTile objectTile in objectTiles)
-            {
-                walkableNeighborTiles.AddRange(GetWalkableNeighborTiles(room, objectTile.X, objectTile.Y));
-            }
-
-            InteriorTile targetTile = walkableNeighborTiles
-                .Distinct()
-                .FirstOrDefault();
-
-            if (targetTile == null)
-                return new Point(-1, -1);
-
-            return new Point(
-     room.WorldX + targetTile.X,
-     room.WorldY + targetTile.Y);
+            return GetTargetPositionFromInteractionDirections(room, targetObject);
         }
 
+        private static Point GetTargetPositionFromInteractionDirections(
+    InteriorRoom room,
+    InteriorObject targetObject)
+        {
+            List<Point> interactionPoints = InteractionHelper.GetInteractionTiles(targetObject);
+
+            foreach (Point point in interactionPoints)
+            {
+                int localX = (int)point.X - room.WorldX;
+                int localY = (int)point.Y - room.WorldY;
+
+                InteriorTile tile = room.GetTileFast(localX, localY);
+
+                if (tile == null)
+                    continue;
+
+                if (!tile.IsWalkable)
+                    continue;
+
+                return point;
+            }
+
+            return new Point(-1, -1);
+        }
+
+        // NO LONGER IN USE
         private static List<InteriorTile> GetWalkableNeighborTiles(
     InteriorRoom room,
     int x,
@@ -112,6 +95,7 @@ namespace Space_RPG.Helpers
             return neighborTiles;
         }
 
+        // NO LONGER IN USE
         private static void AddIfWalkable(
             InteriorRoom room,
             List<InteriorTile> tiles,

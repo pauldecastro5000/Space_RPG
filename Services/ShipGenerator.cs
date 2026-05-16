@@ -272,31 +272,36 @@ namespace Space_RPG.Services
             var Interaction_Left = new List<InteractionDirection>() { InteractionDirection.Left };
             var Interaction_Right = new List<InteractionDirection>() { InteractionDirection.Right };
             var Interaction_Top = new List<InteractionDirection>() { InteractionDirection.Top };
+            var IntAct_LR = new List<InteractionDirection>() {
+                InteractionDirection.Left,
+                InteractionDirection.Right };
             var IntAct_ALL = new List<InteractionDirection>() { InteractionDirection.Top, 
                 InteractionDirection.Bottom, 
                 InteractionDirection.Left, 
                 InteractionDirection.Right };
 
 
-            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 4, InteriorTileType.Cockpit);
+            AddObject(mainDeck, InteriorObjectType.Cockpit, "Cockpit", 5, 4, InteriorTileType.Cockpit, 2, 1);
 
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 3, 2, InteriorTileType.WeaponsConsole);
-            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 2, InteriorTileType.WeaponsConsole);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 3, 2, InteriorTileType.WeaponsConsole, 2, 1);
+            AddObject(mainDeck, InteriorObjectType.WeaponsConsole, "Weapons Console", 7, 2, InteriorTileType.WeaponsConsole, 2, 1);
 
-            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1, InteriorTileType.MedicalConsole);
+            AddObject(medical, InteriorObjectType.MedicalConsole, "Medical Console", 3, 1, InteriorTileType.MedicalConsole, 1, 2, false, IntAct_LR);
 
-            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed);
-            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 5, 4, InteriorTileType.Bed);
+            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 2, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            AddObject(medical, InteriorObjectType.Bed, "Medical Bed", 5, 4, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
 
-            AddObject(crew, InteriorObjectType.Bed, "Bed 1", 1, 1, InteriorTileType.Bed);
-            AddObject(crew, InteriorObjectType.Bed, "Bed 2", 7, 1, InteriorTileType.Bed);
-            AddObject(crew, InteriorObjectType.Bed, "Bed 3", 1, 5, InteriorTileType.Bed);
-            AddObject(crew, InteriorObjectType.Bed, "Bed 4", 7, 5, InteriorTileType.Bed);
+            AddObject(crew, InteriorObjectType.Bed, "Bed 1", 1, 1, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            AddObject(crew, InteriorObjectType.Bed, "Bed 2", 7, 1, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            AddObject(crew, InteriorObjectType.Bed, "Bed 3", 1, 5, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
+            AddObject(crew, InteriorObjectType.Bed, "Bed 4", 7, 5, InteriorTileType.Bed, 1, 2, false, IntAct_LR);
             AddObject(crew, InteriorObjectType.Table, "Small Table", 4, 3, InteriorTileType.Table);
 
             AddObject(cafeteria, InteriorObjectType.Stove, "Stove", 1, 1, InteriorTileType.KitchenCounter);
-            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 5, 3, InteriorTileType.Table, IntAct_ALL, true);
-            AddObject(cafeteria, InteriorObjectType.Sofa, "Sofa", 8, 5, InteriorTileType.Sofa);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 1, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 3, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
+            AddObject(cafeteria, InteriorObjectType.Table, "Dining Table", 3, 5, InteriorTileType.Table, 3, 1, true, IntAct_ALL);
+            //AddObject(cafeteria, InteriorObjectType.Sofa, "Sofa", 1, 6, InteriorTileType.Sofa, 5, 1);
 
             AddObject(cargo, InteriorObjectType.None, "Storage Box 1", 2, 2, InteriorTileType.StorageBox);
             AddObject(cargo, InteriorObjectType.None, "Storage Box 2", 5, 2, InteriorTileType.StorageBox);
@@ -305,14 +310,16 @@ namespace Space_RPG.Services
         }
 
         private static void AddObject(
-      InteriorRoom room,
-      InteriorObjectType objectType,
-      string name,
-      int x,
-      int y,
-      InteriorTileType tileType = InteriorTileType.Floor,
-      List<InteractionDirection> interactionDirections = null,
-      bool allowMultipleCrew = false)
+         InteriorRoom room,
+         InteriorObjectType objectType,
+         string name,
+         int x,
+         int y,
+         InteriorTileType tileType = InteriorTileType.Floor,
+         int width = 1,
+         int height = 1,
+         bool allowMultipleCrew = false,
+         List<InteractionDirection> interactionDirections = null)
         {
             if (interactionDirections == null)
             {
@@ -329,6 +336,8 @@ namespace Space_RPG.Services
                 Name = name,
                 X = x,
                 Y = y,
+                Width = width,
+                Height = height,
                 ParentRoom = room,
                 AllowedInteractionDirections = interactionDirections,
                 AllowMultipleCrew = allowMultipleCrew
@@ -336,13 +345,19 @@ namespace Space_RPG.Services
 
             room.Objects.Add(obj);
 
-            InteriorTile tile = room.GetTileFast(x, y);
-
-            if (tile != null)
+            for (int tileY = y; tileY < y + height; tileY++)
             {
-                tile.ObjectId = obj.Id;
-                tile.TileType = tileType;
-                tile.IsWalkable = false;
+                for (int tileX = x; tileX < x + width; tileX++)
+                {
+                    InteriorTile tile = room.GetTileFast(tileX, tileY);
+
+                    if (tile == null)
+                        continue;
+
+                    tile.ObjectId = obj.Id;
+                    tile.TileType = tileType;
+                    tile.IsWalkable = false;
+                }
             }
         }
     }

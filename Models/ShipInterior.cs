@@ -190,8 +190,13 @@ namespace Space_RPG.Models
 
         public string Name { get; set; }
 
+        // Local room position: top-left of object
         public int X { get; set; }
         public int Y { get; set; }
+
+        // Object size in tiles
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         [JsonIgnore]
         public InteriorRoom ParentRoom { get; set; }
@@ -207,12 +212,15 @@ namespace Space_RPG.Models
         public bool AllowMultipleCrew { get; set; }
 
         public Guid? ReservedByCrewId { get; set; }
-
         public Guid? OccupiedByCrewId { get; set; }
 
         public InteriorObject()
         {
             Id = Guid.NewGuid();
+
+            Width = 1;
+            Height = 1;
+
             AllowedInteractionDirections = new List<InteractionDirection>();
 
             AllowMultipleCrew = false;

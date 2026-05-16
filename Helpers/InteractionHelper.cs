@@ -19,19 +19,31 @@ namespace Space_RPG.Helpers
                 switch (direction)
                 {
                     case InteractionDirection.Top:
-                        result.Add(new Point(obj.WorldX, obj.WorldY - 1));
+                        for (int x = obj.WorldX; x < obj.WorldX + obj.Width; x++)
+                        {
+                            result.Add(new Point(x, obj.WorldY - 1));
+                        }
                         break;
 
                     case InteractionDirection.Bottom:
-                        result.Add(new Point(obj.WorldX, obj.WorldY + 1));
+                        for (int x = obj.WorldX; x < obj.WorldX + obj.Width; x++)
+                        {
+                            result.Add(new Point(x, obj.WorldY + obj.Height));
+                        }
                         break;
 
                     case InteractionDirection.Left:
-                        result.Add(new Point(obj.WorldX - 1, obj.WorldY));
+                        for (int y = obj.WorldY; y < obj.WorldY + obj.Height; y++)
+                        {
+                            result.Add(new Point(obj.WorldX - 1, y));
+                        }
                         break;
 
                     case InteractionDirection.Right:
-                        result.Add(new Point(obj.WorldX + 1, obj.WorldY));
+                        for (int y = obj.WorldY; y < obj.WorldY + obj.Height; y++)
+                        {
+                            result.Add(new Point(obj.WorldX + obj.Width, y));
+                        }
                         break;
                 }
             }

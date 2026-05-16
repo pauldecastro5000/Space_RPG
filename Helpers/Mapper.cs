@@ -137,10 +137,11 @@ namespace Space_RPG.Helpers
         }
 
         private static Point GetTargetPositionFromInteractionDirections(
-    InteriorRoom room,
-    InteriorObject targetObject)
+      InteriorRoom room,
+      InteriorObject targetObject)
         {
-            List<Point> interactionPoints = InteractionHelper.GetInteractionTiles(targetObject);
+            List<Point> interactionPoints =
+                InteractionHelper.GetInteractionTiles(targetObject);
 
             foreach (Point point in interactionPoints)
             {

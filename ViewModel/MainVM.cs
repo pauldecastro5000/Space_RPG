@@ -758,8 +758,6 @@ namespace Space_RPG.ViewModel
 
         private void FinishCrewAction(Crew crew)
         {
-            Mapper.ReleaseWorkstation(State.MyShip, crew);
-
             crew.Action = CrewAction.None;
             crew.Activity = Activity.None;
 
@@ -768,6 +766,9 @@ namespace Space_RPG.ViewModel
 
             ClearCrewPath(crew);
 
+            // Do not release the workstation/object here.
+            // The crew is still physically standing on the interaction tile.
+            // Release it only when the crew is assigned a new destination.
             crew.NextActionDecisionTick =
                 State.TickCount + ActionDecisionIntervalTicks;
         }

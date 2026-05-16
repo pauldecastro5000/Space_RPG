@@ -11,6 +11,20 @@ namespace Space_RPG.Helpers
     public static class Mapper
     {
         private static readonly Random _random = new Random();
+        public static Point GetRandomWalkableTile(Ship ship)
+        {
+            List<ShipMapTile> walkableTiles = ship.Interior.GlobalTileMap.Values
+                .Where(t => t.IsWalkable)
+                .ToList();
+
+            if (walkableTiles.Count == 0)
+                return new Point(-1, -1);
+
+            ShipMapTile randomTile =
+                walkableTiles[_random.Next(walkableTiles.Count)];
+
+            return new Point(randomTile.X, randomTile.Y);
+        }
         public static Point GetWorkstationTargetPosition(
      Ship ship,
      Job job,

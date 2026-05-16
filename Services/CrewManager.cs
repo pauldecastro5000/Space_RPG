@@ -187,7 +187,7 @@ namespace Space_RPG.Services
                     break;
 
                 case CrewAction.Sleep:
-                    SetCrewToSleep(crew);
+                    SetCrewToSleep(ship, crew);
                     break;
             }
         }
@@ -425,6 +425,8 @@ namespace Space_RPG.Services
         }
         private void SetCrewToWork(Ship ship, Crew crew)
         {
+            Mapper.ReleaseWorkstation(ship, crew);
+
             Guid? selectedObjectId;
 
             Point workPoint = Mapper.GetWorkstationTargetPosition(
@@ -442,6 +444,8 @@ namespace Space_RPG.Services
         }
         private void SetCrewToEat(Ship ship, Crew crew)
         {
+            Mapper.ReleaseWorkstation(ship, crew);
+
             Guid? selectedObjectId;
 
             Point target = Mapper.GetObjectInteractionTargetPosition(
@@ -458,10 +462,37 @@ namespace Space_RPG.Services
             crew.TargetY = (int)target.Y;
             crew.ReservedObjectId = selectedObjectId;
         }
-        private void SetCrewToSleep(Crew crew)
+        private void SetCrewToSleep(Ship ship, Crew crew)
         {
-            crew.TargetX = crew.AssignedBedX;
-            crew.TargetY = crew.AssignedBedY;
+            Mapper.ReleaseWorkstation(ship, crew);
+
+            Guid? selectedObjectId;
+
+            Point target = Mapper.GetObjectInteractionTargetPosition(
+                ship,
+                FacilityType.FemaleCrewQuarters,
+                InteriorObjectType.Bed,
+                crew.Id,
+                out selectedObjectId);
+
+            if (target.X == -1 || target.Y == -1)
+                return;
+
+            crew.TargetX = (int)target.X;
+            crew.TargetY = (int)target.Y;
+            crew.ReservedObjectId = selectedObjectId;
+        }
+        private void SetCrewToWander(Ship ship, Crew crew)
+        {
+            Mapper.ReleaseWorkstation(ship, crew);
+
+            Point target = Mapper.GetRandomWalkableTile(ship);
+
+            if (target.X == -1 || target.Y == -1)
+                return;
+
+            crew.TargetX = (int)target.X;
+            crew.TargetY = (int)target.Y;
         }
         private int CalculatePrice(int Stat1, int Stat2, int Stat3, int Stat4)
         {

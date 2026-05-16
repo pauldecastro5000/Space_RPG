@@ -197,7 +197,7 @@ namespace Space_RPG.Views
                 Width = 18,
                 Height = 18,
                 Fill = GetCrewBrush(crew),
-                Stroke = Brushes.White,
+                Stroke = Brushes.LightGray,
                 StrokeThickness = 1.5,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
@@ -206,7 +206,7 @@ namespace Space_RPG.Views
             TextBlock label = new TextBlock
             {
                 Text = string.IsNullOrEmpty(crew.Name) ? "?" : crew.Name.Substring(0, 1),
-                Foreground = Brushes.White,
+                Foreground = GetCrewTextBrush(crew),
                 FontSize = 10,
                 FontWeight = FontWeights.Bold,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -220,6 +220,20 @@ namespace Space_RPG.Views
             Canvas.SetTop(crewMarker, drawY);
 
             ShipCanvas.Children.Add(crewMarker);
+        }
+
+        private Brush GetCrewTextBrush(Crew crew)
+        {
+            switch (crew.Action)
+            {
+                case CrewAction.Eat:
+                case CrewAction.Sleep:
+                case CrewAction.Work:
+                    return Brushes.White;
+
+                default:
+                    return Brushes.Black;
+            }
         }
 
         private Brush GetCrewBrush(Crew crew)

@@ -119,6 +119,8 @@ namespace Space_RPG.Services
             foreach (InteriorRoom room in ship.Interior.Rooms)
                 room.RebuildTileIndex();
 
+            ship.Interior.RebuildObjectLookup();
+
             ShipMapBuilder.RebuildGlobalTileMap(ship);
 
             return ship;

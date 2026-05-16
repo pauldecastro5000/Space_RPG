@@ -11,33 +11,35 @@ namespace Space_RPG.Helpers
     public static class Mapper
     {
         public static Point GetWorkstationTargetPosition(
-     Ship ship,
-     Job job,
-     Guid crewId)
+            Ship ship,
+            Job job,
+            Guid crewId,
+            out Guid? selectedObjectId)
         {
+            selectedObjectId = null;
+
             InteriorObjectType workstationType = CrewHelper.GetWorkstationType(job);
 
             if (workstationType == InteriorObjectType.None)
                 return new Point(-1, -1);
 
-            foreach (InteriorRoom room in ship.Interior.Rooms)
+            foreach (InteriorObject workstation in ship.Interior.ObjectLookup.Values)
             {
-                List<InteriorObject> workstations = room.Objects
-                    .Where(o => o.ObjectType == workstationType)
-                    .ToList();
+                if (workstation.ObjectType != workstationType)
+                    continue;
 
-                foreach (InteriorObject workstation in workstations)
+                if (!IsWorkstationAvailable(workstation, crewId))
+                    continue;
+
+                Point targetPoint = GetTargetPositionFromInteractionDirections(
+                    workstation.ParentRoom,
+                    workstation);
+
+                if (targetPoint.X >= 0 && targetPoint.Y >= 0)
                 {
-                    if (!IsWorkstationAvailable(workstation, crewId))
-                        continue;
-
-                    Point targetPoint = GetTargetPositionFromInteractionDirections(room, workstation);
-
-                    if (targetPoint.X >= 0 && targetPoint.Y >= 0)
-                    {
-                        workstation.ReservedByCrewId = crewId;
-                        return targetPoint;
-                    }
+                    workstation.ReservedByCrewId = crewId;
+                    selectedObjectId = workstation.Id;
+                    return targetPoint;
                 }
             }
 
@@ -45,43 +47,60 @@ namespace Space_RPG.Helpers
         }
 
         public static void MarkWorkstationOccupied(
-    Ship ship,
-    Guid crewId)
+            Ship ship,
+            Crew crew)
         {
-            foreach (InteriorRoom room in ship.Interior.Rooms)
-            {
-                foreach (InteriorObject obj in room.Objects)
-                {
-                    if (obj.ReservedByCrewId == crewId)
-                    {
-                        obj.ReservedByCrewId = null;
-                        obj.OccupiedByCrewId = crewId;
-                        return;
-                    }
-                }
-            }
+            if (!crew.ReservedObjectId.HasValue)
+                return;
+
+            InteriorObject obj = ship.Interior.GetObjectById(crew.ReservedObjectId.Value);
+
+            if (obj == null)
+                return;
+
+            obj.ReservedByCrewId = null;
+            obj.OccupiedByCrewId = crew.Id;
+
+            crew.OccupiedObjectId = obj.Id;
+            crew.ReservedObjectId = null;
         }
 
         public static void ReleaseWorkstation(
-    Ship ship,
-    Guid crewId)
+       Ship ship,
+       Crew crew)
         {
-            foreach (InteriorRoom room in ship.Interior.Rooms)
+            if (crew.ReservedObjectId.HasValue)
             {
-                foreach (InteriorObject obj in room.Objects)
-                {
-                    if (obj.ReservedByCrewId == crewId)
-                        obj.ReservedByCrewId = null;
+                InteriorObject reservedObj =
+                    ship.Interior.GetObjectById(crew.ReservedObjectId.Value);
 
-                    if (obj.OccupiedByCrewId == crewId)
-                        obj.OccupiedByCrewId = null;
+                if (reservedObj != null &&
+                    reservedObj.ReservedByCrewId == crew.Id)
+                {
+                    reservedObj.ReservedByCrewId = null;
                 }
+
+                crew.ReservedObjectId = null;
+            }
+
+            if (crew.OccupiedObjectId.HasValue)
+            {
+                InteriorObject occupiedObj =
+                    ship.Interior.GetObjectById(crew.OccupiedObjectId.Value);
+
+                if (occupiedObj != null &&
+                    occupiedObj.OccupiedByCrewId == crew.Id)
+                {
+                    occupiedObj.OccupiedByCrewId = null;
+                }
+
+                crew.OccupiedObjectId = null;
             }
         }
 
         private static bool IsWorkstationAvailable(
-    InteriorObject workstation,
-    Guid crewId)
+            InteriorObject workstation,
+            Guid crewId)
         {
             if (workstation.AllowMultipleCrew)
                 return true;

@@ -471,6 +471,7 @@ namespace Space_RPG.ViewModel
                 crew.Y == crew.TargetY)
             {
                 ClearCrewPath(crew);
+                Mapper.MarkWorkstationOccupied(ship, crew);
                 crew.Activity = Activity.None;
                 return;
             }
@@ -744,6 +745,8 @@ namespace Space_RPG.ViewModel
 
         private void FinishCrewAction(Crew crew)
         {
+            Mapper.ReleaseWorkstation(State.MyShip, crew);
+
             crew.Action = CrewAction.None;
             crew.Activity = Activity.None;
 

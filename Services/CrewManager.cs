@@ -425,9 +425,20 @@ namespace Space_RPG.Services
         }
         private void SetCrewToWork(Ship ship, Crew crew)
         {
-            var workPoint = Mapper.GetWorkstationTargetPosition(ship, crew.Job, crew.Id);
+            Guid? selectedObjectId;
+
+            Point workPoint = Mapper.GetWorkstationTargetPosition(
+                ship,
+                crew.Job,
+                crew.Id,
+                out selectedObjectId);
+
+            if (workPoint.X == -1 || workPoint.Y == -1)
+                return;
+
             crew.TargetX = (int)workPoint.X;
             crew.TargetY = (int)workPoint.Y;
+            crew.ReservedObjectId = selectedObjectId;
         }
         private void SetCrewToEat(Ship ship,Crew crew)
         {

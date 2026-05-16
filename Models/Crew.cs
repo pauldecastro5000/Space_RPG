@@ -197,6 +197,22 @@ namespace Space_RPG.Models
         }
         #endregion Job Properties
 
+        #region Work State
+        private Guid? _reservedObjectId;
+        public Guid? ReservedObjectId
+        {
+            get { return _reservedObjectId; }
+            set { SetProperty(ref _reservedObjectId, value); }
+        }
+
+        private Guid? _occupiedObjectId;
+        public Guid? OccupiedObjectId
+        {
+            get { return _occupiedObjectId; }
+            set { SetProperty(ref _occupiedObjectId, value); }
+        }
+        #endregion Work State
+
         #region Skills
 
         private double _pilot;

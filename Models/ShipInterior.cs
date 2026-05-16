@@ -74,10 +74,39 @@ namespace Space_RPG.Models
         [JsonIgnore]
         public Dictionary<string, ShipMapTile> GlobalTileMap { get; set; }
 
+        [JsonIgnore]
+        public Dictionary<Guid, InteriorObject> ObjectLookup { get; set; }
+
         public ShipInterior()
         {
             Rooms = new List<InteriorRoom>();
             GlobalTileMap = new Dictionary<string, ShipMapTile>();
+            ObjectLookup = new Dictionary<Guid, InteriorObject>();
+        }
+
+        public void RebuildObjectLookup()
+        {
+            ObjectLookup = new Dictionary<Guid, InteriorObject>();
+
+            foreach (InteriorRoom room in Rooms)
+            {
+                foreach (InteriorObject obj in room.Objects)
+                {
+                    obj.ParentRoom = room;
+                    ObjectLookup[obj.Id] = obj;
+                }
+            }
+        }
+
+        public InteriorObject GetObjectById(Guid objectId)
+        {
+            if (ObjectLookup == null)
+                RebuildObjectLookup();
+
+            InteriorObject obj;
+            ObjectLookup.TryGetValue(objectId, out obj);
+
+            return obj;
         }
     }
     public class InteriorRoom

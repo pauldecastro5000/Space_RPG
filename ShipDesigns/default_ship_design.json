@@ -1,0 +1,131 @@
+{
+  "Name": "Default Ship",
+  "Rooms": [
+    {
+      "Name": "Main Deck",
+      "RoomType": "MainDeck",
+      "Width": 10,
+      "Height": 8,
+      "WorldX": 21,
+      "WorldY": 2,
+      "Objects": [
+        { "Name": "Cockpit", "ObjectType": "Cockpit", "TileType": "Cockpit", "X": 4, "Y": 5, "Width": 2, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Weapons Console", "ObjectType": "WeaponsConsole", "TileType": "WeaponsConsole", "X": 2, "Y": 1, "Width": 2, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Weapons Console", "ObjectType": "WeaponsConsole", "TileType": "WeaponsConsole", "X": 5, "Y": 1, "Width": 2, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Weapons Console", "ObjectType": "WeaponsConsole", "TileType": "WeaponsConsole", "X": 2, "Y": 3, "Width": 2, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Weapons Console", "ObjectType": "WeaponsConsole", "TileType": "WeaponsConsole", "X": 5, "Y": 3, "Width": 2, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] }
+      ]
+    },
+    {
+      "Name": "Cafeteria",
+      "RoomType": "Cafeteria",
+      "Width": 8,
+      "Height": 8,
+      "WorldX": 11,
+      "WorldY": 6,
+      "Objects": [
+        { "Name": "Stove", "ObjectType": "Stove", "TileType": "KitchenCounter", "X": 1, "Y": 1, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Dining Table", "ObjectType": "Table", "TileType": "Table", "X": 3, "Y": 1, "Width": 3, "Height": 1, "AllowMultipleCrew": true, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Dining Table", "ObjectType": "Table", "TileType": "Table", "X": 3, "Y": 3, "Width": 3, "Height": 1, "AllowMultipleCrew": true, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Dining Table", "ObjectType": "Table", "TileType": "Table", "X": 3, "Y": 5, "Width": 3, "Height": 1, "AllowMultipleCrew": true, "InteractionDirections": [ "Bottom" ] }
+      ]
+    },
+    {
+      "Name": "Medical Bay",
+      "RoomType": "MedicalBay",
+      "Width": 8,
+      "Height": 8,
+      "WorldX": 33,
+      "WorldY": 6,
+      "Objects": [
+        { "Name": "Medical Console", "ObjectType": "MedicalConsole", "TileType": "MedicalConsole", "X": 2, "Y": 1, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Medical Console", "ObjectType": "MedicalConsole", "TileType": "MedicalConsole", "X": 5, "Y": 1, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Medical Console", "ObjectType": "MedicalConsole", "TileType": "MedicalConsole", "X": 2, "Y": 4, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Medical Console", "ObjectType": "MedicalConsole", "TileType": "MedicalConsole", "X": 5, "Y": 4, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] }
+      ]
+    },
+    {
+      "Name": "Female Crew Quarter",
+      "RoomType": "FemaleCrewQuarters",
+      "Width": 10,
+      "Height": 8,
+      "WorldX": 3,
+      "WorldY": 19,
+      "Objects": [
+        { "Name": "Bed 1", "ObjectType": "Bed", "TileType": "Bed", "X": 1, "Y": 1, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Bed 2", "ObjectType": "Bed", "TileType": "Bed", "X": 7, "Y": 1, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Bed 3", "ObjectType": "Bed", "TileType": "Bed", "X": 1, "Y": 5, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Bed 4", "ObjectType": "Bed", "TileType": "Bed", "X": 7, "Y": 5, "Width": 1, "Height": 2, "AllowMultipleCrew": false, "InteractionDirections": [ "Left", "Right" ] },
+        { "Name": "Small Table", "ObjectType": "Table", "TileType": "Table", "X": 4, "Y": 3, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] }
+      ]
+    },
+    {
+      "Name": "Male Crew Quarter",
+      "RoomType": "MaleCrewQuarters",
+      "Width": 10,
+      "Height": 8,
+      "WorldX": 39,
+      "WorldY": 19,
+      "Objects": []
+    },
+    {
+      "Name": "Captains Room",
+      "RoomType": "CaptainsRoom",
+      "Width": 7,
+      "Height": 5,
+      "WorldX": 15,
+      "WorldY": 21,
+      "Objects": []
+    },
+    {
+      "Name": "Engine Room",
+      "RoomType": "EngineRoom",
+      "Width": 7,
+      "Height": 5,
+      "WorldX": 30,
+      "WorldY": 21,
+      "Objects": []
+    },
+    {
+      "Name": "Garden",
+      "RoomType": "Garden",
+      "Width": 8,
+      "Height": 7,
+      "WorldX": 10,
+      "WorldY": 28,
+      "Objects": []
+    },
+    {
+      "Name": "Armoury",
+      "RoomType": "Armoury",
+      "Width": 8,
+      "Height": 7,
+      "WorldX": 34,
+      "WorldY": 28,
+      "Objects": []
+    },
+    {
+      "Name": "Cargo",
+      "RoomType": "Cargo",
+      "Width": 11,
+      "Height": 8,
+      "WorldX": 20,
+      "WorldY": 32,
+      "Objects": [
+        { "Name": "Storage Box 1", "ObjectType": "None", "TileType": "StorageBox", "X": 2, "Y": 2, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Storage Box 2", "ObjectType": "None", "TileType": "StorageBox", "X": 5, "Y": 2, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Storage Box 3", "ObjectType": "None", "TileType": "StorageBox", "X": 8, "Y": 2, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] },
+        { "Name": "Workbench", "ObjectType": "None", "TileType": "Workbench", "X": 5, "Y": 5, "Width": 1, "Height": 1, "AllowMultipleCrew": false, "InteractionDirections": [ "Bottom" ] }
+      ]
+    },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 7, "Height": 3, "WorldX": 18, "WorldY": 11, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 7, "Height": 3, "WorldX": 27, "WorldY": 11, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 16, "Height": 4, "WorldX": 9, "WorldY": 16, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 16, "Height": 4, "WorldX": 27, "WorldY": 16, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 4, "Height": 24, "WorldX": 24, "WorldY": 9, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 3, "Height": 3, "WorldX": 19, "WorldY": 19, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 3, "Height": 3, "WorldX": 30, "WorldY": 19, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 8, "Height": 3, "WorldX": 17, "WorldY": 28, "Objects": [] },
+    { "Name": "Corridor", "RoomType": "Corridor", "Width": 8, "Height": 3, "WorldX": 27, "WorldY": 28, "Objects": [] }
+  ]
+}

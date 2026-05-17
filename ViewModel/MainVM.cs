@@ -155,9 +155,15 @@ namespace Space_RPG.ViewModel
         #region Applicants
         public ObservableCollection<Crew> AcceptedApplicants { get; set; }
 
-        public RelayCommand OpenApplicantsCommand { get; }
+
+
 
         #endregion Applicants
+        public RelayCommand OpenApplicantsCommand { get; }
+        public RelayCommand ShipEditorCommand { get; }
+        #region Commands
+
+        #endregion Commands
 
         #region Constructor
 
@@ -170,6 +176,7 @@ namespace Space_RPG.ViewModel
             #region Applicants
             AcceptedApplicants = new ObservableCollection<Crew>();
             OpenApplicantsCommand = new RelayCommand(OpenApplicants, CanOpenApplicants);
+           
             #endregion Applicants
 
 
@@ -212,8 +219,8 @@ namespace Space_RPG.ViewModel
 
         private void CreateMyShip()
         {
-            //_state.MyShip = shipMgr.CreateMyShip();
-            State.MyShip = ShipGenerator.GenerateDefaultShip();
+            State.MyShip = ShipGenerator.GenerateShipFromFile(
+                "ShipDesigns/default_ship_design.json");
         }
 
         private void CreatePlayer()

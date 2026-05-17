@@ -96,6 +96,13 @@
                             Height="40"
                             Command="{Binding OpenApplicantsCommand}" />
                 </TabItem>
+                <TabItem Header="Others">
+                    <Button Content="Ship Editor"
+                            Grid.Row="1"
+                            Width="150"
+                            Height="40"
+                            Command="{Binding ShipEditorCommand}" />
+                </TabItem>
             </TabControl>
         </Border>
 

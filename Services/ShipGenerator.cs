@@ -261,6 +261,65 @@ namespace Space_RPG.Services
             tile.IsWalkable = true;
         }
 
+        public static Ship GenerateShipFromFile(string filePath)
+        {
+            ShipDesign design = ShipDesignLoader.LoadFromFile(filePath);
+
+            if (design == null)
+                return GenerateDefaultShip();
+
+            return GenerateShipFromDesign(design);
+        }
+
+        public static Ship GenerateShipFromDesign(ShipDesign design)
+        {
+            Ship ship = new Ship
+            {
+                Interior = new ShipInterior(),
+                Location = new Point(0, 0),
+                Food = 1000
+            };
+
+            foreach (ShipRoomDesign roomDesign in design.Rooms)
+            {
+                InteriorRoom room = CreateRoom(
+                    roomDesign.Name,
+                    roomDesign.RoomType,
+                    roomDesign.Width,
+                    roomDesign.Height,
+                    roomDesign.WorldX,
+                    roomDesign.WorldY);
+
+                foreach (ShipObjectDesign objectDesign in roomDesign.Objects)
+                {
+                    AddObject(
+                        room,
+                        objectDesign.ObjectType,
+                        objectDesign.Name,
+                        objectDesign.X,
+                        objectDesign.Y,
+                        objectDesign.TileType,
+                        objectDesign.Width,
+                        objectDesign.Height,
+                        objectDesign.AllowMultipleCrew,
+                        objectDesign.InteractionDirections);
+                }
+
+                ship.Interior.Rooms.Add(room);
+            }
+
+            AddSharedWallDoors(ship.Interior.Rooms);
+
+            foreach (InteriorRoom room in ship.Interior.Rooms)
+                room.RebuildTileIndex();
+
+            ship.Interior.RebuildObjectLookup();
+
+            ShipMapBuilder.RebuildGlobalTileMap(ship);
+
+            return ship;
+        }
+
         private static void AddObjects(
             InteriorRoom mainDeck,
             InteriorRoom medical,

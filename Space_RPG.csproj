@@ -70,6 +70,7 @@
     <Compile Include="Helpers\OtherHelpers.cs" />
     <Compile Include="Helpers\ShipMapBuilder.cs" />
     <Compile Include="Models\Facility.cs" />
+    <Compile Include="Models\ShipDesign.cs" />
     <Compile Include="Models\ShipWeapon.cs" />
     <Compile Include="Models\ShipInterior.cs" />
     <Compile Include="Services\AIActionSelector.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Services\PlanetManager.cs" />
     <Compile Include="Services\SaveLoadManager.cs" />
     <Compile Include="Models\Ship.cs" />
+    <Compile Include="Services\ShipDesignLoader.cs" />
     <Compile Include="Services\ShipGenerator.cs" />
     <Compile Include="Services\ShipManager.cs" />
     <Compile Include="Services\StorageManager.cs" />
@@ -182,6 +184,9 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ShipDesigns\default_ship_design.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

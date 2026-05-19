@@ -42,6 +42,7 @@ namespace Space_RPG.ViewModel
         private CrewAction _prevAction;
 
         private bool _isGameTickRunning;
+        private string _shipDesignFilepath;
         BackgroundWorker _bgwUpdate;
 
         public ObservableCollection<string> LogEntries { get; private set; }
@@ -172,11 +173,19 @@ namespace Space_RPG.ViewModel
             crewMgr = CrewMgr;
             util = utilities;
             //CrewManager = MainWindow.CrewMgr;
+
+            _shipDesignFilepath = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "ShipDesigns",
+                "default_ship_design.json");
+
+
             LogEntries = new ObservableCollection<string>();
             #region Applicants
             AcceptedApplicants = new ObservableCollection<Crew>();
             OpenApplicantsCommand = new RelayCommand(OpenApplicants, CanOpenApplicants);
-           
+            ShipEditorCommand = new RelayCommand(OpenShipEditor);
+
             #endregion Applicants
 
 
@@ -192,6 +201,24 @@ namespace Space_RPG.ViewModel
 
 
         #endregion Constructor
+
+        private void OpenShipEditor()
+        {
+            ShipEditorWindow window = new ShipEditorWindow(_shipDesignFilepath)
+            {
+                Owner = Application.Current.MainWindow
+            };
+
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                State.MyShip = ShipGenerator.GenerateShipFromFile(_shipDesignFilepath);
+
+                OnPropertyChanged(nameof(MyShip));
+                OnPropertyChanged(nameof(State));
+            }
+        }
 
         private bool CanOpenApplicants()
         {
@@ -220,7 +247,7 @@ namespace Space_RPG.ViewModel
         private void CreateMyShip()
         {
             State.MyShip = ShipGenerator.GenerateShipFromFile(
-                "ShipDesigns/default_ship_design.json");
+               _shipDesignFilepath);
         }
 
         private void CreatePlayer()

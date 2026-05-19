@@ -98,6 +98,7 @@
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModel\ApplicantSelectionViewModel.cs" />
     <Compile Include="ViewModel\MainVM.cs" />
+    <Compile Include="ViewModel\ShipEditorViewModel.cs" />
     <Compile Include="Views\CockpitView.xaml.cs">
       <DependentUpon>CockpitView.xaml</DependentUpon>
     </Compile>
@@ -119,6 +120,12 @@
     <Compile Include="WeaponsManager.cs" />
     <Compile Include="Windows\ApplicantSelectionWindow.xaml.cs">
       <DependentUpon>ApplicantSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RoomEditorWindow.xaml.cs">
+      <DependentUpon>RoomEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ShipEditorWindow.xaml.cs">
+      <DependentUpon>ShipEditorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +168,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\RoomEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ShipEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -185,9 +200,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="ShipDesigns\default_ship_design.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="ShipDesigns\default_ship_design.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

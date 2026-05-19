@@ -214,8 +214,6 @@
 
         </Style>
 
-        <!-- GLOBAL COMBOBOX STYLE -->
-        <!-- GLOBAL COMBOBOX STYLE -->
         <Style TargetType="ComboBox">
 
             <Setter Property="Background"
@@ -259,9 +257,12 @@
                                                   HorizontalAlignment="Right"
                                                   Width="22"
                                                   Focusable="False"
+                                                  Background="Black"
+                                                  BorderBrush="#404040"
+                                                  Foreground="White"
                                                   IsChecked="{Binding IsDropDownOpen,
-                                                              RelativeSource={RelativeSource TemplatedParent},
-                                                              Mode=TwoWay}">
+                          RelativeSource={RelativeSource TemplatedParent},
+                          Mode=TwoWay}">
 
                                         <TextBlock Text="▼"
                                                    Foreground="White"
@@ -320,7 +321,6 @@
 
         </Style>
 
-        <!-- GLOBAL COMBOBOX ITEM STYLE -->
         <Style TargetType="ComboBoxItem">
             <Setter Property="Background"
                     Value="Black" />
@@ -353,5 +353,7 @@
 
             </Style.Triggers>
         </Style>
+        
+        
     </Application.Resources>
 </Application>

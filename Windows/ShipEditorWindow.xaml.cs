@@ -21,6 +21,16 @@ namespace Space_RPG.Windows
         private int _roomDragStartWorldX;
         private int _roomDragStartWorldY;
 
+        private ShipRoomDesign _resizingRoom;
+        private bool _isRoomResizing;
+        private Point _resizeStartMouseWorldPoint;
+        private int _resizeStartWidth;
+        private int _resizeStartHeight;
+
+        private const int MinimumRoomWidth = 2;
+        private const int MinimumRoomHeight = 2;
+        private const double ResizeHandleSize = 10;
+
         private bool _isPreviewDragging;
         private bool _hasDragged;
         private Point _previewDragStartPoint;
@@ -135,6 +145,20 @@ namespace Space_RPG.Windows
             Canvas.SetLeft(label, x + 3);
             Canvas.SetTop(label, y + 3);
             PreviewCanvas.Children.Add(label);
+
+            Rectangle resizeHandle = new Rectangle
+            {
+                Width = ResizeHandleSize,
+                Height = ResizeHandleSize,
+                Fill = Brushes.White,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+                IsHitTestVisible = false
+            };
+
+            Canvas.SetLeft(resizeHandle, x + width - ResizeHandleSize);
+            Canvas.SetTop(resizeHandle, y + height - ResizeHandleSize);
+            PreviewCanvas.Children.Add(resizeHandle);
         }
 
         private void PreviewHost_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -244,6 +268,24 @@ namespace Space_RPG.Windows
             _hasDragged = false;
 
             Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
+            ShipRoomDesign resizeRoom = GetRoomResizeHandleAtPoint(mouseCanvasPoint);
+
+            if (resizeRoom != null)
+            {
+                _isRoomResizing = true;
+                _resizingRoom = resizeRoom;
+
+                _resizeStartMouseWorldPoint = new Point(
+                    mouseCanvasPoint.X / TileSize,
+                    mouseCanvasPoint.Y / TileSize);
+
+                _resizeStartWidth = resizeRoom.Width;
+                _resizeStartHeight = resizeRoom.Height;
+
+                PreviewHost.CaptureMouse();
+                return;
+            }
+
             ShipRoomDesign clickedRoom = GetRoomAtPoint(mouseCanvasPoint);
 
             if (clickedRoom != null)
@@ -273,10 +315,35 @@ namespace Space_RPG.Windows
 
         private void PreviewHost_MouseMove(object sender, MouseEventArgs e)
         {
+            Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
+
+            if (!_isRoomDragging && !_isRoomResizing && !_isPreviewDragging)
+            {
+                PreviewHost.Cursor = GetRoomResizeHandleAtPoint(mouseCanvasPoint) != null
+                    ? Cursors.SizeNWSE
+                    : Cursors.Arrow;
+            }
+
+            if (_isRoomResizing && _resizingRoom != null)
+            {
+                double currentWorldX = mouseCanvasPoint.X / TileSize;
+                double currentWorldY = mouseCanvasPoint.Y / TileSize;
+
+                int deltaWidth = (int)Math.Round(currentWorldX - _resizeStartMouseWorldPoint.X);
+                int deltaHeight = (int)Math.Round(currentWorldY - _resizeStartMouseWorldPoint.Y);
+
+                if (deltaWidth != 0 || deltaHeight != 0)
+                    _hasDragged = true;
+
+                _resizingRoom.Width = Math.Max(GetMinimumWidthForRoom(_resizingRoom), _resizeStartWidth + deltaWidth);
+                _resizingRoom.Height = Math.Max(GetMinimumHeightForRoom(_resizingRoom), _resizeStartHeight + deltaHeight);
+
+                DrawShipPreview();
+                return;
+            }
+
             if (_isRoomDragging && _draggingRoom != null)
             {
-                Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
-
                 double currentWorldX = mouseCanvasPoint.X / TileSize;
                 double currentWorldY = mouseCanvasPoint.Y / TileSize;
 
@@ -311,14 +378,18 @@ namespace Space_RPG.Windows
         private void PreviewHost_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             bool wasRoomDragging = _isRoomDragging;
+            bool wasRoomResizing = _isRoomResizing;
 
             _isPreviewDragging = false;
             _isRoomDragging = false;
+            _isRoomResizing = false;
             _draggingRoom = null;
+            _resizingRoom = null;
+            PreviewHost.Cursor = Cursors.Arrow;
 
             PreviewHost.ReleaseMouseCapture();
 
-            if (_hasDragged || wasRoomDragging)
+            if (_hasDragged || wasRoomDragging || wasRoomResizing)
                 return;
 
             Point mousePoint = e.GetPosition(PreviewCanvas);
@@ -329,6 +400,61 @@ namespace Space_RPG.Windows
                 return;
 
             OpenRoomEditor(clickedRoom);
+        }
+
+        private ShipRoomDesign GetRoomResizeHandleAtPoint(Point mousePoint)
+        {
+            ShipEditorViewModel vm = DataContext as ShipEditorViewModel;
+
+            if (vm == null || vm.Rooms == null)
+                return null;
+
+            for (int i = vm.Rooms.Count - 1; i >= 0; i--)
+            {
+                ShipRoomDesign room = vm.Rooms[i];
+
+                double handleLeft = (room.WorldX + room.Width) * TileSize - ResizeHandleSize;
+                double handleTop = (room.WorldY + room.Height) * TileSize - ResizeHandleSize;
+                double handleRight = handleLeft + ResizeHandleSize;
+                double handleBottom = handleTop + ResizeHandleSize;
+
+                bool isInsideHandle =
+                    mousePoint.X >= handleLeft &&
+                    mousePoint.X <= handleRight &&
+                    mousePoint.Y >= handleTop &&
+                    mousePoint.Y <= handleBottom;
+
+                if (isInsideHandle)
+                    return room;
+            }
+
+            return null;
+        }
+
+        private int GetMinimumWidthForRoom(ShipRoomDesign room)
+        {
+            int minimumWidth = MinimumRoomWidth;
+
+            if (room.Objects != null)
+            {
+                foreach (ShipObjectDesign obj in room.Objects)
+                    minimumWidth = Math.Max(minimumWidth, obj.X + obj.Width);
+            }
+
+            return minimumWidth;
+        }
+
+        private int GetMinimumHeightForRoom(ShipRoomDesign room)
+        {
+            int minimumHeight = MinimumRoomHeight;
+
+            if (room.Objects != null)
+            {
+                foreach (ShipObjectDesign obj in room.Objects)
+                    minimumHeight = Math.Max(minimumHeight, obj.Y + obj.Height);
+            }
+
+            return minimumHeight;
         }
 
         private ShipRoomDesign GetRoomAtPoint(Point mousePoint)

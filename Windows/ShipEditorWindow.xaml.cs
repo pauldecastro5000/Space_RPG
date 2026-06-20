@@ -13,6 +13,14 @@ namespace Space_RPG.Windows
     {
         private const double TileSize = 14;
 
+        private double _zoom = 1.0;
+
+        private ShipRoomDesign _draggingRoom;
+        private bool _isRoomDragging;
+        private Point _roomDragStartMouseWorldPoint;
+        private int _roomDragStartWorldX;
+        private int _roomDragStartWorldY;
+
         private bool _isPreviewDragging;
         private bool _hasDragged;
         private Point _previewDragStartPoint;
@@ -107,7 +115,8 @@ namespace Space_RPG.Windows
                 Fill = GetRoomBrush(room.RoomType),
                 Stroke = Brushes.White,
                 StrokeThickness = 1,
-                Tag = room
+                Tag = room,
+                Cursor = Cursors.SizeAll
             };
 
             Canvas.SetLeft(rect, x);
@@ -128,6 +137,26 @@ namespace Space_RPG.Windows
             PreviewCanvas.Children.Add(label);
         }
 
+        private void PreviewHost_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            const double zoomStep = 0.1;
+            const double minZoom = 0.3;
+            const double maxZoom = 4.0;
+
+            if (e.Delta > 0)
+                _zoom += zoomStep;
+            else
+                _zoom -= zoomStep;
+
+            if (_zoom < minZoom)
+                _zoom = minZoom;
+
+            if (_zoom > maxZoom)
+                _zoom = maxZoom;
+
+            PreviewScaleTransform.ScaleX = _zoom;
+            PreviewScaleTransform.ScaleY = _zoom;
+        }
         private void DrawObject(ShipRoomDesign room, ShipObjectDesign obj)
         {
             double x = (room.WorldX + obj.X) * TileSize;
@@ -212,8 +241,28 @@ namespace Space_RPG.Windows
 
         private void PreviewHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _isPreviewDragging = true;
             _hasDragged = false;
+
+            Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
+            ShipRoomDesign clickedRoom = GetRoomAtPoint(mouseCanvasPoint);
+
+            if (clickedRoom != null)
+            {
+                _isRoomDragging = true;
+                _draggingRoom = clickedRoom;
+
+                _roomDragStartMouseWorldPoint = new Point(
+                    mouseCanvasPoint.X / TileSize,
+                    mouseCanvasPoint.Y / TileSize);
+
+                _roomDragStartWorldX = clickedRoom.WorldX;
+                _roomDragStartWorldY = clickedRoom.WorldY;
+
+                PreviewHost.CaptureMouse();
+                return;
+            }
+
+            _isPreviewDragging = true;
 
             _previewDragStartPoint = e.GetPosition(this);
             _previewStartOffsetX = PreviewTranslateTransform.X;
@@ -224,27 +273,52 @@ namespace Space_RPG.Windows
 
         private void PreviewHost_MouseMove(object sender, MouseEventArgs e)
         {
+            if (_isRoomDragging && _draggingRoom != null)
+            {
+                Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
+
+                double currentWorldX = mouseCanvasPoint.X / TileSize;
+                double currentWorldY = mouseCanvasPoint.Y / TileSize;
+
+                int deltaX = (int)Math.Round(currentWorldX - _roomDragStartMouseWorldPoint.X);
+                int deltaY = (int)Math.Round(currentWorldY - _roomDragStartMouseWorldPoint.Y);
+
+                if (deltaX != 0 || deltaY != 0)
+                    _hasDragged = true;
+
+                _draggingRoom.WorldX = _roomDragStartWorldX + deltaX;
+                _draggingRoom.WorldY = _roomDragStartWorldY + deltaY;
+
+                DrawShipPreview();
+                return;
+            }
+
             if (!_isPreviewDragging)
                 return;
 
             Point currentPoint = e.GetPosition(this);
 
-            double deltaX = currentPoint.X - _previewDragStartPoint.X;
-            double deltaY = currentPoint.Y - _previewDragStartPoint.Y;
+            double previewDeltaX = currentPoint.X - _previewDragStartPoint.X;
+            double previewDeltaY = currentPoint.Y - _previewDragStartPoint.Y;
 
-            if (Math.Abs(deltaX) > 3 || Math.Abs(deltaY) > 3)
+            if (Math.Abs(previewDeltaX) > 3 || Math.Abs(previewDeltaY) > 3)
                 _hasDragged = true;
 
-            PreviewTranslateTransform.X = _previewStartOffsetX + deltaX;
-            PreviewTranslateTransform.Y = _previewStartOffsetY + deltaY;
+            PreviewTranslateTransform.X = _previewStartOffsetX + previewDeltaX;
+            PreviewTranslateTransform.Y = _previewStartOffsetY + previewDeltaY;
         }
 
         private void PreviewHost_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            bool wasRoomDragging = _isRoomDragging;
+
             _isPreviewDragging = false;
+            _isRoomDragging = false;
+            _draggingRoom = null;
+
             PreviewHost.ReleaseMouseCapture();
 
-            if (_hasDragged)
+            if (_hasDragged || wasRoomDragging)
                 return;
 
             Point mousePoint = e.GetPosition(PreviewCanvas);

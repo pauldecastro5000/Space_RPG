@@ -30,28 +30,33 @@
               Grid.Row="1"
               Background="Black"
               ClipToBounds="True"
+              MouseWheel="PreviewHost_MouseWheel"
               MouseLeftButtonDown="PreviewHost_MouseLeftButtonDown"
               MouseMove="PreviewHost_MouseMove"
               MouseLeftButtonUp="PreviewHost_MouseLeftButtonUp">
 
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="71*" />
-                    <ColumnDefinition Width="4*" />
-                </Grid.ColumnDefinitions>
 
-                <!-- GRID BACKGROUND -->
+                <!-- GRID -->
                 <Canvas x:Name="GridCanvas"
                         Background="Black"
                         Width="1200"
-                        Height="900"
-                        Grid.ColumnSpan="2"
-                        Margin="0,0,0,-211">
+                        Height="900">
 
                     <Canvas.RenderTransform>
-                        <TranslateTransform x:Name="PreviewTranslateTransform"
-                                            X="0"
-                                            Y="0" />
+
+                        <TransformGroup>
+
+                            <ScaleTransform x:Name="PreviewScaleTransform"
+                                            ScaleX="1"
+                                            ScaleY="1" />
+
+                            <TranslateTransform x:Name="PreviewTranslateTransform"
+                                                X="0"
+                                                Y="0" />
+
+                        </TransformGroup>
+
                     </Canvas.RenderTransform>
 
                 </Canvas>
@@ -61,13 +66,20 @@
                         Background="Transparent"
                         Width="1200"
                         Height="900"
-                        IsHitTestVisible="False"
-                        Grid.ColumnSpan="2"
-                        Margin="0,0,0,-211">
+                        IsHitTestVisible="False">
 
                     <Canvas.RenderTransform>
-                        <TranslateTransform X="{Binding X, ElementName=PreviewTranslateTransform}"
-                                            Y="{Binding Y, ElementName=PreviewTranslateTransform}" />
+
+                        <TransformGroup>
+
+                            <ScaleTransform ScaleX="{Binding ScaleX, ElementName=PreviewScaleTransform}"
+                                            ScaleY="{Binding ScaleY, ElementName=PreviewScaleTransform}" />
+
+                            <TranslateTransform X="{Binding X, ElementName=PreviewTranslateTransform}"
+                                                Y="{Binding Y, ElementName=PreviewTranslateTransform}" />
+
+                        </TransformGroup>
+
                     </Canvas.RenderTransform>
 
                 </Canvas>

@@ -7,8 +7,7 @@
         <ScrollViewer x:Name="MapScrollViewer"
                       HorizontalScrollBarVisibility="Hidden"
                       VerticalScrollBarVisibility="Hidden"
-                      PanningMode="Both"
-                      PreviewMouseWheel="MapScrollViewer_PreviewMouseWheel">
+                      PanningMode="Both">
 
             <Canvas x:Name="ShipCanvas"
                     Background="#111111"
@@ -17,13 +16,7 @@
                     MouseLeftButtonDown="ShipCanvas_MouseLeftButtonDown"
                     MouseLeftButtonUp="ShipCanvas_MouseLeftButtonUp"
                     MouseMove="ShipCanvas_MouseMove"
-                    MouseLeave="ShipCanvas_MouseLeave">
-                <Canvas.LayoutTransform>
-                    <ScaleTransform x:Name="MapScaleTransform"
-                                    ScaleX="1"
-                                    ScaleY="1" />
-                </Canvas.LayoutTransform>
-            </Canvas>
+                    MouseLeave="ShipCanvas_MouseLeave" />
 
         </ScrollViewer>
     </Grid>

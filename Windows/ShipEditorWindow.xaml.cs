@@ -31,6 +31,9 @@ namespace Space_RPG.Windows
         private const int MinimumRoomHeight = 2;
         private const double ResizeHandleSize = 10;
 
+        private ShipRoomDesign _selectedObjectRoom;
+        private ShipObjectDesign _selectedPlacedObject;
+
         private bool _isPreviewDragging;
         private bool _hasDragged;
         private Point _previewDragStartPoint;
@@ -52,7 +55,11 @@ namespace Space_RPG.Windows
 
             DataContext = vm;
 
-            Loaded += (s, e) => DrawShipPreview();
+            Loaded += (s, e) =>
+            {
+                LoadObjectPalette();
+                DrawShipPreview();
+            };
         }
 
         private void DrawShipPreview()
@@ -188,19 +195,33 @@ namespace Space_RPG.Windows
             double width = obj.Width * TileSize;
             double height = obj.Height * TileSize;
 
+            bool isSelected = ReferenceEquals(obj, _selectedPlacedObject);
+
             Rectangle rect = new Rectangle
             {
                 Width = width,
                 Height = height,
                 Fill = GetObjectBrush(obj.TileType),
-                Stroke = Brushes.Black,
-                StrokeThickness = 1,
+                Stroke = isSelected ? Brushes.Yellow : Brushes.Black,
+                StrokeThickness = isSelected ? 3 : 1,
                 IsHitTestVisible = false
             };
 
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
             PreviewCanvas.Children.Add(rect);
+
+            TextBlock label = new TextBlock
+            {
+                Text = obj.TileType.ToString(),
+                Foreground = Brushes.White,
+                FontSize = 9,
+                IsHitTestVisible = false
+            };
+
+            Canvas.SetLeft(label, x + 2);
+            Canvas.SetTop(label, y + 2);
+            PreviewCanvas.Children.Add(label);
         }
 
         private Brush GetRoomBrush(FacilityType roomType)
@@ -263,11 +284,249 @@ namespace Space_RPG.Windows
             }
         }
 
+        private void LoadObjectPalette()
+        {
+            ObjectTypeComboBox.ItemsSource = Enum.GetValues(typeof(InteriorObjectType));
+            TileTypeComboBox.ItemsSource = Enum.GetValues(typeof(InteriorTileType));
+
+            ObjectTypeComboBox.SelectedItem = InteriorObjectType.Table;
+            TileTypeComboBox.SelectedItem = InteriorTileType.Table;
+        }
+
+        private bool IsObjectPlacementMode()
+        {
+            return PlaceObjectToggleButton != null && PlaceObjectToggleButton.IsChecked == true;
+        }
+
+        private int GetObjectWidthFromInput()
+        {
+            int value;
+            if (!int.TryParse(ObjectWidthTextBox.Text, out value))
+                value = 1;
+
+            return Math.Max(1, value);
+        }
+
+        private int GetObjectHeightFromInput()
+        {
+            int value;
+            if (!int.TryParse(ObjectHeightTextBox.Text, out value))
+                value = 1;
+
+            return Math.Max(1, value);
+        }
+
+        private void RotateObjectSize_Click(object sender, RoutedEventArgs e)
+        {
+            string widthText = ObjectWidthTextBox.Text;
+            ObjectWidthTextBox.Text = GetObjectHeightFromInput().ToString();
+            ObjectHeightTextBox.Text = GetObjectWidthFromInputFromText(widthText).ToString();
+        }
+
+        private int GetObjectWidthFromInputFromText(string text)
+        {
+            int value;
+            if (!int.TryParse(text, out value))
+                value = 1;
+
+            return Math.Max(1, value);
+        }
+
+        private void RotateSelectedObject_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedPlacedObject == null || _selectedObjectRoom == null)
+                return;
+
+            int newWidth = _selectedPlacedObject.Height;
+            int newHeight = _selectedPlacedObject.Width;
+
+            if (!ObjectCanFit(_selectedObjectRoom, _selectedPlacedObject, _selectedPlacedObject.X, _selectedPlacedObject.Y, newWidth, newHeight))
+            {
+                MessageBox.Show("The selected object cannot be rotated there because it will overlap another object or go outside the room.", "Ship Editor");
+                return;
+            }
+
+            _selectedPlacedObject.Width = newWidth;
+            _selectedPlacedObject.Height = newHeight;
+
+            DrawShipPreview();
+            UpdateSelectedObjectText();
+        }
+
+        private void DeleteSelectedObject_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedPlacedObject == null || _selectedObjectRoom == null)
+                return;
+
+            _selectedObjectRoom.Objects.Remove(_selectedPlacedObject);
+            _selectedPlacedObject = null;
+            _selectedObjectRoom = null;
+
+            DrawShipPreview();
+            UpdateSelectedObjectText();
+        }
+
+        private void PlaceObjectAt(Point mouseCanvasPoint)
+        {
+            ShipEditorViewModel vm = DataContext as ShipEditorViewModel;
+
+            if (vm == null || vm.Rooms == null)
+                return;
+
+            ShipRoomDesign room = GetRoomAtPoint(mouseCanvasPoint);
+
+            if (room == null)
+                return;
+
+            int roomTileX = (int)Math.Floor(mouseCanvasPoint.X / TileSize) - room.WorldX;
+            int roomTileY = (int)Math.Floor(mouseCanvasPoint.Y / TileSize) - room.WorldY;
+            int objectWidth = GetObjectWidthFromInput();
+            int objectHeight = GetObjectHeightFromInput();
+
+            if (!ObjectCanFit(room, null, roomTileX, roomTileY, objectWidth, objectHeight))
+            {
+                MessageBox.Show("The object cannot be placed there because it will overlap another object or go outside the room.", "Ship Editor");
+                return;
+            }
+
+            InteriorObjectType objectType = InteriorObjectType.None;
+            InteriorTileType tileType = InteriorTileType.Table;
+
+            if (ObjectTypeComboBox.SelectedItem is InteriorObjectType)
+                objectType = (InteriorObjectType)ObjectTypeComboBox.SelectedItem;
+
+            if (TileTypeComboBox.SelectedItem is InteriorTileType)
+                tileType = (InteriorTileType)TileTypeComboBox.SelectedItem;
+
+            ShipObjectDesign obj = new ShipObjectDesign
+            {
+                Name = tileType.ToString(),
+                ObjectType = objectType,
+                TileType = tileType,
+                X = roomTileX,
+                Y = roomTileY,
+                Width = objectWidth,
+                Height = objectHeight,
+                AllowMultipleCrew = false
+            };
+
+            obj.InteractionDirections.Add(InteractionDirection.Bottom);
+            room.Objects.Add(obj);
+
+            _selectedObjectRoom = room;
+            _selectedPlacedObject = obj;
+
+            DrawShipPreview();
+            UpdateSelectedObjectText();
+        }
+
+        private bool ObjectCanFit(ShipRoomDesign room, ShipObjectDesign objectToIgnore, int objectX, int objectY, int objectWidth, int objectHeight)
+        {
+            if (objectX < 0 || objectY < 0)
+                return false;
+
+            if (objectX + objectWidth > room.Width || objectY + objectHeight > room.Height)
+                return false;
+
+            foreach (ShipObjectDesign existingObject in room.Objects)
+            {
+                if (ReferenceEquals(existingObject, objectToIgnore))
+                    continue;
+
+                bool overlaps =
+                    objectX < existingObject.X + existingObject.Width &&
+                    objectX + objectWidth > existingObject.X &&
+                    objectY < existingObject.Y + existingObject.Height &&
+                    objectY + objectHeight > existingObject.Y;
+
+                if (overlaps)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private ShipObjectDesign GetObjectAtPoint(Point mousePoint, out ShipRoomDesign objectRoom)
+        {
+            ShipEditorViewModel vm = DataContext as ShipEditorViewModel;
+            objectRoom = null;
+
+            if (vm == null || vm.Rooms == null)
+                return null;
+
+            double worldX = mousePoint.X / TileSize;
+            double worldY = mousePoint.Y / TileSize;
+
+            for (int roomIndex = vm.Rooms.Count - 1; roomIndex >= 0; roomIndex--)
+            {
+                ShipRoomDesign room = vm.Rooms[roomIndex];
+
+                for (int objectIndex = room.Objects.Count - 1; objectIndex >= 0; objectIndex--)
+                {
+                    ShipObjectDesign obj = room.Objects[objectIndex];
+
+                    bool isInside =
+                        worldX >= room.WorldX + obj.X &&
+                        worldX < room.WorldX + obj.X + obj.Width &&
+                        worldY >= room.WorldY + obj.Y &&
+                        worldY < room.WorldY + obj.Y + obj.Height;
+
+                    if (isInside)
+                    {
+                        objectRoom = room;
+                        return obj;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void UpdateSelectedObjectText()
+        {
+            if (SelectedObjectTextBlock == null)
+                return;
+
+            if (_selectedPlacedObject == null || _selectedObjectRoom == null)
+            {
+                SelectedObjectTextBlock.Text = "None";
+                return;
+            }
+
+            SelectedObjectTextBlock.Text =
+                _selectedPlacedObject.TileType +
+                "\nRoom: " + _selectedObjectRoom.Name +
+                "\nX: " + _selectedPlacedObject.X +
+                ", Y: " + _selectedPlacedObject.Y +
+                "\nSize: " + _selectedPlacedObject.Width +
+                " x " + _selectedPlacedObject.Height;
+        }
+
         private void PreviewHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _hasDragged = false;
 
             Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
+
+            if (IsObjectPlacementMode())
+            {
+                PlaceObjectAt(mouseCanvasPoint);
+                PreviewHost.CaptureMouse();
+                return;
+            }
+
+            ShipRoomDesign objectRoom;
+            ShipObjectDesign clickedObject = GetObjectAtPoint(mouseCanvasPoint, out objectRoom);
+
+            if (clickedObject != null)
+            {
+                _selectedObjectRoom = objectRoom;
+                _selectedPlacedObject = clickedObject;
+                DrawShipPreview();
+                UpdateSelectedObjectText();
+                return;
+            }
+
             ShipRoomDesign resizeRoom = GetRoomResizeHandleAtPoint(mouseCanvasPoint);
 
             if (resizeRoom != null)
@@ -389,7 +648,7 @@ namespace Space_RPG.Windows
 
             PreviewHost.ReleaseMouseCapture();
 
-            if (_hasDragged || wasRoomDragging || wasRoomResizing)
+            if (_hasDragged || wasRoomDragging || wasRoomResizing || IsObjectPlacementMode())
                 return;
 
             Point mousePoint = e.GetPosition(PreviewCanvas);

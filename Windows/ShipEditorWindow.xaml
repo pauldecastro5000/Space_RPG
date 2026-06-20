@@ -1,9 +1,9 @@
-﻿<Window x:Class="Space_RPG.Windows.ShipEditorWindow"
+<Window x:Class="Space_RPG.Windows.ShipEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ship Editor"
         Height="750"
-        Width="1200"
+        Width="1300"
         WindowStartupLocation="CenterOwner"
         Background="Black">
 
@@ -13,7 +13,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
         <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2"
                     Orientation="Horizontal"
                     Background="#111111"
                     HorizontalAlignment="Right">
@@ -26,8 +32,108 @@
 
         </StackPanel>
 
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="#111111"
+                BorderBrush="#333333"
+                BorderThickness="0,0,1,0"
+                Padding="10">
+
+            <StackPanel>
+                <TextBlock Text="Object Palette"
+                           Foreground="White"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10" />
+
+                <TextBlock Text="Object Type"
+                           Foreground="White" />
+                <ComboBox x:Name="ObjectTypeComboBox"
+                          Height="28"
+                          Margin="0,3,0,8" />
+
+                <TextBlock Text="Tile Type"
+                           Foreground="White" />
+                <ComboBox x:Name="TileTypeComboBox"
+                          Height="28"
+                          Margin="0,3,0,8" />
+
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Width"
+                                   Foreground="White" />
+                        <TextBox x:Name="ObjectWidthTextBox"
+                                 Text="1"
+                                 Height="26"
+                                 Margin="0,3,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Height"
+                                   Foreground="White" />
+                        <TextBox x:Name="ObjectHeightTextBox"
+                                 Text="1"
+                                 Height="26"
+                                 Margin="0,3,0,0" />
+                    </StackPanel>
+                </Grid>
+
+                <Button Content="Rotate Size"
+                        Height="30"
+                        Margin="0,3,0,8"
+                        Click="RotateObjectSize_Click" />
+
+                <ToggleButton x:Name="PlaceObjectToggleButton"
+                              Content="Place Object Mode"
+                              Height="34"
+                              Margin="0,3,0,12" />
+
+                <Separator Margin="0,5,0,10" />
+
+                <TextBlock Text="Selected Object"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5" />
+
+                <TextBlock x:Name="SelectedObjectTextBlock"
+                           Text="None"
+                           Foreground="#CCCCCC"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,8" />
+
+                <Button Content="Rotate Selected Object"
+                        Height="30"
+                        Margin="0,3,0,5"
+                        Click="RotateSelectedObject_Click" />
+
+                <Button Content="Delete Selected Object"
+                        Height="30"
+                        Margin="0,3,0,12"
+                        Click="DeleteSelectedObject_Click" />
+
+                <TextBlock Foreground="#CCCCCC"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,0"
+                           Text="How to use:
+1. Select object type.
+2. Set Width/Height.
+3. Optional: Rotate Size.
+4. Enable Place Object Mode.
+5. Click inside a room to place it.
+
+Click an existing object to select it, then rotate or delete it." />
+            </StackPanel>
+        </Border>
+
         <Grid x:Name="PreviewHost"
               Grid.Row="1"
+              Grid.Column="1"
               Background="Black"
               ClipToBounds="True"
               MouseWheel="PreviewHost_MouseWheel"

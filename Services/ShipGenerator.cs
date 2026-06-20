@@ -191,68 +191,109 @@ namespace Space_RPG.Services
 
         private static void AddSharedWallDoors(List<InteriorRoom> rooms)
         {
+            if (rooms == null || rooms.Count == 0)
+                return;
+
+            foreach (InteriorRoom room in rooms)
+                room.RebuildTileIndex();
+
             for (int i = 0; i < rooms.Count; i++)
             {
                 for (int j = i + 1; j < rooms.Count; j++)
                 {
-                    TryCreateSharedWallDoor(rooms[i], rooms[j]);
+                    CreateDoorsOnAllInternalSharedWalls(rooms, rooms[i], rooms[j]);
                 }
             }
         }
 
-        private static void TryCreateSharedWallDoor(InteriorRoom a, InteriorRoom b)
+        private static void CreateDoorsOnAllInternalSharedWalls(List<InteriorRoom> rooms, InteriorRoom a, InteriorRoom b)
         {
-            int aLeft = a.WorldX;
-            int aRight = a.WorldX + a.Width - 1;
-            int aTop = a.WorldY;
-            int aBottom = a.WorldY + a.Height - 1;
+            int overlapLeft = Math.Max(a.WorldX, b.WorldX);
+            int overlapRight = Math.Min(a.WorldX + a.Width - 1, b.WorldX + b.Width - 1);
+            int overlapTop = Math.Max(a.WorldY, b.WorldY);
+            int overlapBottom = Math.Min(a.WorldY + a.Height - 1, b.WorldY + b.Height - 1);
 
-            int bLeft = b.WorldX;
-            int bRight = b.WorldX + b.Width - 1;
-            int bTop = b.WorldY;
-            int bBottom = b.WorldY + b.Height - 1;
+            if (overlapLeft > overlapRight || overlapTop > overlapBottom)
+                return;
 
-            // A left/right shared wall with B
-            if (aRight == bLeft || bRight == aLeft)
+            for (int worldY = overlapTop; worldY <= overlapBottom; worldY++)
             {
-                int sharedX = aRight == bLeft ? aRight : bRight;
-
-                int overlapTop = Math.Max(aTop + 1, bTop + 1);
-                int overlapBottom = Math.Min(aBottom - 1, bBottom - 1);
-
-                if (overlapTop <= overlapBottom)
+                for (int worldX = overlapLeft; worldX <= overlapRight; worldX++)
                 {
-                    int doorY = (overlapTop + overlapBottom) / 2;
+                    InteriorTile tileA = GetTileByWorldPosition(a, worldX, worldY);
+                    InteriorTile tileB = GetTileByWorldPosition(b, worldX, worldY);
 
-                    SetDoorByWorldPosition(a, sharedX, doorY);
-                    SetDoorByWorldPosition(b, sharedX, doorY);
+                    if (tileA == null || tileB == null)
+                        continue;
+
+                    // Only room wall + room wall overlap can become a generated door.
+                    // Object tiles or existing floor overlaps should not be changed here.
+                    if (tileA.TileType != InteriorTileType.Wall || tileB.TileType != InteriorTileType.Wall)
+                        continue;
+
+                    // A shared wall is internal only when there is usable ship space
+                    // on both opposite sides of the wall tile.
+                    //
+                    // Vertical shared wall example:
+                    //     Room A floor | shared wall | Room B floor
+                    //
+                    // Horizontal shared wall example:
+                    //     Room A floor
+                    //     shared wall
+                    //     Room B floor
+                    //
+                    // If only one side has ship space and the other side is empty,
+                    // that wall is part of the external hull and must stay as a wall.
+                    bool hasInteriorSpaceLeftAndRight =
+                        IsInteriorSpace(rooms, worldX - 1, worldY) &&
+                        IsInteriorSpace(rooms, worldX + 1, worldY);
+
+                    bool hasInteriorSpaceTopAndBottom =
+                        IsInteriorSpace(rooms, worldX, worldY - 1) &&
+                        IsInteriorSpace(rooms, worldX, worldY + 1);
+
+                    if (hasInteriorSpaceLeftAndRight || hasInteriorSpaceTopAndBottom)
+                    {
+                        SetDoorByWorldPosition(a, worldX, worldY);
+                        SetDoorByWorldPosition(b, worldX, worldY);
+                    }
                 }
             }
+        }
 
-            // A top/bottom shared wall with B
-            if (aBottom == bTop || bBottom == aTop)
+        private static InteriorTile GetTileByWorldPosition(InteriorRoom room, int worldX, int worldY)
+        {
+            if (room == null)
+                return null;
+
+            int localX = worldX - room.WorldX;
+            int localY = worldY - room.WorldY;
+
+            if (localX < 0 || localY < 0 || localX >= room.Width || localY >= room.Height)
+                return null;
+
+            return room.GetTileFast(localX, localY);
+        }
+
+        private static bool IsInteriorSpace(List<InteriorRoom> rooms, int worldX, int worldY)
+        {
+            foreach (InteriorRoom room in rooms)
             {
-                int sharedY = aBottom == bTop ? aBottom : bBottom;
+                InteriorTile tile = GetTileByWorldPosition(room, worldX, worldY);
 
-                int overlapLeft = Math.Max(aLeft + 1, bLeft + 1);
-                int overlapRight = Math.Min(aRight - 1, bRight - 1);
+                if (tile == null)
+                    continue;
 
-                if (overlapLeft <= overlapRight)
-                {
-                    int doorX = (overlapLeft + overlapRight) / 2;
-
-                    SetDoorByWorldPosition(a, doorX, sharedY);
-                    SetDoorByWorldPosition(b, doorX, sharedY);
-                }
+                if (tile.TileType != InteriorTileType.Wall)
+                    return true;
             }
+
+            return false;
         }
 
         private static void SetDoorByWorldPosition(InteriorRoom room, int worldX, int worldY)
         {
-            int localX = worldX - room.WorldX;
-            int localY = worldY - room.WorldY;
-
-            InteriorTile tile = room.Tiles.FirstOrDefault(t => t.X == localX && t.Y == localY);
+            InteriorTile tile = GetTileByWorldPosition(room, worldX, worldY);
 
             if (tile == null)
                 return;

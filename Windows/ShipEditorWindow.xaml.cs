@@ -1,4 +1,4 @@
-﻿using Space_RPG.Models;
+using Space_RPG.Models;
 using Space_RPG.ViewModel;
 using System;
 using System.Windows;
@@ -33,6 +33,9 @@ namespace Space_RPG.Windows
 
         private ShipRoomDesign _selectedObjectRoom;
         private ShipObjectDesign _selectedPlacedObject;
+
+        private bool _hasObjectPreviewPoint;
+        private Point _objectPreviewMouseCanvasPoint;
 
         private bool _isPreviewDragging;
         private bool _hasDragged;
@@ -81,6 +84,8 @@ namespace Space_RPG.Windows
                 foreach (ShipObjectDesign obj in room.Objects)
                     DrawObject(room, obj);
             }
+
+            DrawObjectPlacementPreview();
         }
 
         private void DrawGrid()
@@ -224,6 +229,75 @@ namespace Space_RPG.Windows
             PreviewCanvas.Children.Add(label);
         }
 
+        private void DrawObjectPlacementPreview()
+        {
+            if (!IsObjectPlacementMode() || !_hasObjectPreviewPoint)
+                return;
+
+            ShipRoomDesign room = GetRoomAtPoint(_objectPreviewMouseCanvasPoint);
+
+            if (room == null)
+                return;
+
+            int roomTileX = (int)Math.Floor(_objectPreviewMouseCanvasPoint.X / TileSize) - room.WorldX;
+            int roomTileY = (int)Math.Floor(_objectPreviewMouseCanvasPoint.Y / TileSize) - room.WorldY;
+            int objectWidth = GetObjectWidthFromInput();
+            int objectHeight = GetObjectHeightFromInput();
+
+            bool canPlace = ObjectCanFit(room, null, roomTileX, roomTileY, objectWidth, objectHeight);
+
+            double x = (room.WorldX + roomTileX) * TileSize;
+            double y = (room.WorldY + roomTileY) * TileSize;
+            double width = objectWidth * TileSize;
+            double height = objectHeight * TileSize;
+
+            InteriorTileType tileType = GetSelectedTileType();
+
+            Rectangle previewRect = new Rectangle
+            {
+                Width = width,
+                Height = height,
+                Fill = GetObjectBrush(tileType),
+                Stroke = canPlace ? Brushes.LimeGreen : Brushes.Red,
+                StrokeThickness = 2,
+                Opacity = 0.55,
+                IsHitTestVisible = false
+            };
+
+            Canvas.SetLeft(previewRect, x);
+            Canvas.SetTop(previewRect, y);
+            PreviewCanvas.Children.Add(previewRect);
+
+            TextBlock label = new TextBlock
+            {
+                Text = canPlace ? tileType.ToString() : "Cannot place",
+                Foreground = Brushes.White,
+                FontSize = 9,
+                FontWeight = FontWeights.Bold,
+                IsHitTestVisible = false
+            };
+
+            Canvas.SetLeft(label, x + 2);
+            Canvas.SetTop(label, y + 2);
+            PreviewCanvas.Children.Add(label);
+        }
+
+        private InteriorObjectType GetSelectedObjectType()
+        {
+            if (ObjectTypeComboBox != null && ObjectTypeComboBox.SelectedItem is InteriorObjectType)
+                return (InteriorObjectType)ObjectTypeComboBox.SelectedItem;
+
+            return InteriorObjectType.None;
+        }
+
+        private InteriorTileType GetSelectedTileType()
+        {
+            if (TileTypeComboBox != null && TileTypeComboBox.SelectedItem is InteriorTileType)
+                return (InteriorTileType)TileTypeComboBox.SelectedItem;
+
+            return InteriorTileType.Table;
+        }
+
         private Brush GetRoomBrush(FacilityType roomType)
         {
             switch (roomType)
@@ -321,6 +395,7 @@ namespace Space_RPG.Windows
             string widthText = ObjectWidthTextBox.Text;
             ObjectWidthTextBox.Text = GetObjectHeightFromInput().ToString();
             ObjectHeightTextBox.Text = GetObjectWidthFromInputFromText(widthText).ToString();
+            DrawShipPreview();
         }
 
         private int GetObjectWidthFromInputFromText(string text)
@@ -389,14 +464,8 @@ namespace Space_RPG.Windows
                 return;
             }
 
-            InteriorObjectType objectType = InteriorObjectType.None;
-            InteriorTileType tileType = InteriorTileType.Table;
-
-            if (ObjectTypeComboBox.SelectedItem is InteriorObjectType)
-                objectType = (InteriorObjectType)ObjectTypeComboBox.SelectedItem;
-
-            if (TileTypeComboBox.SelectedItem is InteriorTileType)
-                tileType = (InteriorTileType)TileTypeComboBox.SelectedItem;
+            InteriorObjectType objectType = GetSelectedObjectType();
+            InteriorTileType tileType = GetSelectedTileType();
 
             ShipObjectDesign obj = new ShipObjectDesign
             {
@@ -502,6 +571,20 @@ namespace Space_RPG.Windows
                 " x " + _selectedPlacedObject.Height;
         }
 
+        private void PlaceObjectToggleButton_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (!IsObjectPlacementMode())
+                _hasObjectPreviewPoint = false;
+
+            DrawShipPreview();
+        }
+
+        private void ObjectPalette_Changed(object sender, RoutedEventArgs e)
+        {
+            if (IsLoaded)
+                DrawShipPreview();
+        }
+
         private void PreviewHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _hasDragged = false;
@@ -576,7 +659,16 @@ namespace Space_RPG.Windows
         {
             Point mouseCanvasPoint = e.GetPosition(PreviewCanvas);
 
-            if (!_isRoomDragging && !_isRoomResizing && !_isPreviewDragging)
+            if (IsObjectPlacementMode())
+            {
+                _hasObjectPreviewPoint = true;
+                _objectPreviewMouseCanvasPoint = mouseCanvasPoint;
+                PreviewHost.Cursor = Cursors.Cross;
+
+                if (!_isRoomDragging && !_isRoomResizing && !_isPreviewDragging)
+                    DrawShipPreview();
+            }
+            else if (!_isRoomDragging && !_isRoomResizing && !_isPreviewDragging)
             {
                 PreviewHost.Cursor = GetRoomResizeHandleAtPoint(mouseCanvasPoint) != null
                     ? Cursors.SizeNWSE
